@@ -1,16 +1,41 @@
 using UnityEngine;
-
-public class RoomManager : MonoBehaviour
+using Photon.Pun;
+public class RoomManager : MonoBehaviourPunCallbacks
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Start()
     {
-        
+         Debug.Log("Connect...");
+
+        PhotonNetwork.ConnectUsingSettings();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnConnectedToMaster()
     {
-        
+        base.OnConnectedToMaster();
+        Debug.Log("Connected To Master");
+        PhotonNetwork.JoinLobby();
+
+       
+
+
     }
+
+    public override void OnConnected()
+    {
+        base.OnConnected();
+
+        Debug.Log("mine");
+ 
+    }
+
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
+        PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
+
+        Debug.Log("We're in a Room");
+    }
+
+
 }
