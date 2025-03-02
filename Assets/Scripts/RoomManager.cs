@@ -2,10 +2,13 @@ using UnityEngine;
 using Photon.Pun;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-
+    [SerializeField] private GameObject connectCanva;
+    [SerializeField] private GameObject chooseTeamCanva;
     private void Start()
     {
-         Debug.Log("Connect...");
+        connectCanva.SetActive(true);
+        chooseTeamCanva.SetActive(false);
+        Debug.Log("Connect...");
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -33,7 +36,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
-
+        connectCanva.SetActive(false);
+        chooseTeamCanva.SetActive(true);
         Debug.Log("We're in a Room");
     }
 
