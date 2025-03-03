@@ -23,11 +23,9 @@ public class TeamManager : MonoBehaviourPun
     [SerializeField] private GameObject chooseTeamCanva;
     [SerializeField] private GameObject playCanva;
 
-
     //---Team
     [SerializeField] private Team redTeam;
     [SerializeField] private Team blueTeam;
-
 
 
     void Start()
@@ -43,7 +41,6 @@ public class TeamManager : MonoBehaviourPun
 
     private void RequestJoinTeam(TeamName _teamName)
     {
-
         var playerData = new PlayerData();
         playerData.playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
         playerData.playerID = PhotonNetwork.LocalPlayer.UserId;
@@ -60,12 +57,8 @@ public class TeamManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-
-
-
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
 
-        //   ReportDate reportDate = new ReportDate();
         switch (data.teamName)
         {
             case TeamName.Red:
@@ -73,36 +66,17 @@ public class TeamManager : MonoBehaviourPun
                 {
                     if (!redTeam.TeamFull())
                     {
-
                         redTeam.AddPlayer(data);
 
-                        // reportDate.responseState = ResponseState.Complete.ToString();
-                        // reportDate.responseMessage = "Join Player Complete";
-
-                        // var jsonData = JsonUtility.ToJson(reportDate);
-
                         photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
-
                     }
                     else
                     {
-                        // reportDate.responseState = ResponseState.Fail.ToString();
-                        // reportDate.responseMessage = "Team Have Full";
-
-                        // var jsonData = JsonUtility.ToJson(reportDate);
-
                         photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
-
                     }
                 }
                 else
                 {
-
-                    // reportDate.responseState = ResponseState.Fail.ToString();
-                    // reportDate.responseMessage = "You Have Join In Red Team";
-
-                    // var jsonData = JsonUtility.ToJson(reportDate);
-
                     photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Red Team"));
                 }
 
@@ -114,41 +88,21 @@ public class TeamManager : MonoBehaviourPun
                     {
                         blueTeam.AddPlayer(data);
 
-                        // reportDate.responseState = ResponseState.Complete.ToString();
-                        // reportDate.responseMessage = "Join Player Complete";
-
-                        // var jsonData = JsonUtility.ToJson(reportDate);
-
-                        // photonView.RPC("ReceiveJoinTeam", info.Sender, jsonData);
                         photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
                     }
                     else
                     {
-                        // reportDate.responseState = ResponseState.Fail.ToString();
-                        // reportDate.responseMessage = "Team Have Full";
-
-                        // var jsonData = JsonUtility.ToJson(reportDate);
-
                         photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
                     }
                 }
                 else
                 {
-                    // reportDate.responseState = ResponseState.Fail.ToString();
-                    // reportDate.responseMessage = "You Have Join In Blue Team";
-
-                    // var jsonData = JsonUtility.ToJson(reportDate);
-
                     photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Blue Team"));
                 }
-
-
                 break;
         }
-
-
-
     }
+
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
@@ -166,7 +120,6 @@ public class TeamManager : MonoBehaviourPun
         photonView.RPC("UpDatePlayerDate", RpcTarget.MasterClient);
     }
 
-
     [PunRPC]
     private void UpDatePlayerDate()
     {
@@ -182,7 +135,6 @@ public class TeamManager : MonoBehaviourPun
         }
     }
 
-
     private string PackJsonData(Enum _responseState, string responseMessage)
     {
         ReportDate reportDate;
@@ -191,8 +143,6 @@ public class TeamManager : MonoBehaviourPun
 
         return JsonUtility.ToJson(reportDate);
     }
-
-
 }
 
 public enum ResponseState
