@@ -603,8 +603,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -79.861, y: -44.9}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 21.445183, y: -44.9}
+  m_SizeDelta: {x: 402.6124, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &315797640
 MonoBehaviour:
@@ -2165,6 +2165,9 @@ GameObject:
   - component: {fileID: 855123744}
   - component: {fileID: 855123743}
   - component: {fileID: 855123742}
+  - component: {fileID: 855123746}
+  - component: {fileID: 855123745}
+  - component: {fileID: 855123747}
   m_Layer: 5
   m_Name: List
   m_TagString: Untagged
@@ -2235,7 +2238,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 855123743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 855123747}
+        m_TargetAssemblyTypeName: ButtonToggle, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &855123743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2274,6 +2289,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855123740}
   m_CullTransparentMesh: 1
+--- !u!114 &855123745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855123740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082a949320d64974b9051cb86661f114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamName1: {fileID: 737932197}
+  Team1List: {fileID: 1974157092}
+  teamName2: {fileID: 1512736896}
+  Team2List: {fileID: 854428794}
+--- !u!114 &855123746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855123740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &855123747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855123740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c60998d93bf6749910468546b8373f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1127628604}
+  startShow: 0
 --- !u!1 &967317895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,7 +2617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1134546079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2867,7 +2934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1501601471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3283,9 +3350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713b1d0e4820504449eec776c30edf56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamSetting: {fileID: 11400000, guid: 7666cdef52d023a48858f3ee3bf77c5f, type: 2}
   enterNameInput: {fileID: 216920431}
   btn1: {fileID: 336122620}
   btn2: {fileID: 525379616}
+  reportError: {fileID: 315797640}
   chooseTeamCanva: {fileID: 1501601470}
   playCanva: {fileID: 1134546078}
   redTeam:

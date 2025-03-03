@@ -1,17 +1,22 @@
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
+using ExitGames.Client.Photon;
+using System;
 
 
 
 public class TeamManager : MonoBehaviourPun
 {
-
+    [Header("Team Setting")]
+    [SerializeField] private TeamSetting teamSetting;
     //--UI
     [Space]
     [SerializeField] private TMP_InputField enterNameInput;
     [SerializeField] private Button btn1, btn2;
+    [SerializeField] private TMP_Text reportError;
 
     //--Canva
     [Space]
@@ -20,9 +25,8 @@ public class TeamManager : MonoBehaviourPun
 
 
     //---Team
-    [SerializeField] private Team redTeam = new Team(TeamName.Red);
-    [SerializeField] private Team blueTeam = new Team(TeamName.Blue);
-
+    [SerializeField] private Team redTeam;
+    [SerializeField] private Team blueTeam;
 
 
 
@@ -30,37 +34,38 @@ public class TeamManager : MonoBehaviourPun
     {
         playCanva.SetActive(false);
 
+        redTeam = new Team(TeamName.Red, teamSetting);
+        blueTeam = new Team(TeamName.Blue, teamSetting);
 
         btn1.onClick.AddListener(() => RequestJoinTeam(TeamName.Red));
         btn2.onClick.AddListener(() => RequestJoinTeam(TeamName.Blue));
     }
 
-
-
-
     private void RequestJoinTeam(TeamName _teamName)
     {
+
         var playerData = new PlayerData();
         playerData.playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
         playerData.playerID = PhotonNetwork.LocalPlayer.UserId;
-        playerData.sender = PhotonNetwork.LocalPlayer;
+
         playerData.teamName = _teamName;
 
         var jsonData = JsonUtility.ToJson(playerData);
 
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
-
-
     }
 
     [PunRPC]
-    private void TryJoinTeam(string _jsonData)
+    private void TryJoinTeam(string _jsonData, PhotonMessageInfo info)
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
 
+
+
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
-        ReportDate reportDate;
+
+        //   ReportDate reportDate = new ReportDate();
         switch (data.teamName)
         {
             case TeamName.Red:
@@ -68,28 +73,37 @@ public class TeamManager : MonoBehaviourPun
                 {
                     if (!redTeam.TeamFull())
                     {
+
                         redTeam.AddPlayer(data);
 
-                        reportDate.ReportFail = false;
-                        reportDate.ReportText = "Join Player Complete";
+                        // reportDate.responseState = ResponseState.Complete.ToString();
+                        // reportDate.responseMessage = "Join Player Complete";
 
-                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                        // var jsonData = JsonUtility.ToJson(reportDate);
+
+                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
+
                     }
                     else
                     {
-                        reportDate.ReportFail = true;
-                        reportDate.ReportText = "Team Have Full";
+                        // reportDate.responseState = ResponseState.Fail.ToString();
+                        // reportDate.responseMessage = "Team Have Full";
 
-                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                        // var jsonData = JsonUtility.ToJson(reportDate);
+
+                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
+
                     }
                 }
                 else
                 {
 
-                    reportDate.ReportFail = true;
-                    reportDate.ReportText = "You Have Join In Red Team";
+                    // reportDate.responseState = ResponseState.Fail.ToString();
+                    // reportDate.responseMessage = "You Have Join In Red Team";
 
-                    photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    // var jsonData = JsonUtility.ToJson(reportDate);
+
+                    photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Red Team"));
                 }
 
                 break;
@@ -100,25 +114,32 @@ public class TeamManager : MonoBehaviourPun
                     {
                         blueTeam.AddPlayer(data);
 
-                        reportDate.ReportFail = false;
-                        reportDate.ReportText = "Join Player Complete";
+                        // reportDate.responseState = ResponseState.Complete.ToString();
+                        // reportDate.responseMessage = "Join Player Complete";
 
-                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                        // var jsonData = JsonUtility.ToJson(reportDate);
+
+                        // photonView.RPC("ReceiveJoinTeam", info.Sender, jsonData);
+                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
                     }
                     else
                     {
-                        reportDate.ReportFail = true;
-                        reportDate.ReportText = "Team Have Full";
+                        // reportDate.responseState = ResponseState.Fail.ToString();
+                        // reportDate.responseMessage = "Team Have Full";
 
-                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                        // var jsonData = JsonUtility.ToJson(reportDate);
+
+                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
                     }
                 }
                 else
                 {
-                    reportDate.ReportFail = true;
-                    reportDate.ReportText = "You Have Join In Blue Team";
+                    // reportDate.responseState = ResponseState.Fail.ToString();
+                    // reportDate.responseMessage = "You Have Join In Blue Team";
 
-                    photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    // var jsonData = JsonUtility.ToJson(reportDate);
+
+                    photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Blue Team"));
                 }
 
 
@@ -129,25 +150,59 @@ public class TeamManager : MonoBehaviourPun
 
     }
     [PunRPC]
-    private void ReceiveAddPlayer(string _reportJson)
+    private void ReceiveJoinTeam(string _reportJson)
     {
         var data = JsonUtility.FromJson<ReportDate>(_reportJson);
-        if (!data.ReportFail)
+        if (data.responseState == ResponseState.Complete.ToString())
         {
-            //  playCanva.SetActive(true);
-            //   chooseTeamCanva.SetActive(false);
-            Debug.Log(data.ReportText);
+            playCanva.SetActive(true);
+            chooseTeamCanva.SetActive(false);
         }
-        else
+        else if (data.responseState == ResponseState.Fail.ToString())
         {
-            Debug.Log(data.ReportText);
+            reportError.text = data.responseMessage;
+        }
+
+        photonView.RPC("UpDatePlayerDate", RpcTarget.MasterClient);
+    }
+
+
+    [PunRPC]
+    private void UpDatePlayerDate()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Hashtable playerList = new Hashtable()
+            {
+                {redTeam.TeamName,redTeam.GetAllPlayerListString()},
+                {blueTeam.TeamName,blueTeam.GetAllPlayerListString()}
+            };
+
+            PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
         }
     }
+
+
+    private string PackJsonData(Enum _responseState, string responseMessage)
+    {
+        ReportDate reportDate;
+        reportDate.responseState = _responseState.ToString();
+        reportDate.responseMessage = responseMessage;
+
+        return JsonUtility.ToJson(reportDate);
+    }
+
+
 }
 
+public enum ResponseState
+{
+    Fail,
+    Complete
+}
 
 public struct ReportDate
 {
-    public bool ReportFail;
-    public string ReportText;
+    public string responseState;
+    public string responseMessage;
 }

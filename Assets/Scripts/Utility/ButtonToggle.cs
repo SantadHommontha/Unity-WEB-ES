@@ -2,15 +2,33 @@ using UnityEngine;
 
 public class ButtonToggle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private GameObject target;
+
+    private bool show = false;
+
+    [SerializeField] private bool startShow;
+
     void Start()
     {
-        
+        if (startShow) Show();
+        else Hide();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Toggle()
     {
-        
+        if (show) Hide();
+        else Show();
+    }
+
+    public void Show()
+    {
+        target.SetActive(true);
+        show = true;
+    }
+
+    public void Hide()
+    {
+        target.SetActive(false);
+        show = false;
     }
 }

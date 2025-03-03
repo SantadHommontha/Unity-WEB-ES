@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using ExitGames.Client.Photon;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject connectCanva;
@@ -41,5 +42,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("We're in a Room");
     }
 
-
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+    }
 }
