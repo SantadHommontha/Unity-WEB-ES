@@ -23,7 +23,7 @@ public class Team
 {
     private const int maxPlayer = 4;
     public TeamName teamName;
-    public List<PlayerData> playerData = new List<PlayerData>();
+    public List<PlayerData> playerDatas = new List<PlayerData>();
 
    
     public Team(TeamName _teamName)
@@ -33,13 +33,13 @@ public class Team
 
     public bool TeamFull()
     {
-        return playerData.Count < maxPlayer;
+        return playerDatas.Count < maxPlayer;
     }
 
 
     public bool HavePlayer(string playerID)
     {
-        foreach (var t in playerData)
+        foreach (var t in playerDatas)
         {
             if(t.playerID == playerID) return true;
         }
@@ -48,13 +48,13 @@ public class Team
 
     public void AddPlayer(PlayerData _data)
     {
-        playerData.Add(_data);
+        playerDatas.Add(_data);
     }
 
     public void RemovePlayer(PlayerData _data, bool player)
     {
-        if(playerData.Contains(_data))
-            playerData.Remove(_data);
+        if(playerDatas.Contains(_data))
+            playerDatas.Remove(_data);
     }
 
 }

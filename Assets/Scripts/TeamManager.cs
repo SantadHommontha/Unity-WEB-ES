@@ -3,13 +3,15 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
 
+
+
 public class TeamManager : MonoBehaviourPun
 {
 
     //--UI
     [Space]
     [SerializeField] private TMP_InputField enterNameInput;
-    [SerializeField] private Button btn1,btn2;
+    [SerializeField] private Button btn1, btn2;
 
     //--Canva
     [Space]
@@ -18,8 +20,8 @@ public class TeamManager : MonoBehaviourPun
 
 
     //---Team
-    [SerializeField]  private Team redTeam = new Team(TeamName.Red);
-    [SerializeField]  private Team blueTeam = new Team(TeamName.Blue);
+    [SerializeField] private Team redTeam = new Team(TeamName.Red);
+    [SerializeField] private Team blueTeam = new Team(TeamName.Blue);
 
 
 
@@ -27,57 +29,96 @@ public class TeamManager : MonoBehaviourPun
     void Start()
     {
         playCanva.SetActive(false);
-   
 
-        btn1.onClick.AddListener(() => RequestAddPlayer(TeamName.Red));
-        btn2.onClick.AddListener(() => RequestAddPlayer(TeamName.Blue));
+
+        btn1.onClick.AddListener(() => RequestJoinTeam(TeamName.Red));
+        btn2.onClick.AddListener(() => RequestJoinTeam(TeamName.Blue));
     }
 
-  
-  
 
-   private void RequestAddPlayer(TeamName _teamName)
+
+
+    private void RequestJoinTeam(TeamName _teamName)
     {
-        var playerData =  new PlayerData();
-        playerData.playerName = enterNameInput.text;
+        var playerData = new PlayerData();
+        playerData.playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
         playerData.playerID = PhotonNetwork.LocalPlayer.UserId;
         playerData.sender = PhotonNetwork.LocalPlayer;
         playerData.teamName = _teamName;
-        photonView.RPC("TryAddPlayer", RpcTarget.MasterClient, playerData);
+
+        var jsonData = JsonUtility.ToJson(playerData);
+
+        photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
 
 
     }
-    
+
     [PunRPC]
-    private void TryAddPlayer(PlayerData _data)
+    private void TryJoinTeam(string _jsonData)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        Debug.Log(_data);
-        switch(_data.teamName)
+
+
+        var data = JsonUtility.FromJson<PlayerData>(_jsonData);
+        ReportDate reportDate;
+        switch (data.teamName)
         {
             case TeamName.Red:
-              if (!redTeam.HavePlayer(_data.playerID))
+                if (!redTeam.HavePlayer(data.playerID))
                 {
-                    redTeam.AddPlayer(_data);
-                
-                    photonView.RPC("ReceiveAddPlayer", _data.sender, true);
-                }
-              else
-                {
-                    photonView.RPC("ReceiveAddPlayer", _data.sender, false);
-                }
+                    if (!redTeam.TeamFull())
+                    {
+                        redTeam.AddPlayer(data);
 
-            break;
-            case TeamName.Blue:
-                if (!blueTeam.HavePlayer(_data.playerID))
-                {
-                    blueTeam.AddPlayer(_data);
-                  
-                    photonView.RPC("ReceiveAddPlayer", _data.sender, true);
+                        reportDate.ReportFail = false;
+                        reportDate.ReportText = "Join Player Complete";
+
+                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    }
+                    else
+                    {
+                        reportDate.ReportFail = true;
+                        reportDate.ReportText = "Team Have Full";
+
+                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    }
                 }
                 else
                 {
-                    photonView.RPC("ReceiveAddPlayer", _data.sender, false);
+
+                    reportDate.ReportFail = true;
+                    reportDate.ReportText = "You Have Join In Red Team";
+
+                    photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                }
+
+                break;
+            case TeamName.Blue:
+                if (!blueTeam.HavePlayer(data.playerID))
+                {
+                    if (!blueTeam.TeamFull())
+                    {
+                        blueTeam.AddPlayer(data);
+
+                        reportDate.ReportFail = false;
+                        reportDate.ReportText = "Join Player Complete";
+
+                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    }
+                    else
+                    {
+                        reportDate.ReportFail = true;
+                        reportDate.ReportText = "Team Have Full";
+
+                        photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
+                    }
+                }
+                else
+                {
+                    reportDate.ReportFail = true;
+                    reportDate.ReportText = "You Have Join In Blue Team";
+
+                    photonView.RPC("ReceiveAddPlayer", data.sender, reportDate);
                 }
 
 
@@ -88,17 +129,25 @@ public class TeamManager : MonoBehaviourPun
 
     }
     [PunRPC]
-    private void ReceiveAddPlayer(bool _isComplete)
+    private void ReceiveAddPlayer(string _reportJson)
     {
-        if (_isComplete)
+        var data = JsonUtility.FromJson<ReportDate>(_reportJson);
+        if (!data.ReportFail)
         {
-          //  playCanva.SetActive(true);
-         //   chooseTeamCanva.SetActive(false);
-            Debug.Log("Add PLayer Complete");
+            //  playCanva.SetActive(true);
+            //   chooseTeamCanva.SetActive(false);
+            Debug.Log(data.ReportText);
         }
         else
         {
-            Debug.Log("Fail To Add Player");
+            Debug.Log(data.ReportText);
         }
     }
+}
+
+
+public struct ReportDate
+{
+    public bool ReportFail;
+    public string ReportText;
 }
