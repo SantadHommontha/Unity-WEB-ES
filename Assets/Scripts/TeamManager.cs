@@ -1,6 +1,5 @@
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
@@ -10,6 +9,8 @@ using System;
 
 public class TeamManager : MonoBehaviourPun
 {
+    public static TeamManager instance;
+
     [Header("Team Setting")]
     [SerializeField] private TeamSetting teamSetting;
     //--UI
@@ -28,6 +29,16 @@ public class TeamManager : MonoBehaviourPun
     [SerializeField] private Team blueTeam;
 
 
+    //Var
+    public int AllPLayerCount => redTeam.PlayerCount + blueTeam.PlayerCount;
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+    }
     void Start()
     {
         playCanva.SetActive(false);
@@ -53,12 +64,12 @@ public class TeamManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void TryJoinTeam(string _jsonData, PhotonMessageInfo info)
+    private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
-
+        data.info = _info;
         switch (data.teamName)
         {
             case TeamName.Red:
@@ -66,18 +77,19 @@ public class TeamManager : MonoBehaviourPun
                 {
                     if (!redTeam.TeamFull())
                     {
+
                         redTeam.AddPlayer(data);
 
-                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
+                        photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
                     }
                     else
                     {
-                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
+                        photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
                     }
                 }
                 else
                 {
-                    photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Red Team"));
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Red Team"));
                 }
 
                 break;
@@ -88,16 +100,16 @@ public class TeamManager : MonoBehaviourPun
                     {
                         blueTeam.AddPlayer(data);
 
-                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
+                        photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete"));
                     }
                     else
                     {
-                        photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
+                        photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
                     }
                 }
                 else
                 {
-                    photonView.RPC("ReceiveJoinTeam", info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Blue Team"));
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Blue Team"));
                 }
                 break;
         }
@@ -106,7 +118,7 @@ public class TeamManager : MonoBehaviourPun
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
-        var data = JsonUtility.FromJson<ReportDate>(_reportJson);
+        var data = JsonUtility.FromJson<ResponsetData>(_reportJson);
         if (data.responseState == ResponseState.Complete.ToString())
         {
             playCanva.SetActive(true);
@@ -135,9 +147,11 @@ public class TeamManager : MonoBehaviourPun
         }
     }
 
+
+    // Utility Funcetion
     private string PackJsonData(Enum _responseState, string responseMessage)
     {
-        ReportDate reportDate;
+        ResponsetData reportDate;
         reportDate.responseState = _responseState.ToString();
         reportDate.responseMessage = responseMessage;
 
@@ -151,7 +165,7 @@ public enum ResponseState
     Complete
 }
 
-public struct ReportDate
+public struct ResponsetData
 {
     public string responseState;
     public string responseMessage;

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Photon.Realtime;
 using System;
+using Photon.Pun;
 
 public enum TeamName
 {
@@ -15,6 +16,7 @@ public class PlayerData
     public string playerName;
     public string playerID;
     public TeamName teamName;
+    public PhotonMessageInfo info;
 }
 
 
@@ -40,6 +42,8 @@ public class Team
 
         maxPlayer = teamSetting.MaxPlayer;
     }
+
+   
 
     public bool TeamFull()
     {
