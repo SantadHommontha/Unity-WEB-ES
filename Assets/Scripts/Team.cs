@@ -43,7 +43,7 @@ public class Team
         maxPlayer = teamSetting.MaxPlayer;
     }
 
-   
+
 
     public bool TeamFull()
     {
@@ -60,9 +60,10 @@ public class Team
         return false;
     }
 
-    public void AddPlayer(PlayerData _data)
+    public PlayerData AddPlayer(PlayerData _data)
     {
         playerDatas.Add(_data);
+        return _data;
     }
 
     public void RemovePlayer(PlayerData _data, bool player)

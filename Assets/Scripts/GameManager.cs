@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public static GameManager instance;
     [Header("UI")]
     [SerializeField] private TMP_Text score_text;
     [SerializeField] private GameObject startGameBTN;
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool isMaster;
     //--Var
     private int score = 0;
-    private float timeToUpdate = 1;
+    [SerializeField] private float timeToUpdate = 1;
     [SerializeField] private bool gameStart = false;
 
 
@@ -46,7 +47,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
 
-
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+    }
 
 
 
@@ -60,6 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        UpdateScoreText();
         clickCount_text.text = $"{clickCount}:{allClick}";
     }
 
@@ -102,21 +110,44 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SendClickScore()
     {
+        if (clickCount == 0) return;
         int currentClick = clickCount;
         clickCount = 0;
-        photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, currentClick);
+        string teamType = "Nope";
+        if (TeamManager.instance.MyTeamType == "ADD") { teamType = "ADD"; }
+        else if (TeamManager.instance.MyTeamType == "MINUS") { teamType = "MINUS"; }
+
+        ScoreSend data = new ScoreSend()
+        {
+            scoreType = teamType,
+            score = currentClick
+        };
+
+        var jsonData = JsonUtility.ToJson(data);
+        Debug.Log($"Send:{jsonData}");
+        photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, jsonData);
     }
 
     [PunRPC]
-    private void ReceiveClickScore(int _clickCount, PhotonMessageInfo _info)
+    private void ReceiveClickScore(string _jsonData, PhotonMessageInfo _info)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            score += _clickCount;
+            var data = JsonUtility.FromJson<ScoreSend>(_jsonData);
+            Debug.Log($"Receive:{_jsonData}");
+            if (data.scoreType == "ADD")
+            {
+                this.score += data.score;
+            }
+            else if (data.scoreType == "MINUS")
+            {
+                this.score -= data.score;
+                this.score = Mathf.Clamp(this.score, 0, int.MaxValue);
+            }
             photonView.RPC("ReceviceResponse", _info.Sender, Utility.ResponseDataToJson(ResponseState.Complete, "Update You Score To Master"));
             ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
             {
-                {"Score", score}
+                {"Score", this.score}
             };
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
         }
@@ -138,7 +169,35 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void RequstUpDataGameData()
+    {
+        photonView.RPC("SendUpDataGameData", RpcTarget.MasterClient);
+    }
+    [PunRPC]
+    private void SendUpDataGameData()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameUpdate gameUpdate = new GameUpdate()
+            {
+                gameStart = this.gameStart,
+                currentScore = this.score
+            };
 
+            var jsonData = JsonUtility.ToJson(gameUpdate);
+            photonView.RPC("ReceiveUpDataGameData", RpcTarget.AllBuffered, jsonData);
+
+        }
+    }
+
+    [PunRPC]
+    private void ReceiveUpDataGameData(string _jsonData)
+    {
+        if (PhotonNetwork.IsMasterClient) return;
+        GameUpdate gameUpdate = JsonUtility.FromJson<GameUpdate>(_jsonData);
+        gameStart = gameUpdate.gameStart;
+        score = gameUpdate.currentScore;
+    }
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
@@ -149,6 +208,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             int score = (int)propertiesThatChanged["Score"];
             this.score = score;
             UpdateScoreText(score.ToString());
+        }
+
+        if (propertiesThatChanged.ContainsKey("GameStart"))
+        {
+            gameStart = (bool)propertiesThatChanged["GameStart"];
         }
     }
 
@@ -164,12 +228,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         gameStart = true;
         StartCO();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
+            {
+                {"GameStart",gameStart}
+            };
 
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
+        }
     }
 
     //--Call in Button UI
     public void Click()
     {
+        if (!gameStart) return;
         clickCount++;
         allClick++;
 
