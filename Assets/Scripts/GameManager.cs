@@ -1,35 +1,75 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviourPunCallbacks
+
+public struct EndGameScore
+{
+    public string teamWin;
+    public int teamWinScore;
+    public int gameScore;
+}
+public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static GameManager instance;
     [Header("UI")]
-    [SerializeField] private TMP_Text score_text;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text clickCountText;
+    [SerializeField] private TMP_Text timerTxt;
     [SerializeField] private GameObject startGameBTN;
-    [SerializeField] private TMP_Text clickCount_text;
-    [SerializeField] private TMP_Text timer_txt;
+    [Space]
+    [Header("Canva")]
+    [SerializeField] private GameObject playCanva;
+    [Header("GameEnd")]
+    [SerializeField] private GameObject gameendCanva;
+    [SerializeField] private TMP_Text teamWinTxt;
+    [SerializeField] private TMP_Text scoreWin;
+    [SerializeField] private TMP_Text scoreTeam;
 
-    public bool isMaster;
+   
+
     //--Var
-    private int score = 0;
+    [Space]
     [SerializeField] private float timeToUpdateScore = 0.2f;
     [SerializeField] private bool gameStart = false;
-
-
+    private bool GameStart
+    {
+        get
+        {
+            return gameStart;
+        }
+        set
+        {
+            gameStart = value;
+            GameStratChangeEvent?.Invoke(value);
+        }
+    }
+    [SerializeField] private float gameTime = 10f;
+    [SerializeField] private int scoreForAddTeamWin = 50;
+    private int score = 0;
+    private float gameTimer = 0;
+   
     private int clickCount = 0;
     private int allClick = 0;
 
     //--Corutine
     private Coroutine coroutineUpdateScore;
+    private Coroutine coroutineTimeUpdate; 
 
-
-
+    //--Event
+    public event Action GameEndEvent;
+    public event Action<float> GameTimeUpdateEvent;
+    public event Action GameStartEvent;
+    public event Action GameStopEvent;
+    public event Action GameSetupEvent;
+    private Action<bool> GameStratChangeEvent;
 
     #region Unity Function
     void Awake()
@@ -38,40 +78,171 @@ public class GameManager : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
         else
             instance = this;
+
+        SetupEvents();
     }
-
-
 
     void Start()
     {
         clickCount = 0;
         score = 0;
         UpdateScoreText();
-
+        gameendCanva.SetActive(false);
     }
 
     void Update()
     {
         UpdateScoreText();
         ClickCountUpdate();
+        UpdateTimeText();
     }
+    #endregion
+    
+
+    #region Setup Event
+    private void SetupEvents()
+    {
+        //Setup in Awake
+        //GameStart
+        GameStartEvent += StartTimeCount;
+        GameStartEvent += StartUpdateScore;
+
+        GameEndEvent += MasterGameEnd;
+
+
+
+        //GameStart
+      //  GameStart += ()=> { if(!GameStart) }
+       // GameSetupEvent 
+    }
+
     #endregion
 
 
     #region UpdateText
     private void UpdateScoreText()
     {
-        score_text.text = score.ToString();
+        scoreText.text = score.ToString();
     }
     private void UpdateScoreText(string _score)
     {
-        score_text.text = _score;
+        scoreText.text = _score;
     }
     private void ClickCountUpdate()
     {
-        clickCount_text.text = $"{clickCount}:{allClick}";
+        clickCountText.text = $"{clickCount}:{allClick}";
+    }
+    private void UpdateTimeText()
+    {
+        timerTxt.text = gameTimer.ToString();
     }
     #endregion
+
+
+    #region Update Game Time
+
+    private void StartTimeCount()
+    {
+        if (coroutineTimeUpdate != null) return;
+        gameTimer = gameTime;
+        coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(gameTime));
+    }
+    private IEnumerator GameTimerUpdate(float _gameTime)
+    {
+        while((gameTimer > 0) && GameStart)
+        { 
+            yield return new WaitForSeconds(1);
+           
+            UpdateGameTime(0);
+        }
+        coroutineTimeUpdate = null;
+    }
+
+    private void UpdateGameTime(float _time)
+    {
+        // Game Time will Update to other Player by OnPhotonSerializeView
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gameTimer--;
+            gameTimer = Mathf.Clamp(gameTimer, 0, gameTime);
+                      
+            if (gameTimer <= 0)
+            {
+                gameTimer = 0;
+                GameStart = false;
+
+                GameStopEvent?.Invoke();
+
+                //photonView.RPC("ReceiveGameEnd", RpcTarget.AllBuffered);
+                MasterGameEnd();
+            }
+            else
+            {
+                GameTimeUpdateEvent?.Invoke(gameTimer);
+            }
+        }
+       else
+        {
+            gameTimer = _time;
+            GameTimeUpdateEvent?.Invoke(gameTimer);
+        }
+        
+    }
+
+    private void MasterGameEnd()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        var addScore = TeamManager.instance.AddTeam.Score;
+        var minusScore = TeamManager.instance.MinusTeam.Score;
+
+        EndGameScore endGameScore = new EndGameScore()
+        {
+            gameScore = score
+        };
+
+        scoreWin.text = $"Score: {score.ToString()}";
+        if (addScore > scoreForAddTeamWin)
+        {
+            teamWinTxt.text = "ADD Team";
+           
+            scoreTeam.text = $"Team Score: {addScore.ToString()}";
+            endGameScore.teamWin = teamWinTxt.text;
+            endGameScore.teamWinScore = addScore;
+        }
+        else
+        {
+            teamWinTxt.text = "Minus Team";
+            scoreTeam.text = $"Team Score: {minusScore.ToString()}" ;
+            endGameScore.teamWin = teamWinTxt.text;
+            endGameScore.teamWinScore = minusScore;
+        }
+        var jsonData = JsonUtility.ToJson(endGameScore);
+        photonView.RPC("GameEnd", RpcTarget.AllBuffered, jsonData);
+    }
+    [PunRPC]
+    private void ReceiveGameEnd()
+    {
+           GameEndEvent?.Invoke();
+    }
+    [PunRPC]
+    private void GameEnd(string _scoreDataJson)
+    {
+        EndGameScore endGameScore = JsonUtility.FromJson<EndGameScore>(_scoreDataJson);
+        gameendCanva.SetActive(true);
+        playCanva.SetActive(false);
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            teamWinTxt.text = endGameScore.teamWin;
+            scoreWin.text = $"Score: {endGameScore.gameScore.ToString()}";
+            scoreTeam.text = $"Team Score: {endGameScore.teamWinScore.ToString()}";
+        }
+
+
+    }
+
+    #endregion
+
 
     #region UpdateScore
     private void StartUpdateScore()
@@ -119,7 +290,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         };
 
         var jsonData = JsonUtility.ToJson(data);
-        Debug.Log($"Send:{jsonData}");
+       // Debug.Log($"Send:{jsonData}");
         photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, jsonData);
     }
 
@@ -133,12 +304,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (data.scoreType == "ADD")
             {
                 this.score += data.score;
+                TeamManager.instance.AddTeam.SetScore(data.score);
             }
             else if (data.scoreType == "MINUS")
             {
                 this.score -= data.score;
                 this.score = Mathf.Clamp(this.score, 0, int.MaxValue);
+                TeamManager.instance.MinusTeam.SetScore(data.score);
             }
+            
             photonView.RPC("ReceviceResponse", _info.Sender, Utility.ResponseDataToJson(ResponseState.Complete, "Update You Score To Master"));
             ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
             {
@@ -196,10 +370,42 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameStart = gameUpdate.gameStart;
         score = gameUpdate.currentScore;
     }
+
+
     #endregion
 
 
-    #region CallBack And PropertiesUpdate
+    #region UI Button Funtion
+    //--Call in Button UI
+    public void StartGame()
+    {
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameStart = true;
+            GameStartEvent?.Invoke();
+           
+            ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
+            {
+                {"GameStart",GameStart}
+            };
+
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
+           
+        }
+    }
+
+    //--Call in Button UI
+    public void Click()
+    {
+        if (!GameStart) return;
+        clickCount++;
+        allClick++;
+    }
+    #endregion
+
+
+    #region Phton Function And PropertiesUpdate
     //--CallBack
     public override void OnJoinedRoom()
     {
@@ -207,8 +413,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-
-
             startGameBTN.SetActive(true);
         }
         else
@@ -229,36 +433,29 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (propertiesThatChanged.ContainsKey("GameStart"))
         {
-            gameStart = (bool)propertiesThatChanged["GameStart"];
+            GameStart = (bool)propertiesThatChanged["GameStart"];
+            GameStartEvent?.Invoke();
         }
+
+      
     }
-    #endregion
 
-
-    #region UI Button Funtion
-    //--Call in Button UI
-    public void StartGame()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-       
-        if (PhotonNetwork.IsMasterClient)
+       if(stream.IsWriting)
         {
-            gameStart = true;
-            StartUpdateScore();
-            ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
-            {
-                {"GameStart",gameStart}
-            };
-
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
+            stream.SendNext(gameTimer);
+            stream.SendNext(GameStart);
+        }
+       else
+        {
+            UpdateGameTime((float)stream.ReceiveNext());
+            GameStart = (bool)stream.ReceiveNext();
         }
     }
-
-    //--Call in Button UI
-    public void Click()
-    {
-        if (!gameStart) return;
-        clickCount++;
-        allClick++;
-    }
     #endregion
+
+
+   
+
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Realtime;
 using System;
 using Photon.Pun;
+using UnityEngine.InputSystem.Utilities;
 
 public enum TeamName
 {
@@ -33,7 +34,8 @@ public class Team
     public string TeamName => teamName.ToString();
     [SerializeField] private List<PlayerData> playerDatas = new List<PlayerData>();
     public int PlayerCount => playerDatas.Count;
-
+    [SerializeField]  private int score;
+    public int Score => score;
     public Team(TeamName _teamName, TeamSetting _teamSetting)
     {
         teamName = _teamName;
@@ -43,7 +45,10 @@ public class Team
         maxPlayer = teamSetting.MaxPlayer;
     }
 
-
+       public void SetScore(int _score)
+    {
+        score += _score;
+    }
 
     public bool TeamFull()
     {

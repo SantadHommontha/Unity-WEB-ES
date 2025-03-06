@@ -7,7 +7,7 @@ using System;
 
 
 
-public class TeamManager : MonoBehaviourPun
+public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
 {
     public static TeamManager instance;
 
@@ -30,9 +30,22 @@ public class TeamManager : MonoBehaviourPun
     private string myTeamType;
     public string MyTeamType => myTeamType;
 
+    private Team myTeam;
+    public Team MyTeam => myTeam;
+    public Team AddTeam => addTeam;
+    public Team MinusTeam => minusTeam;
     //Var
     public int AllPLayerCount => addTeam.PlayerCount + minusTeam.PlayerCount;
 
+
+    private void SetupEvent()
+    {
+        GameManager.instance.GameStopEvent += GameEnd;
+
+
+
+
+    }
 
     #region Unity Function
     void Awake()
@@ -41,6 +54,8 @@ public class TeamManager : MonoBehaviourPun
             Destroy(this.gameObject);
         else
             instance = this;
+
+        SetupEvent();
     }
     void Start()
     {
@@ -85,7 +100,7 @@ public class TeamManager : MonoBehaviourPun
                     {
 
                         addTeam.AddPlayer(data);
-
+                        myTeam = addTeam;
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "ADD"));
                     }
                     else
@@ -105,7 +120,7 @@ public class TeamManager : MonoBehaviourPun
                     if (!minusTeam.TeamFull())
                     {
                         minusTeam.AddPlayer(data);
-
+                        myTeam = minusTeam;
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "MINUS"));
                     }
                     else
@@ -157,6 +172,18 @@ public class TeamManager : MonoBehaviourPun
     }
     #endregion
 
+    private void GameEnd()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable teamScore = new Hashtable()
+            {
+                { "AddScore", AddTeam.Score },
+                { "MinusScore", MinusTeam.Score },
+            };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(teamScore);
+        }
+    }
 
     #region Utility
     // Utility Funcetion
@@ -178,6 +205,31 @@ public class TeamManager : MonoBehaviourPun
     {
         return PackJsonData(_responseState, _responseMessage, "Nope");
     }
+
+
     #endregion
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+    }
+
+
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        if (PhotonNetwork.IsMasterClient) return;
+        if(propertiesThatChanged.ContainsKey("AddScore"))
+        {
+          addTeam.SetScore((int)propertiesThatChanged["AddScore"])  ;
+        }
+        if (propertiesThatChanged.ContainsKey("MinusScore"))
+        {
+            minusTeam.SetScore((int)propertiesThatChanged["MinusScore"]);
+        }
+    }
+
+
 }
 

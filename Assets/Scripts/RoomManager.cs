@@ -6,6 +6,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject connectCanva;
     [SerializeField] private GameObject chooseTeamCanva;
+
+    [SerializeField] private  bool isMaster;
     private void Start()
     {
         connectCanva.SetActive(true);
@@ -51,6 +53,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        isMaster = PhotonNetwork.IsMasterClient;
         Debug.Log("Room");
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
