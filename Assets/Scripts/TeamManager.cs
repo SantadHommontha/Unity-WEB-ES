@@ -42,7 +42,7 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
     {
         GameManager.instance.GameStopEvent += GameEnd;
 
-
+        GameManager.instance.ResetGameEvent += Reset;
 
 
     }
@@ -230,6 +230,10 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
         }
     }
 
-
+    private void Reset()
+    {
+        AddTeam.Reset();
+        minusTeam.Reset();
+    }
 }
 

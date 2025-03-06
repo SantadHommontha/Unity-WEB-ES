@@ -88,4 +88,8 @@ public class Team
         return allName;
     }
 
+    public void Reset()
+    {
+        score = 0;
+    }
 }

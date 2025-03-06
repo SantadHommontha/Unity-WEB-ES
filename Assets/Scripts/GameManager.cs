@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private TMP_Text clickCountText;
     [SerializeField] private TMP_Text timerTxt;
     [SerializeField] private GameObject startGameBTN;
+    [SerializeField] private GameObject resetGameBTN;
     [Space]
     [Header("Canva")]
     [SerializeField] private GameObject playCanva;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public event Action GameStopEvent;
     public event Action GameSetupEvent;
     private Action<bool> GameStratChangeEvent;
-
+    public event Action ResetGameEvent;
     #region Unity Function
     void Awake()
     {
@@ -109,7 +110,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         GameEndEvent += MasterGameEnd;
 
-
+        ResetGameEvent += Reset;
 
         //GameStart
       //  GameStart += ()=> { if(!GameStart) }
@@ -377,9 +378,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region UI Button Funtion
     //--Call in Button UI
-    public void StartGame()
+    public void StartGameBTN()
     {
-
+        ResetGameEvent?.Invoke();
         if (PhotonNetwork.IsMasterClient)
         {
             GameStart = true;
@@ -396,11 +397,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     //--Call in Button UI
-    public void Click()
+    public void ClickBTN()
     {
         if (!GameStart) return;
         clickCount++;
         allClick++;
+    }
+    public void ResetBTN()
+    {
+        //   ResetGameEvent?.Invoke();
+        photonView.RPC("CallAllReSet", RpcTarget.AllBuffered);
     }
     #endregion
 
@@ -414,10 +420,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             startGameBTN.SetActive(true);
+            resetGameBTN.SetActive(true);
         }
         else
         {
             startGameBTN.SetActive(false);
+            resetGameBTN.SetActive(false);
         }
     }
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
@@ -455,7 +463,34 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     #endregion
 
+    private void Reset()
+    {
+       
+        score = 0;
+        clickCount = 0;
+        allClick = 0;
+        gameStart = false;
+        gameTimer = 0;
 
-   
+        StopAllCoroutines();
+
+       
+        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
+            {
+                {"GameStart",GameStart},
+                   {"Score", this.score}
+            };
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
+
+    }
+
+    [PunRPC]
+    private void CallAllReSet()
+    {
+       
+        ResetGameEvent?.Invoke();
+
+    }
 
 }
