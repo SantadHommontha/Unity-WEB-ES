@@ -33,6 +33,8 @@ public class TeamManager : MonoBehaviourPun
     //Var
     public int AllPLayerCount => addTeam.PlayerCount + minusTeam.PlayerCount;
 
+
+    #region Unity Function
     void Awake()
     {
         if (instance != null && instance != this)
@@ -50,7 +52,10 @@ public class TeamManager : MonoBehaviourPun
         btn1.onClick.AddListener(() => RequestJoinTeam(TeamName.Red));
         btn2.onClick.AddListener(() => RequestJoinTeam(TeamName.Blue));
     }
+    #endregion
 
+
+    #region Join Team
     private void RequestJoinTeam(TeamName _teamName)
     {
         var playerData = new PlayerData();
@@ -150,8 +155,10 @@ public class TeamManager : MonoBehaviourPun
             PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
         }
     }
+    #endregion
 
 
+    #region Utility
     // Utility Funcetion
     private string PackJsonData(Enum _responseState, string _responseMessage, string _teamType)
     {
@@ -171,5 +178,6 @@ public class TeamManager : MonoBehaviourPun
     {
         return PackJsonData(_responseState, _responseMessage, "Nope");
     }
+    #endregion
 }
 

@@ -13,40 +13,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text score_text;
     [SerializeField] private GameObject startGameBTN;
     [SerializeField] private TMP_Text clickCount_text;
+    [SerializeField] private TMP_Text timer_txt;
 
     public bool isMaster;
     //--Var
     private int score = 0;
-    [SerializeField] private float timeToUpdate = 1;
+    [SerializeField] private float timeToUpdateScore = 0.2f;
     [SerializeField] private bool gameStart = false;
 
 
     private int clickCount = 0;
     private int allClick = 0;
 
+    //--Corutine
+    private Coroutine coroutineUpdateScore;
 
 
 
-    //--CallBack
 
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-
-            startGameBTN.SetActive(true);
-        }
-        else
-        {
-            startGameBTN.SetActive(false);
-        }
-    }
-
-
-
+    #region Unity Function
     void Awake()
     {
         if (instance != null && instance != this)
@@ -68,10 +53,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Update()
     {
         UpdateScoreText();
-        clickCount_text.text = $"{clickCount}:{allClick}";
+        ClickCountUpdate();
     }
+    #endregion
 
 
+    #region UpdateText
     private void UpdateScoreText()
     {
         score_text.text = score.ToString();
@@ -80,31 +67,35 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         score_text.text = _score;
     }
-
-    private Coroutine timerCORU;
-    private void StartCO()
+    private void ClickCountUpdate()
     {
-        Debug.Log("111");
-        if (timerCORU != null) return;
-        timerCORU = StartCoroutine(Timer());
-        Debug.Log("222");
+        clickCount_text.text = $"{clickCount}:{allClick}";
+    }
+    #endregion
+
+    #region UpdateScore
+    private void StartUpdateScore()
+    {
+        if (coroutineUpdateScore != null) return;
+        coroutineUpdateScore = StartCoroutine(IEUpdaScore());
+       
     }
 
-    private IEnumerator Timer()
+    private IEnumerator IEUpdaScore()
     {
         while (gameStart)
         {
-            yield return new WaitForSeconds(timeToUpdate);
+            yield return new WaitForSeconds(timeToUpdateScore);
             RequstClickScore();
         }
-        timerCORU = null;
+        coroutineUpdateScore = null;
     }
 
 
 
     private void RequstClickScore()
     {
-        Debug.Log("Update Score");
+       // Debug.Log("Update Score");
         photonView.RPC("SendClickScore", RpcTarget.AllBuffered);
     }
     [PunRPC]
@@ -114,6 +105,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         int currentClick = clickCount;
         clickCount = 0;
         string teamType = "Nope";
+        if(photonView.IsOwnerActive)
+        {
+
+        }
         if (TeamManager.instance.MyTeamType == "ADD") { teamType = "ADD"; }
         else if (TeamManager.instance.MyTeamType == "MINUS") { teamType = "MINUS"; }
 
@@ -168,7 +163,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError(data.responseMessage);
         }
     }
+    #endregion
 
+
+    #region Update Game Data when Join Team
     public void RequstUpDataGameData()
     {
         photonView.RPC("SendUpDataGameData", RpcTarget.MasterClient);
@@ -198,7 +196,26 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameStart = gameUpdate.gameStart;
         score = gameUpdate.currentScore;
     }
+    #endregion
 
+
+    #region CallBack And PropertiesUpdate
+    //--CallBack
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+
+            startGameBTN.SetActive(true);
+        }
+        else
+        {
+            startGameBTN.SetActive(false);
+        }
+    }
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
@@ -215,21 +232,18 @@ public class GameManager : MonoBehaviourPunCallbacks
             gameStart = (bool)propertiesThatChanged["GameStart"];
         }
     }
+    #endregion
 
 
-
-
-
-
-
-
+    #region UI Button Funtion
     //--Call in Button UI
     public void StartGame()
     {
-        gameStart = true;
-        StartCO();
+       
         if (PhotonNetwork.IsMasterClient)
         {
+            gameStart = true;
+            StartUpdateScore();
             ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
             {
                 {"GameStart",gameStart}
@@ -245,6 +259,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!gameStart) return;
         clickCount++;
         allClick++;
-
     }
+    #endregion
 }
