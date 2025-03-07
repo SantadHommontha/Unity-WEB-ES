@@ -4,11 +4,13 @@ using TMPro;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using System;
+using Photon.Realtime;
 
 
 
-public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
+public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+    #region  Variable
     public static TeamManager instance;
 
     [Header("Team Setting")]
@@ -36,8 +38,9 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
     public Team MinusTeam => minusTeam;
     //Var
     public int AllPLayerCount => addTeam.PlayerCount + minusTeam.PlayerCount;
+    #endregion
 
-
+    #region  GameEvent
     private void SetupEvent()
     {
         GameManager.instance.GameStopEvent += GameEnd;
@@ -46,6 +49,27 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
 
 
     }
+
+    private void Reset()
+    {
+        AddTeam.Reset();
+        minusTeam.Reset();
+    }
+
+    private void GameEnd()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable teamScore = new Hashtable()
+            {
+                { "AddScore", AddTeam.Score },
+                { "MinusScore", MinusTeam.Score },
+            };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(teamScore);
+        }
+    }
+    #endregion
+
 
     #region Unity Function
     void Awake()
@@ -101,6 +125,7 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
 
                         addTeam.AddPlayer(data);
                         myTeam = addTeam;
+                        Debug.Log($"PLayer Join AddTeam: {data.playerID}");
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "ADD"));
                     }
                     else
@@ -121,6 +146,7 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
                     {
                         minusTeam.AddPlayer(data);
                         myTeam = minusTeam;
+                        Debug.Log($"PLayer Join MinusTeam: {data.playerID}");
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "MINUS"));
                     }
                     else
@@ -145,7 +171,7 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
             playCanva.SetActive(true);
             chooseTeamCanva.SetActive(false);
             myTeamType = data.myTeamType;
-
+            AfterJoinTeam();
             GameManager.instance.RequstUpDataGameData();
         }
         else if (data.responseState == ResponseState.Fail.ToString())
@@ -170,20 +196,15 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
             PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
         }
     }
+
+
+    private void AfterJoinTeam()
+    {
+
+
+    }
     #endregion
 
-    private void GameEnd()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            ExitGames.Client.Photon.Hashtable teamScore = new Hashtable()
-            {
-                { "AddScore", AddTeam.Score },
-                { "MinusScore", MinusTeam.Score },
-            };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(teamScore);
-        }
-    }
 
     #region Utility
     // Utility Funcetion
@@ -209,6 +230,8 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
 
     #endregion
 
+
+    #region  Photon Function
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -220,20 +243,63 @@ public class TeamManager : MonoBehaviourPunCallbacks,IPunObservable
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
         if (PhotonNetwork.IsMasterClient) return;
-        if(propertiesThatChanged.ContainsKey("AddScore"))
+        if (propertiesThatChanged.ContainsKey("AddScore"))
         {
-          addTeam.SetScore((int)propertiesThatChanged["AddScore"])  ;
+            addTeam.SetScore((int)propertiesThatChanged["AddScore"]);
         }
         if (propertiesThatChanged.ContainsKey("MinusScore"))
         {
             minusTeam.SetScore((int)propertiesThatChanged["MinusScore"]);
         }
     }
+    #endregion
 
-    private void Reset()
+    #region Kick Player
+    private PlayerData GetPlayerFromID(string _playerID)
     {
-        AddTeam.Reset();
-        minusTeam.Reset();
+        var a = addTeam.HavePlayerAndGet(_playerID);
+        var b = minusTeam.HavePlayerAndGet(_playerID);
+
+
+        if (a != null) return a;
+        else if (b != null) return b;
+        else return null;
     }
+
+
+    private void FindPlayerForKick(string _playerID)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        PlayerData playerData = GetPlayerFromID(_playerID);
+
+        if (playerData == null) return;
+
+
+
+        photonView.RPC("Kick", playerData.info.Sender);
+
+
+
+    }
+
+    private void Kick()
+    {
+        
+    }
+
+
+    public void KickPlayer(string _playerID)
+    {
+        FindPlayerForKick(_playerID);
+    }
+
+
+
+
+
+
+    #endregion
+
 }
 

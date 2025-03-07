@@ -351,6 +351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNameBlock (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -464,6 +468,10 @@ PrefabInstance:
     - target: {fileID: 5605129154006547132, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: m_Name
       value: PlayerNameBlock
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: teamType
+      value: MINUS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -687,7 +695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.27788886, y: 0.224}
   m_AnchorMax: {x: 0.64644444, y: 0.27400002}
-  m_AnchoredPosition: {x: -0.30400085, y: 0.64001465}
+  m_AnchoredPosition: {x: -0.3040161, y: 0.64001465}
   m_SizeDelta: {x: 1, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226777313
@@ -2215,6 +2223,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNameBlock (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: teamType
+      value: MINUS
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2324,6 +2340,10 @@ PrefabInstance:
     - target: {fileID: 5605129154006547132, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: m_Name
       value: PlayerNameBlock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2676,6 +2696,14 @@ PrefabInstance:
     - target: {fileID: 5605129154006547132, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: m_Name
       value: PlayerNameBlock (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: teamType
+      value: MINUS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3127,7 +3155,6 @@ GameObject:
   - component: {fileID: 855123743}
   - component: {fileID: 855123742}
   - component: {fileID: 855123746}
-  - component: {fileID: 855123745}
   - component: {fileID: 855123747}
   m_Layer: 5
   m_Name: List_Btn
@@ -3250,22 +3277,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855123740}
   m_CullTransparentMesh: 1
---- !u!114 &855123745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855123740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 082a949320d64974b9051cb86661f114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teamName1: {fileID: 737932197}
-  Team1List: {fileID: 0}
-  teamName2: {fileID: 0}
-  Team2List: {fileID: 0}
 --- !u!114 &855123746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3401,6 +3412,14 @@ PrefabInstance:
     - target: {fileID: 5605129154006547132, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: m_Name
       value: PlayerNameBlock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: teamType
+      value: MINUS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4013,6 +4032,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNameBlock (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4119,6 +4142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNameBlock (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4138,6 +4165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127628605}
+  - component: {fileID: 1127628606}
   m_Layer: 5
   m_Name: List Name
   m_TagString: Untagged
@@ -4166,6 +4194,28 @@ RectTransform:
   m_AnchoredPosition: {x: 16.61499, y: -0.6052246}
   m_SizeDelta: {x: -23.23, y: 1.2904968}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1127628606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127628604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1134546078
 GameObject:
   m_ObjectHideFlags: 0
@@ -5471,6 +5521,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerNameBlock (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: index
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: teamType
+      value: MINUS
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5492,6 +5550,7 @@ GameObject:
   - component: {fileID: 1736650176}
   - component: {fileID: 1736650177}
   - component: {fileID: 1736650175}
+  - component: {fileID: 1736650178}
   m_Layer: 0
   m_Name: TeamManager
   m_TagString: Untagged
@@ -5520,11 +5579,9 @@ MonoBehaviour:
   playCanva: {fileID: 1134546078}
   addTeam:
     teamName: 0
-    playerDatas: []
     score: 0
   minusTeam:
     teamName: 0
-    playerDatas: []
     score: 0
 --- !u!4 &1736650176
 Transform:
@@ -5564,6 +5621,20 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1736650178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736650174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082a949320d64974b9051cb86661f114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addTeam: []
+  minusTeam: []
 --- !u!1 &1851072596
 GameObject:
   m_ObjectHideFlags: 0

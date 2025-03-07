@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 3979103543946859116}
   - component: {fileID: 5433174919314336519}
   - component: {fileID: 9218036365308642975}
+  - component: {fileID: 6661504890255036733}
   m_Layer: 5
   m_Name: PlayerNameBlock
   m_TagString: Untagged
@@ -198,6 +199,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6661504890255036733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605129154006547132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a72015911844044ba94f46cb6447f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kick_Btn: {fileID: 1893538658900570985}
+  playerName_txt: {fileID: 6133392959457219492}
+  index: 0
+  teamType: ADD
 --- !u!1 &6295276511059807133
 GameObject:
   m_ObjectHideFlags: 0

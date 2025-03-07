@@ -60,4 +60,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
     }
+
+
+    public void LeveRoom()
+    {
+
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        Debug.Log($"Player Left Room: {otherPlayer.UserId}");
+    }
 }

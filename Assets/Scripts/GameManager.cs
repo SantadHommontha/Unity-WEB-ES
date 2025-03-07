@@ -18,6 +18,7 @@ public struct EndGameScore
 }
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
+    #region  Variable
     public static GameManager instance;
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
@@ -72,6 +73,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public event Action GameSetupEvent;
     private Action<bool> GameStratChangeEvent;
     public event Action ResetGameEvent;
+    #endregion
+
+
     #region Unity Function
     void Awake()
     {
@@ -115,6 +119,37 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         //GameStart
       //  GameStart += ()=> { if(!GameStart) }
        // GameSetupEvent 
+    }
+
+
+     private void Reset()
+    {
+       
+        score = 0;
+        clickCount = 0;
+        allClick = 0;
+        gameStart = false;
+        gameTimer = 0;
+
+        StopAllCoroutines();
+
+       
+        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
+            {
+                {"GameStart",GameStart},
+                   {"Score", this.score}
+            };
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
+
+    }
+
+    [PunRPC]
+    private void CallAllReSet()
+    {
+       
+        ResetGameEvent?.Invoke();
+
     }
 
     #endregion
@@ -463,34 +498,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     #endregion
 
-    private void Reset()
-    {
-       
-        score = 0;
-        clickCount = 0;
-        allClick = 0;
-        gameStart = false;
-        gameTimer = 0;
-
-        StopAllCoroutines();
-
-       
-        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
-            {
-                {"GameStart",GameStart},
-                   {"Score", this.score}
-            };
-
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
-
-    }
-
-    [PunRPC]
-    private void CallAllReSet()
-    {
-       
-        ResetGameEvent?.Invoke();
-
-    }
+   
 
 }

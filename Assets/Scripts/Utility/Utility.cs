@@ -33,6 +33,14 @@ public struct GameUpdate
     public int currentScore;
     public bool gameStart;
 }
+
+
+public struct PlayerTeamList
+{
+    public string[] playerName;
+    public string[] playerID;
+}
+
 public static class Utility
 {
     public static string ResponseDataToJson(ResponseState _responseState, String _responseMessage)
