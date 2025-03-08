@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using System;
-using Photon.Realtime;
+
 
 
 
@@ -79,12 +79,12 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         else
             instance = this;
 
-        SetupEvent();
+
     }
     void Start()
     {
-        playCanva.SetActive(false);
-
+        // playCanva.SetActive(false);
+        SetupEvent();
         addTeam = new Team(TeamName.Red, teamSetting);
         minusTeam = new Team(TeamName.Blue, teamSetting);
 
@@ -167,11 +167,17 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
+        var a = addTeam.GetAllPlayerToPlayerTeamList();
+        var b = minusTeam.GetAllPlayerToPlayerTeamList();
+        // Debug.Log($"SetP {a}");
+        //  Debug.Log($"SetP2 {b}");
         ExitGames.Client.Photon.Hashtable playerList = new ExitGames.Client.Photon.Hashtable()
         {
-            {"ADD_TEAM_PLAYER_LIST",addTeam.GetAllPlayerToPlayerTeamList()},
-            {"MINUS_TEAM_PLAYER_LIST",minusTeam.GetAllPlayerToPlayerTeamList()}
+            {"ADD_TEAM_PLAYER_LIST",a},
+            {"MINUS_TEAM_PLAYER_LIST",b}
         };
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
 
     }
     [PunRPC]
@@ -268,15 +274,27 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Kick Player
-    private PlayerData GetPlayerFromID(string _playerID)
+    private PlayerData GetPlayerFromID(string _playerID, out string _team)
     {
         var a = addTeam.HavePlayerAndGet(_playerID);
         var b = minusTeam.HavePlayerAndGet(_playerID);
 
 
-        if (a != null) return a;
-        else if (b != null) return b;
-        else return null;
+        if (a != null)
+        {
+            _team = "ADD";
+            return a;
+        }
+        else if (b != null)
+        {
+            _team = "MINUS";
+            return b;
+        }
+        else
+        {
+            _team = "NONE";
+            return null;
+        }
     }
 
 
@@ -284,21 +302,25 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        PlayerData playerData = GetPlayerFromID(_playerID);
+        PlayerData playerData = GetPlayerFromID(_playerID, out var _team);
 
         if (playerData == null) return;
 
+        if (_team == "ADD")
+            addTeam.RemovePlayer(playerData);
+        if (_team == "MINUS")
+            minusTeam.RemovePlayer(playerData);
 
-
+        UpdatePlayerListToRoomPorperties();
         photonView.RPC("Kick", playerData.info.Sender);
 
 
 
     }
-
+    [PunRPC]
     private void Kick()
     {
-
+        RoomManager.instace.LeveRoom();
     }
 
 

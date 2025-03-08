@@ -4,16 +4,28 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
+    public static RoomManager instace;
     [SerializeField] private GameObject connectCanva;
     [SerializeField] private GameObject chooseTeamCanva;
+    [SerializeField] private GameObject play_Canva;
+    [SerializeField] private GameObject leveRoomCanvaTest;
 
-    [SerializeField] private  bool isMaster;
+    [SerializeField] private bool isMaster;
+
+    void Awake()
+    {
+        if (instace != null && instace != this)
+            Destroy(this.gameObject);
+        else
+            instace = this;
+    }
     private void Start()
     {
+        leveRoomCanvaTest.SetActive(false);
         connectCanva.SetActive(true);
         chooseTeamCanva.SetActive(false);
         Debug.Log("Connect...");
-
+        play_Canva.SetActive(true);
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -23,7 +35,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("Connected To Master");
         PhotonNetwork.JoinLobby();
 
-       
+
 
 
     }
@@ -33,13 +45,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
         base.OnConnected();
 
         Debug.Log("mine");
- 
+
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
+        play_Canva.SetActive(false);
         connectCanva.SetActive(false);
         chooseTeamCanva.SetActive(true);
         Debug.Log("We're in a Room");
@@ -64,7 +77,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void LeveRoom()
     {
-
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.Disconnect();
+        leveRoomCanvaTest.SetActive(true);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

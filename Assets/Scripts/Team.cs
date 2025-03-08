@@ -89,7 +89,7 @@ public class Team
         return _data;
     }
 
-    public void RemovePlayer(PlayerData _data, bool player)
+    public void RemovePlayer(PlayerData _data)
     {
         // if (playerDatas.Contains(_data))
         //     playerDatas.Remove(_data);
@@ -130,6 +130,7 @@ public class Team
         foreach (var t in playerDate)
         {
             p.playerName[i] = t.Value.playerName;
+            p.playerID[i] = t.Value.playerID;
             i++;
         }
 

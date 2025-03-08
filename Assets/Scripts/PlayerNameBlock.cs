@@ -34,10 +34,11 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
 
 
 
-        SetEvent();
+        
     }
     void Start()
     {
+        SetEvent();
         ShowListPlayer.instance.AddPlayerBlock(index, this);
         kick_Btn.onClick.AddListener(KickBTN);
     }

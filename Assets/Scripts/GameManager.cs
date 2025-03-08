@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         else
             instance = this;
 
-        SetupEvents();
+     
     }
 
     void Start()
@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         clickCount = 0;
         score = 0;
         UpdateScoreText();
+           SetupEvents();
         gameendCanva.SetActive(false);
     }
 

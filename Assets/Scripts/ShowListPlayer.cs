@@ -1,3 +1,4 @@
+
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using TMPro;
@@ -37,20 +38,29 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     }
     public void UpdatePlayerList()
     {
+        if (addTeam[0] == null) return;
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("ADD_TEAM_PLAYER_LIST"))
         {
+
             PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["ADD_TEAM_PLAYER_LIST"]);
 
-            for (int i = 0; i < addTeam.Length; i++)
+            // foreach (var t in playerTeamList.playerID)
+            // {
+            //     Debug.Log($"ADD{} {t} ");
+            //   
+            // }
+            for (int i = 0; i < playerTeamList.playerID.Length; i++)
             {
+
                 addTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
+
             }
         }
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MINUS_TEAM_PLAYER_LIST"))
         {
             PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["MINUS_TEAM_PLAYER_LIST"]);
-
-            for (int i = 0; i < addTeam.Length; i++)
+          
+            for (int i = 0; i < playerTeamList.playerID.Length; i++)
             {
                 minusTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
             }
