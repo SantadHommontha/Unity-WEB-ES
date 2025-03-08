@@ -8,6 +8,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     public static ShowListPlayer instance;
     [SerializeField] private PlayerNameBlock[] addTeam;
     [SerializeField] private PlayerNameBlock[] minusTeam;
+
     void Awake()
     {
         addTeam = new PlayerNameBlock[5];
@@ -36,27 +37,31 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     }
     public void UpdatePlayerList()
     {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("ADD_TEAM_PLAYER_LIST"))
+        {
+            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["ADD_TEAM_PLAYER_LIST"]);
 
+            for (int i = 0; i < addTeam.Length; i++)
+            {
+                addTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
+            }
+        }
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MINUS_TEAM_PLAYER_LIST"))
+        {
+            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["MINUS_TEAM_PLAYER_LIST"]);
+
+            for (int i = 0; i < addTeam.Length; i++)
+            {
+                minusTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
+            }
+        }
     }
 
 
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        if (propertiesThatChanged.ContainsKey("ADD_TEAM_PLAYER_LIST"))
-        {
-            // var allName = (string)propertiesThatChanged[TeamName.Red.ToString()];
-            // teamName1.text = "Red";
-            // Team1List.text = allName;
-            // Debug.Log($"Red : {allName}");
-            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)propertiesThatChanged["ADD_TEAM_PLAYER_LIST"]);
-
-            for (int i = 0; i < addTeam.Length; i++)
-            {
-                addTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
-            }
-
-        }
+        UpdatePlayerList();
         // if (propertiesThatChanged.ContainsKey(TeamName.Blue.ToString()))
         // {
         //     var allName = (string)propertiesThatChanged[TeamName.Blue.ToString()];
@@ -71,15 +76,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
 
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("ADD_TEAM_PLAYER_LIST"))
-        {
-             PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["ADD_TEAM_PLAYER_LIST"]);
-          
-            for (int i = 0; i < addTeam.Length; i++)
-            {
-                addTeam[i].SetPlayer(playerTeamList.playerName[i], playerTeamList.playerID[i]);
-            }
-        }
+        UpdatePlayerList();
 
     }
 }

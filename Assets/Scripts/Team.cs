@@ -33,10 +33,10 @@ public class Team
     private int maxPlayer = 0;
     [SerializeField] private TeamName teamName;
     public string TeamName => teamName.ToString();
-   // [SerializeField] private List<PlayerData> playerDatas = new List<PlayerData>();
-    public int PlayerCount => platerDatass.Count;
+    // [SerializeField] private List<PlayerData> playerDatas = new List<PlayerData>();
+    public int PlayerCount => playerDate.Count;
     [SerializeField] private int score;
-    private Dictionary<string, PlayerData> platerDatass = new Dictionary<string, PlayerData>();
+    private Dictionary<string, PlayerData> playerDate = new Dictionary<string, PlayerData>();
     public int Score => score;
     public Team(TeamName _teamName, TeamSetting _teamSetting)
     {
@@ -54,7 +54,7 @@ public class Team
 
     public bool TeamFull()
     {
-        return platerDatass.Count >= maxPlayer;
+        return playerDate.Count >= maxPlayer;
     }
 
 
@@ -65,7 +65,7 @@ public class Team
         //     if (t.playerID == playerID) return true;
         // }
 
-        return platerDatass.ContainsKey(_playerID);
+        return playerDate.ContainsKey(_playerID);
     }
 
     public PlayerData HavePlayerAndGet(string _playerID)
@@ -75,9 +75,9 @@ public class Team
         //     if (t.playerID == playerID) return t;
         // }
 
-        if (platerDatass.ContainsKey(_playerID))
+        if (playerDate.ContainsKey(_playerID))
         {
-            return platerDatass[_playerID];
+            return playerDate[_playerID];
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class Team
     public PlayerData AddPlayer(PlayerData _data)
     {
         //    playerDatas.Add(_data);
-        platerDatass.Add(_data.playerID, _data);
+        playerDate.Add(_data.playerID, _data);
         return _data;
     }
 
@@ -94,9 +94,9 @@ public class Team
         // if (playerDatas.Contains(_data))
         //     playerDatas.Remove(_data);
 
-        if (platerDatass.ContainsKey(_data.playerID))
+        if (playerDate.ContainsKey(_data.playerID))
         {
-            platerDatass.Remove(_data.playerID);
+            playerDate.Remove(_data.playerID);
         }
     }
 
@@ -109,7 +109,7 @@ public class Team
         //     allName += $"{t.playerName}" + "\n";
         // }
 
-        foreach (var t in platerDatass)
+        foreach (var t in playerDate)
         {
             allName += $"{t.Value.playerName}" + "\n";
         }
@@ -119,5 +119,20 @@ public class Team
     public void Reset()
     {
         score = 0;
+    }
+    public string GetAllPlayerToPlayerTeamList()
+    {
+        PlayerTeamList p;
+        p.playerName = new string[maxPlayer];
+        p.playerID = new string[maxPlayer];
+        int i = 0;
+
+        foreach (var t in playerDate)
+        {
+            p.playerName[i] = t.Value.playerName;
+            i++;
+        }
+
+        return JsonUtility.ToJson(p);
     }
 }

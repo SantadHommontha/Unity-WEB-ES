@@ -126,6 +126,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
                         addTeam.AddPlayer(data);
                         myTeam = addTeam;
                         Debug.Log($"PLayer Join AddTeam: {data.playerID}");
+                        UpdatePlayerListToRoomPorperties();
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "ADD"));
                     }
                     else
@@ -147,6 +148,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
                         minusTeam.AddPlayer(data);
                         myTeam = minusTeam;
                         Debug.Log($"PLayer Join MinusTeam: {data.playerID}");
+                        UpdatePlayerListToRoomPorperties();
                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "MINUS"));
                     }
                     else
@@ -161,7 +163,17 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
                 break;
         }
     }
+    private void UpdatePlayerListToRoomPorperties()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
 
+        ExitGames.Client.Photon.Hashtable playerList = new ExitGames.Client.Photon.Hashtable()
+        {
+            {"ADD_TEAM_PLAYER_LIST",addTeam.GetAllPlayerToPlayerTeamList()},
+            {"MINUS_TEAM_PLAYER_LIST",minusTeam.GetAllPlayerToPlayerTeamList()}
+        };
+
+    }
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
@@ -187,13 +199,14 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Hashtable playerList = new Hashtable()
-            {
-                {addTeam.TeamName,addTeam.GetAllPlayerListString()},
-                {minusTeam.TeamName,minusTeam.GetAllPlayerListString()}
-            };
+            // Hashtable playerList = new Hashtable()
+            // {
+            //     {addTeam.TeamName,addTeam.GetAllPlayerListString()},
+            //     {minusTeam.TeamName,minusTeam.GetAllPlayerListString()}
+            // };
 
-            PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
+            // PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
+            UpdatePlayerListToRoomPorperties();
         }
     }
 
@@ -285,7 +298,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Kick()
     {
-        
+
     }
 
 
