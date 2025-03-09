@@ -23,9 +23,12 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 
     //--Canva
     [Space]
-    [SerializeField] private GameObject chooseTeamCanva;
-    [SerializeField] private GameObject playCanva;
-
+    //  [SerializeField] private GameObject chooseTeamCanva;
+    //  [SerializeField] private GameObject playCanva;
+    [Header("Event")]
+    [SerializeField] private GameEvent chooseTeamEven;
+    [SerializeField] private GameEvent playerEvent;
+    [Space]
     //---Team
     [SerializeField] private Team addTeam;
     [SerializeField] private Team minusTeam;
@@ -186,8 +189,8 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         var data = JsonUtility.FromJson<SendResponseJoinData>(_reportJson);
         if (data.responseState == ResponseState.Complete.ToString())
         {
-            playCanva.SetActive(true);
-            chooseTeamCanva.SetActive(false);
+         
+            playerEvent.Raise(this, this);
             myTeamType = data.myTeamType;
             AfterJoinTeam();
             GameManager.instance.RequstUpDataGameData();

@@ -28,14 +28,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject resetGameBTN;
     [Space]
     [Header("Canva")]
-    [SerializeField] private GameObject playCanva;
+  //  [SerializeField] private GameObject playCanva;
     [Header("GameEnd")]
-    [SerializeField] private GameObject gameendCanva;
+  //  [SerializeField] private GameObject gameendCanva;
     [SerializeField] private TMP_Text teamWinTxt;
     [SerializeField] private TMP_Text scoreWin;
     [SerializeField] private TMP_Text scoreTeam;
 
-   
+    [Header("Event")]
+    [Space]
+    [SerializeField] private GameEvent gameEndEvent;
 
     //--Var
     [Space]
@@ -92,8 +94,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         clickCount = 0;
         score = 0;
         UpdateScoreText();
-           SetupEvents();
-        gameendCanva.SetActive(false);
+        SetupEvents();
+   //     gameendCanva.SetActive(false);
     }
 
     void Update()
@@ -265,9 +267,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private void GameEnd(string _scoreDataJson)
     {
         EndGameScore endGameScore = JsonUtility.FromJson<EndGameScore>(_scoreDataJson);
-        gameendCanva.SetActive(true);
-        playCanva.SetActive(false);
-
+      
+        gameEndEvent.Raise(this, this);
         if (!PhotonNetwork.IsMasterClient)
         {
             teamWinTxt.text = endGameScore.teamWin;

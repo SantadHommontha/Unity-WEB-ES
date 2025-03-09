@@ -5,10 +5,20 @@ using Photon.Realtime;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager instace;
-    [SerializeField] private GameObject connectCanva;
-    [SerializeField] private GameObject chooseTeamCanva;
-    [SerializeField] private GameObject play_Canva;
-    [SerializeField] private GameObject leveRoomCanvaTest;
+    //  [SerializeField] private GameObject connectCanva;
+    //  [SerializeField] private GameObject chooseTeamCanva;
+    //  [SerializeField] private GameObject play_Canva;
+    // [SerializeField] private GameObject leveRoomCanvaTest;
+    [Header("Event")]
+   
+    [SerializeField] private GameEvent connectEvent;
+    [SerializeField] private GameEvent chooseTeamEvent;
+    [SerializeField] private GameEvent playEvent;
+    [SerializeField] private GameEvent leaveRoomEven;
+    [SerializeField] private GameEvent gameEndEvent;
+
+
+
 
     [SerializeField] private bool isMaster;
 
@@ -21,11 +31,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        leveRoomCanvaTest.SetActive(false);
-        connectCanva.SetActive(true);
-        chooseTeamCanva.SetActive(false);
+       
         Debug.Log("Connect...");
-        play_Canva.SetActive(true);
+        connectEvent.Raise(this, this);
+
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -52,9 +61,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
-        play_Canva.SetActive(false);
-        connectCanva.SetActive(false);
-        chooseTeamCanva.SetActive(true);
+      //  play_Canva.SetActive(false);
+      //  connectCanva.SetActive(false);
+      //  chooseTeamCanva.SetActive(true);
+      chooseTeamEvent.Raise(this, this);
         Debug.Log("We're in a Room");
     }
 
@@ -79,7 +89,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
-        leveRoomCanvaTest.SetActive(true);
+        leaveRoomEven.Raise(this, this);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
