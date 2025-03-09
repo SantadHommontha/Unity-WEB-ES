@@ -16,7 +16,7 @@ public struct EndGameScore
     public int teamWinScore;
     public int gameScore;
 }
-public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
+public class GameManager : MonoBehaviourPunCallbacks
 {
     #region  Variable
     public static GameManager instance;
@@ -38,12 +38,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Event")]
     [Space]
     [SerializeField] private GameEvent gameEndEvent;
-
+    [SerializeField] private GameEvent gameStartEvent;
     //--Var
     [Space]
     [SerializeField] private float timeToUpdateScore = 0.2f;
-    [SerializeField] private bool gameStart = false;
-    private bool GameStart
+   
+  //  [SerializeField] private bool gameStart = false;
+   /* private bool GameStart
     {
         get
         {
@@ -51,14 +52,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         set
         {
-            gameStart = value;
-            GameStratChangeEvent?.Invoke(value);
+       //     gameStart = value;
+        //    GameStratChangeEvent?.Invoke(value);
         }
-    }
+    }*/
     [SerializeField] private float gameTime = 10f;
     [SerializeField] private int scoreForAddTeamWin = 50;
-    private int score = 0;
-    private float gameTimer = 0;
+ //   private int score = 0;
+   // private float gameTimer = 0;
    
     private int clickCount = 0;
     private int allClick = 0;
@@ -70,11 +71,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     //--Event
     public event Action GameEndEvent;
     public event Action<float> GameTimeUpdateEvent;
-    public event Action GameStartEvent;
+  //  public event Action GameStartEvent;
     public event Action GameStopEvent;
     public event Action GameSetupEvent;
-    private Action<bool> GameStratChangeEvent;
+   // private Action<bool> GameStratChangeEvent;
     public event Action ResetGameEvent;
+
+
+    [Header("Value")]
+    [Space]
+    public BoolValue gameStart;
+    public IntValue gameScore;
+    public FloatValue gameTimer;
+    public 
     #endregion
 
 
@@ -92,7 +101,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         clickCount = 0;
-        score = 0;
+        gameScore.Value = 0;
         UpdateScoreText();
         SetupEvents();
    //     gameendCanva.SetActive(false);
@@ -105,16 +114,41 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         UpdateTimeText();
     }
     #endregion
-    
+
 
     #region Setup Event
+
+    private void OnEnable()
+    {
+        gameStart.OnValueChange += UpdateGameStartToRoomProperties;
+    }
+    
+
+
+    private void UpdateGameStartToRoomProperties(bool _data)
+    {
+        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
+        {
+            {"GAME_START",gameStart.Value}
+        };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+    }
+  private void UpdateScoreToRoomProperties(bool _data)
+    {
+        ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
+        {
+            {"GAME_SCORE",gameStart.Value}
+        };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+    }
     private void SetupEvents()
     {
         //Setup in Awake
         //GameStart
-        GameStartEvent += StartTimeCount;
-        GameStartEvent += StartUpdateScore;
-
+      //  GameStartEvent += StartTimeCount;
+      //  GameStartEvent += StartUpdateScore;
+        gameStart.OnValueChange += StartTimeCount;
+        gameStart.OnValueChange += StartUpdateScore;
         GameEndEvent += MasterGameEnd;
 
         ResetGameEvent += Reset;
@@ -127,20 +161,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
      private void Reset()
     {
-       
-        score = 0;
+
+        gameScore.Value = 0;
         clickCount = 0;
         allClick = 0;
-        gameStart = false;
-        gameTimer = 0;
-
+        gameStart.Value = false;
+        gameTimer.Value = 0;
+        coroutineUpdateScore = null;
+        coroutineTimeUpdate = null;
         StopAllCoroutines();
 
        
         ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
             {
-                {"GameStart",GameStart},
-                   {"Score", this.score}
+                {"GameStart",gameStart.Value},
+                   {"Score", this.gameScore.Value}
             };
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
@@ -161,7 +196,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     #region UpdateText
     private void UpdateScoreText()
     {
-        scoreText.text = score.ToString();
+        scoreText.text = gameScore.Value.ToString();
     }
     private void UpdateScoreText(string _score)
     {
@@ -180,15 +215,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Update Game Time
 
-    private void StartTimeCount()
+    private void StartTimeCount(bool _data)
     {
+        if (!_data) return;
+
         if (coroutineTimeUpdate != null) return;
-        gameTimer = gameTime;
+        gameTimer.Value = gameTime;
         coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(gameTime));
     }
     private IEnumerator GameTimerUpdate(float _gameTime)
     {
-        while((gameTimer > 0) && GameStart)
+        while((gameTimer.Value > 0) && gameStart.Value)
         { 
             yield return new WaitForSeconds(1);
            
@@ -202,13 +239,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Game Time will Update to other Player by OnPhotonSerializeView
         if (PhotonNetwork.IsMasterClient)
         {
-            gameTimer--;
-            gameTimer = Mathf.Clamp(gameTimer, 0, gameTime);
+            gameTimer.Value--;
+            gameTimer.Value = Mathf.Clamp(gameTimer.Value, 0, gameTime);
                       
-            if (gameTimer <= 0)
+            if (gameTimer.Value <= 0)
             {
-                gameTimer = 0;
-                GameStart = false;
+                gameTimer.Value = 0;
+                gameStart.Value = false;
 
                 GameStopEvent?.Invoke();
 
@@ -217,13 +254,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                GameTimeUpdateEvent?.Invoke(gameTimer);
+                GameTimeUpdateEvent?.Invoke(gameTimer.Value);
             }
         }
        else
         {
-            gameTimer = _time;
-            GameTimeUpdateEvent?.Invoke(gameTimer);
+            gameTimer.Value = _time;
+            GameTimeUpdateEvent?.Invoke(gameTimer.Value);
         }
         
     }
@@ -236,10 +273,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         EndGameScore endGameScore = new EndGameScore()
         {
-            gameScore = score
+            gameScore = gameScore.Value
         };
 
-        scoreWin.text = $"Score: {score.ToString()}";
+        scoreWin.text = $"Score: {gameScore.Value.ToString()}";
         if (addScore > scoreForAddTeamWin)
         {
             teamWinTxt.text = "ADD Team";
@@ -283,8 +320,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
     #region UpdateScore
-    private void StartUpdateScore()
+    private void StartUpdateScore(bool _data)
     {
+        if (!_data) return;
         if (coroutineUpdateScore != null) return;
         coroutineUpdateScore = StartCoroutine(IEUpdaScore());
        
@@ -341,20 +379,20 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             Debug.Log($"Receive:{_jsonData}");
             if (data.scoreType == "ADD")
             {
-                this.score += data.score;
+                this.gameScore.Value += data.score;
                 TeamManager.instance.AddTeam.SetScore(data.score);
             }
             else if (data.scoreType == "MINUS")
             {
-                this.score -= data.score;
-                this.score = Mathf.Clamp(this.score, 0, int.MaxValue);
+                this.gameScore.Value -= data.score;
+                this.gameScore.Value = Mathf.Clamp(this.gameScore.Value, 0, int.MaxValue);
                 TeamManager.instance.MinusTeam.SetScore(data.score);
             }
             
             photonView.RPC("ReceviceResponse", _info.Sender, Utility.ResponseDataToJson(ResponseState.Complete, "Update You Score To Master"));
             ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
             {
-                {"Score", this.score}
+                {"Score", this.gameScore.Value}
             };
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
         }
@@ -391,7 +429,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             GameUpdate gameUpdate = new GameUpdate()
             {
                 gameStart = this.gameStart,
-                currentScore = this.score
+                currentScore = this.gameScore.Value
             };
 
             var jsonData = JsonUtility.ToJson(gameUpdate);
@@ -405,8 +443,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient) return;
         GameUpdate gameUpdate = JsonUtility.FromJson<GameUpdate>(_jsonData);
-        gameStart = gameUpdate.gameStart;
-        score = gameUpdate.currentScore;
+        gameStart.Value = gameUpdate.gameStart;
+        gameScore.Value = gameUpdate.currentScore;
     }
 
 
@@ -420,12 +458,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         ResetGameEvent?.Invoke();
         if (PhotonNetwork.IsMasterClient)
         {
-            GameStart = true;
-            GameStartEvent?.Invoke();
+           gameStart.Value = true;
+         //   GameStartEvent?.Invoke();
            
             ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
             {
-                {"GameStart",GameStart}
+                {"GameStart",gameStart.Value}
             };
 
             PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
@@ -436,7 +474,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     //--Call in Button UI
     public void ClickBTN()
     {
-        if (!GameStart) return;
+        if (!gameStart.Value) return;
         clickCount++;
         allClick++;
     }
@@ -469,35 +507,38 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
-        if (propertiesThatChanged.ContainsKey("Score"))
+        if (propertiesThatChanged.ContainsKey("GAME_SCORE"))
         {
-            int score = (int)propertiesThatChanged["Score"];
-            this.score = score;
+            int score = (int)propertiesThatChanged["GAME_SCORE"];
+            this.gameScore.Value = score;
             UpdateScoreText(score.ToString());
         }
 
-        if (propertiesThatChanged.ContainsKey("GameStart"))
+        if (propertiesThatChanged.ContainsKey("GAME_START"))
         {
-            GameStart = (bool)propertiesThatChanged["GameStart"];
-            GameStartEvent?.Invoke();
+            gameStart.Value = (bool)propertiesThatChanged["GAME_START"];
+            
+
+
+         //   GameStartEvent?.Invoke();
         }
 
       
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+  /*  public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
        if(stream.IsWriting)
         {
             stream.SendNext(gameTimer);
-            stream.SendNext(GameStart);
+            stream.SendNext(gameStart.Value);
         }
        else
         {
             UpdateGameTime((float)stream.ReceiveNext());
-            GameStart = (bool)stream.ReceiveNext();
+            gameStart.Value = (bool)stream.ReceiveNext();
         }
-    }
+    }*/
     #endregion
 
    

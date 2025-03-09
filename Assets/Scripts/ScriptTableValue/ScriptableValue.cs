@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-
+[System.Serializable]
 public abstract class ScriptableValue<T> : ScriptableObject
 {
-    [SerializeField] private T value;
+    [SerializeField] protected T value;
     public Action<T> OnValueChange;
     public T Value
     {

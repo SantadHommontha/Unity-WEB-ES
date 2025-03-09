@@ -5436,10 +5436,11 @@ MonoBehaviour:
   scoreWin: {fileID: 1172789151}
   scoreTeam: {fileID: 1355128523}
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
+  gameStartEvent: {fileID: 0}
   timeToUpdateScore: 0.2
-  gameStart: 0
   gameTime: 10
   scoreForAddTeamWin: 50
+  gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
 --- !u!114 &1051956783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7939,6 +7940,7 @@ GameObject:
   - component: {fileID: 1736650177}
   - component: {fileID: 1736650175}
   - component: {fileID: 1736650178}
+  - component: {fileID: 1736650179}
   m_Layer: 0
   m_Name: TeamManager
   m_TagString: Untagged
@@ -8023,6 +8025,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addTeam: []
   minusTeam: []
+--- !u!114 &1736650179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736650174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea5b247f27a3e047869a5b91126ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  intValue: {fileID: 0}
+  useLocalValue: 0
+  localValue: 0
 --- !u!1 &1792370293
 GameObject:
   m_ObjectHideFlags: 0
