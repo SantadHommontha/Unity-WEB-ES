@@ -39,10 +39,10 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     public void UpdatePlayerList()
     {
         if (addTeam[0] == null) return;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("ADD_TEAM_PLAYER_LIST"))
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
 
-            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["ADD_TEAM_PLAYER_LIST"]);
+            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST]);
 
             // foreach (var t in playerTeamList.playerID)
             // {
@@ -56,9 +56,9 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
             }
         }
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MINUS_TEAM_PLAYER_LIST"))
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
         {
-            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties["MINUS_TEAM_PLAYER_LIST"]);
+            PlayerTeamList playerTeamList = JsonUtility.FromJson<PlayerTeamList>((string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.MINUS_TEAM_PLAYER_LIST]);
           
             for (int i = 0; i < playerTeamList.playerID.Length; i++)
             {

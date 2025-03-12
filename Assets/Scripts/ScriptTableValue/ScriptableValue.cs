@@ -11,7 +11,7 @@ public abstract class ScriptableValue<T> : ScriptableObject
         get { return value; }
         set { 
             this.value = value; 
-            OnValueChange(value);
+            OnValueChange?.Invoke(value);
         }
     }
 
