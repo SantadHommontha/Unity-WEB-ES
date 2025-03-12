@@ -5,9 +5,13 @@ using UnityEngine;
 public class BoolValue : ScriptableValue<bool>
 {
   //  public bool defualtValue;
-    private void OnDisable()
-    {
-        value = false;
-        OnValueChange = null;
-    }
+  private void OnDisable()
+  {
+    Clear();
+  }
+  public void Clear()
+  {
+    value = false;
+    OnValueChange = null;
+  }
 }

@@ -7,6 +7,15 @@ public enum ResponseState
     Fail,
     Complete
 }
+public struct PlayerDataForUI
+{
+    public int index;
+    public string playerName;
+    public string playerID;
+  
+}
+
+
 
 public struct ResponsetData
 {

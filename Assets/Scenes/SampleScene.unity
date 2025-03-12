@@ -688,6 +688,10 @@ PrefabInstance:
       propertyPath: index
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -818,6 +822,10 @@ PrefabInstance:
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2401,6 +2409,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1127628604}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 836129337}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1388602593}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
 --- !u!1 &450206909
 GameObject:
@@ -3071,6 +3115,10 @@ PrefabInstance:
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3343,6 +3391,10 @@ PrefabInstance:
       propertyPath: index
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3719,6 +3771,10 @@ PrefabInstance:
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5073,6 +5129,10 @@ PrefabInstance:
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5975,6 +6035,10 @@ PrefabInstance:
       propertyPath: index
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6101,6 +6165,10 @@ PrefabInstance:
       propertyPath: index
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6219,6 +6287,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 886253944}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1127628604}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -6715,6 +6795,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 886253944}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1127628604}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -7771,6 +7863,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1127628604}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
 --- !u!1 &1587574593
 GameObject:
@@ -8016,7 +8120,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1127628604}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: ed2f2c8df24d6e540a7ccd4bc61353a3, type: 2}
 --- !u!1 &1679121459
@@ -8372,6 +8488,10 @@ PrefabInstance:
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8427,6 +8547,18 @@ MonoBehaviour:
   minusTeam:
     teamName: 0
     score: 0
+  addTeamUI:
+  - {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
+  - {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
+  - {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
+  - {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
+  - {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
+  minusTeamUI:
+  - {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
+  - {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
+  - {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
+  - {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
+  - {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
 --- !u!4 &1736650176
 Transform:
   m_ObjectHideFlags: 0
@@ -8477,8 +8609,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082a949320d64974b9051cb86661f114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addTeam: []
-  minusTeam: []
+  addTeam:
+  - {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
+  - {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
+  - {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
+  - {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
+  - {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
+  minusTeam:
+  - {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
+  - {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
+  - {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
+  - {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
+  - {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
 --- !u!114 &1736650179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9199,6 +9341,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 36
       objectReference: {fileID: 0}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: stringValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

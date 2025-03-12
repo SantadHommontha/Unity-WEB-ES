@@ -5,13 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Values/StringValue")]
 public class StringValue : ScriptableValue<String>
 {
-
-  //  public string defualtValue;
-  /*  private void OnEnable()
-    {
-        value = defualtValue;
-    }*/
     private void OnDisable()
+    {
+        Clear();
+    }
+    public void Clear()
     {
         value = null;
         OnValueChange = null;

@@ -41,6 +41,12 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     public Team MinusTeam => minusTeam;
     //Var
     public int AllPLayerCount => addTeam.PlayerCount + minusTeam.PlayerCount;
+
+
+    [SerializeField] private StringValue[] addTeamUI;
+    [SerializeField] private StringValue[] minusTeamUI;
+
+
     #endregion
 
     #region  GameEvent
@@ -94,8 +100,29 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         btn1.onClick.AddListener(() => RequestJoinTeam(TeamName.Red));
         btn2.onClick.AddListener(() => RequestJoinTeam(TeamName.Blue));
 
-        addTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
-        minusTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
+        //    addTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
+        //   minusTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
+
+        addTeam.OnPlayerTeamChange += UpdatePlayerAddTeam;
+        minusTeam.OnPlayerTeamChange += UpdatePlayerMinusTeam;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            foreach (var value in addTeam.GetAllPlayerData())
+            {
+                Debug.Log("ADD TEAM: " + value.playerName);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            foreach (var value in minusTeam.GetAllPlayerData())
+            {
+                Debug.Log("MINUS TEAM: " + value.playerName);
+            }
+        }
     }
     #endregion
 
@@ -200,6 +227,39 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
 
     }
+
+    public void UpdatePlayerAddTeam(PlayerData[] _playerDatas)
+    {
+        foreach (var t in addTeamUI) t.Clear();
+
+        for (int i = 0; i < _playerDatas.Length; i++)
+        {
+            PlayerDataForUI playerDataForUI = new PlayerDataForUI()
+            {
+                playerName = _playerDatas[i].playerName,
+                playerID = _playerDatas[i].playerID
+            };
+
+            addTeamUI[i].Value = JsonUtility.ToJson(playerDataForUI);
+        }
+    }
+
+    public void UpdatePlayerMinusTeam(PlayerData[] _playerDatas)
+    {
+         foreach (var t in minusTeamUI) t.Clear();
+        for (int i = 0; i < _playerDatas.Length; i++)
+        {
+            PlayerDataForUI playerDataForUI = new PlayerDataForUI()
+            {
+                playerName = _playerDatas[i].playerName,
+                playerID = _playerDatas[i].playerID
+            };
+            minusTeamUI[i].Clear();
+            minusTeamUI[i].Value = JsonUtility.ToJson(playerDataForUI);
+        }
+    }
+
+
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
