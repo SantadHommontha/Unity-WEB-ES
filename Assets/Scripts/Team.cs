@@ -6,6 +6,7 @@ using System;
 using Photon.Pun;
 using UnityEngine.InputSystem.Utilities;
 using Unity.VisualScripting;
+using System.Linq;
 
 public enum TeamName
 {
@@ -33,11 +34,11 @@ public class Team
     private int maxPlayer = 0;
     [SerializeField] private TeamName teamName;
     public string TeamName => teamName.ToString();
-    // [SerializeField] private List<PlayerData> playerDatas = new List<PlayerData>();
-    public int PlayerCount => playerDate.Count;
+    public int PlayerCount => playerdata.Count;
     [SerializeField] private int score;
-    private Dictionary<string, PlayerData> playerDate = new Dictionary<string, PlayerData>();
+    private Dictionary<string, PlayerData> playerdata = new Dictionary<string, PlayerData>();
     public int Score => score;
+    public Action<PlayerData[]> OnPlayerTeamChange;
     public Team(TeamName _teamName, TeamSetting _teamSetting)
     {
         teamName = _teamName;
@@ -51,75 +52,63 @@ public class Team
     {
         score += _score;
     }
-
+    public void Reset()
+    {
+        score = 0;
+    }
     public bool TeamFull()
     {
-        return playerDate.Count >= maxPlayer;
+        return playerdata.Count >= maxPlayer;
     }
 
-
+    #region  HavePlayer
     public bool HavePlayer(string _playerID)
     {
-        // foreach (var t in playerDatas)
-        // {
-        //     if (t.playerID == playerID) return true;
-        // }
-
-        return playerDate.ContainsKey(_playerID);
+        return playerdata.ContainsKey(_playerID);
     }
 
     public PlayerData HavePlayerAndGet(string _playerID)
     {
-        // foreach (var t in playerDatas)
-        // {
-        //     if (t.playerID == playerID) return t;
-        // }
-
-        if (playerDate.ContainsKey(_playerID))
+        if (playerdata.ContainsKey(_playerID))
         {
-            return playerDate[_playerID];
+            return playerdata[_playerID];
         }
         return null;
     }
+    #endregion
 
+    #region  Add Player And Remove Player
     public PlayerData AddPlayer(PlayerData _data)
     {
-        //    playerDatas.Add(_data);
-        playerDate.Add(_data.playerID, _data);
+        playerdata.Add(_data.playerID, _data);
+        OnPlayerTeamChange?.Invoke(GetAllPlayerData());
         return _data;
     }
 
     public void RemovePlayer(PlayerData _data)
     {
-        // if (playerDatas.Contains(_data))
-        //     playerDatas.Remove(_data);
-
-        if (playerDate.ContainsKey(_data.playerID))
+        if (playerdata.ContainsKey(_data.playerID))
         {
-            playerDate.Remove(_data.playerID);
+            playerdata.Remove(_data.playerID);
+            OnPlayerTeamChange?.Invoke(GetAllPlayerData());
         }
     }
+    #endregion
 
+
+
+    #region Get Player Player Data
     public String GetAllPlayerListString()
     {
         string allName = "";
-
-        // foreach (var t in playerDatas)
-        // {
-        //     allName += $"{t.playerName}" + "\n";
-        // }
-
-        foreach (var t in playerDate)
+        foreach (var t in playerdata)
         {
             allName += $"{t.Value.playerName}" + "\n";
         }
         return allName;
     }
 
-    public void Reset()
-    {
-        score = 0;
-    }
+
     public string GetAllPlayerToPlayerTeamList()
     {
         PlayerTeamList p;
@@ -127,7 +116,7 @@ public class Team
         p.playerID = new string[maxPlayer];
         int i = 0;
 
-        foreach (var t in playerDate)
+        foreach (var t in playerdata)
         {
             p.playerName[i] = t.Value.playerName;
             p.playerID[i] = t.Value.playerID;
@@ -136,4 +125,18 @@ public class Team
 
         return JsonUtility.ToJson(p);
     }
+
+    public PlayerData[] GetAllPlayerData()
+    {
+        PlayerData[] playerDatas = new PlayerData[playerdata.Count];
+        int num = 0;
+        foreach (var t in playerdata)
+        {
+            playerDatas[num] = t.Value;
+            num++;
+        }
+        return playerDatas;
+
+    }
+    #endregion
 }

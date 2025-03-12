@@ -10,6 +10,9 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
     [SerializeField] private int index = 0;
     public string teamType = "NOPE";
     private string playerID = "NOPE";
+
+    [Header("Value")]
+    [SerializeField] private StringValue stringValue;
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -34,7 +37,7 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
 
 
 
-        
+
     }
     void Start()
     {

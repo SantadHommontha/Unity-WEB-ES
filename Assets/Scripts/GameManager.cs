@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Space]
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent gameStartEvent;
-    
+
     //--Var
     [Space]
     [SerializeField] private float timeToUpdateScore = 0.2f;
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region Setup Event
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         gameStart.OnValueChange += UpdateGameStartToRoomProperties;
         Debug.Log("Enable");
