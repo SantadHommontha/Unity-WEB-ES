@@ -1,12 +1,9 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Photon.Realtime;
 using System;
 using Photon.Pun;
-using UnityEngine.InputSystem.Utilities;
-using Unity.VisualScripting;
-using System.Linq;
+
 
 public enum TeamName
 {
@@ -20,6 +17,7 @@ public class PlayerData
     public string playerID;
     public TeamName teamName;
     public PhotonMessageInfo info;
+    public int clickCount;
 }
 
 

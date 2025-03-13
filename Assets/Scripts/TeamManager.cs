@@ -330,6 +330,16 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
 
+    #region PullDataForRoomPropertise
+    public void PullData()
+    {
+
+    }
+
+    #endregion
+
+
+
     #region  Photon Function
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -341,7 +351,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        if (PhotonNetwork.IsMasterClient) return;
+     /*   if (PhotonNetwork.IsMasterClient) return;
         if (propertiesThatChanged.ContainsKey("AddScore"))
         {
             addTeam.SetScore((int)propertiesThatChanged["AddScore"]);
@@ -349,7 +359,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         if (propertiesThatChanged.ContainsKey("MinusScore"))
         {
             minusTeam.SetScore((int)propertiesThatChanged["MinusScore"]);
-        }
+        }*/
     }
     #endregion
 
