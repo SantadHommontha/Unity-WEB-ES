@@ -1648,6 +1648,7 @@ GameObject:
   - component: {fileID: 315797639}
   - component: {fileID: 315797641}
   - component: {fileID: 315797640}
+  - component: {fileID: 315797642}
   m_Layer: 5
   m_Name: ErrorReport_text
   m_TagString: Untagged
@@ -1773,6 +1774,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315797638}
   m_CullTransparentMesh: 1
+--- !u!114 &315797642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315797638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e982ad837fd14cc4d872066ce4dde403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 315797640}
+  stringValue: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
+  intValue: {fileID: 0}
+  floatValue: {fileID: 0}
+  boolValue: {fileID: 0}
+  valueType: 0
+  startText: 
+  endText: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -5448,7 +5469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.758, y: 0.91870844}
   m_AnchorMax: {x: 0.9702964, y: 0.96500003}
-  m_AnchoredPosition: {x: -0.8294678, y: 0.17999268}
+  m_AnchoredPosition: {x: -0.8294678, y: 0.17993164}
   m_SizeDelta: {x: -1.6589012, y: 4.3085003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &965726279
@@ -5849,6 +5870,7 @@ GameObject:
   - component: {fileID: 1051956781}
   - component: {fileID: 1051956783}
   - component: {fileID: 1051956782}
+  - component: {fileID: 1051956784}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5892,6 +5914,7 @@ MonoBehaviour:
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
   gameStartEvent: {fileID: 11400000, guid: 5c557ff27f29e9b4ea98810b90a6809d, type: 2}
   timeToUpdateScore: 0.2
+  currentLickCount: {fileID: 1051956784}
   gameTime: 10
   scoreForAddTeamWin: 50
   gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
@@ -5919,6 +5942,19 @@ MonoBehaviour:
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1051956784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051956780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6531d1ad9fd844b83f49e4994fb1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCount: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
 --- !u!1001 &1083585442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6386,7 +6422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1134546079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7679,7 +7715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1501601471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8219,9 +8255,9 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1051956782}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ClickBTN
+      - m_Target: {fileID: 1051956784}
+        m_TargetAssemblyTypeName: ClickCount, Assembly-CSharp
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8514,7 +8550,6 @@ GameObject:
   - component: {fileID: 1736650177}
   - component: {fileID: 1736650175}
   - component: {fileID: 1736650178}
-  - component: {fileID: 1736650179}
   m_Layer: 0
   m_Name: TeamManager
   m_TagString: Untagged
@@ -8534,19 +8569,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713b1d0e4820504449eec776c30edf56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTeamCount: 3
   teamSetting: {fileID: 11400000, guid: 7666cdef52d023a48858f3ee3bf77c5f, type: 2}
   enterNameInput: {fileID: 216920431}
   btn1: {fileID: 336122620}
   btn2: {fileID: 525379616}
   reportError: {fileID: 315797640}
   chooseTeamEven: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
-  playerEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
-  addTeam:
-    teamName: 0
-    score: 0
-  minusTeam:
-    teamName: 0
-    score: 0
+  playEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
   addTeamUI:
   - {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
   - {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
@@ -8559,6 +8589,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
   - {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
   - {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
+  reSpones: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
 --- !u!4 &1736650176
 Transform:
   m_ObjectHideFlags: 0
@@ -8621,22 +8652,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
   - {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
   - {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
---- !u!114 &1736650179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736650174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea5b247f27a3e047869a5b91126ec5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: 
-  intValue: {fileID: 0}
-  useLocalValue: 0
-  localValue: 0
 --- !u!1 &1792370293
 GameObject:
   m_ObjectHideFlags: 0
