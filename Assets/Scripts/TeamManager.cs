@@ -3,8 +3,6 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
-using System;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
@@ -316,28 +314,35 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     // Update When Player List In Team Change
     private void UpdatePlayerListToRoomPorperties()
     {
-        Debug.Log("ffffffff");
+     
         if (!PhotonNetwork.IsMasterClient) return;
-        Debug.Log("11111");
+       
         List<PlayerData> a = new List<PlayerData>();
         List<PlayerData> m = new List<PlayerData>();
-        Debug.Log("22222");
+      
         foreach (var v in team.GetAllPlayer())
         {
-            Debug.Log("33333");
-            if (v.teamName == ValueName.ADD_TEAM) a.Add(v); 
-
-            else if (v.teamName == ValueName.MINUS_TEAM) m.Add(v);
-
+            Debug.Log("11111");
+            if (v.teamName == ValueName.ADD_TEAM)
+            {
+                a.Add(v);
+                Debug.Log("2222");
+            }
+           
+           else if (v.teamName == ValueName.MINUS_TEAM)
+            {
+                m.Add(v);
+                Debug.Log("33333");
+            }
         }
-        Debug.Log("4444");
-        ExitGames.Client.Photon.Hashtable playerList = new ExitGames.Client.Photon.Hashtable()
+        
+        ExitGames.Client.Photon.Hashtable playerListSS = new ExitGames.Client.Photon.Hashtable()
         {
-            {ValueName.ADD_TEAM_PLAYER_LIST,a.ToArray()},
+            {ValueName.ADD_TEAM_PLAYER_LIST,125},
             {ValueName.MINUS_TEAM_PLAYER_LIST,m.ToArray()}
         };
-        Debug.Log("55555");
-      //  PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
+     
+        PhotonNetwork.CurrentRoom.SetCustomProperties(playerListSS);
         playEvent.Raise(this, this);
     }
 
@@ -454,6 +459,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        Debug.Log("dEBUG.LOG");
      /*   if (PhotonNetwork.IsMasterClient) return;
         if (propertiesThatChanged.ContainsKey("AddScore"))
         {

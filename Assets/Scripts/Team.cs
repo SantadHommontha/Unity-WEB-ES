@@ -11,7 +11,7 @@ public struct ChangePlayerData
     public int clickCount;
 }
 [System.Serializable]
-public struct PlayerData
+public class PlayerData
 {
     public PhotonMessageInfo info;
     public string playerID;
