@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b35934d41945748b97261ce0017020, type: 3}
-  m_Name: Leave
+  m_Script: {fileID: 11500000, guid: 5410e0f8a875fff40ba8c054a4401f5e, type: 3}
+  m_Name: All_Click
   m_EditorClassIdentifier: 
-  listeners: []
+  value: 0

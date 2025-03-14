@@ -9,6 +9,7 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text playerName_txt;
     private string playerID = "NOPE";
 
+    [SerializeField] private GameEvent KickEvent;
     [Header("Value")]
     [SerializeField] private StringValue stringValue;
     public override void OnJoinedRoom()
@@ -19,7 +20,7 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
 
     private void SetEvent()
     {
-        GameManager.instance.ResetGameEvent += () => kick_Btn.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+        //  GameManager.instance.ResetGameEvent += () => kick_Btn.gameObject.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     void Start()
@@ -30,7 +31,8 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
     private void KickBTN()
     {
         if (playerID == "NOPE") return;
-        TeamManager.instance.KickPlayer(playerID);
+        KickEvent.Raise(this, playerID);
+      //  TeamManager.instance.KickPlayer(playerID);
     }
 
     private void Clear()
@@ -53,9 +55,5 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
             playerName_txt.text = data[0];
             playerID = data[1];
         }
-
-
-
-
     }
 }

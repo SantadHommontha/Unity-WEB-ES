@@ -25,6 +25,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent chooseTeamEven;
     [SerializeField] private GameEvent playEvent;
     [SerializeField] private GameEvent UpdatePlayerList;
+
     [Space]
 
     private Team team = new Team();
@@ -50,7 +51,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     {
         GameManager.instance.GameStopEvent += GameEnd;
 
-        GameManager.instance.ResetGameEvent += Reset;
+        //   GameManager.instance.ResetGameEvent += Reset;
 
         team.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
     }
@@ -120,18 +121,14 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
-
-        var add_team = ValueName.ADD_TEAM;
-        var minus_team = ValueName.MINUS_TEAM;
-
-        if (data.teamName == add_team)
+        if (data.teamName == ValueName.ADD_TEAM)
         {
 
             if ((team.AddTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
             {
                 // add Complete
                 Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
-                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.ADD_TEAM));
 
             }
             else
@@ -140,7 +137,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
                 photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
             }
         }
-        else if (data.teamName == minus_team)
+        else if (data.teamName == ValueName.MINUS_TEAM)
         {
 
             if ((team.MinusTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
@@ -273,7 +270,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     // Fetch data from a room when joining a room without being the master
     public void PullData()
     {
-     
+
         List<PlayerData> pd = new List<PlayerData>();
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
@@ -301,7 +298,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
                 });
             }
         }
-       
+
         team.SetPlayerData(pd.ToArray());
     }
 
@@ -326,6 +323,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     #region Kick Player
 
+
     private void FindPlayerForKick(string _playerID)
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -344,11 +342,25 @@ public class TeamManager : MonoBehaviourPunCallbacks
     }
 
 
-    public void KickPlayer(string _playerID)
+    public void KickPlayer(Component _sender, object _playerID)
+    {
+         Debug.Log("KickPlayer");
+        FindPlayerForKick((string)_playerID);
+    }
+
+    public void LeaveGame(Component _sender, object _playerID)
+    {
+        Debug.Log("LeaveGame");
+        //   photonView.RPC("ReviesLeaveGame", RpcTarget.MasterClient, (string)_playerID);
+    }
+    /*
+    [PunRPC]
+    private void ReviesLeaveGame(string _playerID)
     {
         FindPlayerForKick(_playerID);
     }
 
+*/
 
     public int GetAddTeamScore()
     {

@@ -3,20 +3,23 @@ using UnityEngine;
 public class ClickCount : MonoBehaviour
 {
     //private int currentCount = 0;
-    private int allClick = 0;
+    // private int allClick = 0;
 
     [SerializeField] private IntValue currentCount;
+    [SerializeField] private IntValue allClick;
+    [SerializeField] private BoolValue gamestart;
     public int CurrentClickCount => currentCount.Value;
 
-   public void Click()
+    public void Click()
     {
+        if (!gamestart.Value) return;
         currentCount.Value++;
-        allClick++;
+        allClick.Value++;
     }
     public void SetCurrentClick(int _click) => currentCount.Value = _click;
     public void Reset()
     {
         currentCount.Value = 0;
-        allClick= 0;
+        allClick.Value = 0;
     }
 }
