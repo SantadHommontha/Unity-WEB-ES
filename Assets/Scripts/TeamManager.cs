@@ -25,6 +25,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent chooseTeamEven;
     [SerializeField] private GameEvent playEvent;
     [SerializeField] private GameEvent UpdatePlayerList;
+    [SerializeField] private GameEvent kickEvent;
 
     [Space]
 
@@ -338,29 +339,32 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void Kick()
     {
-        RoomManager.instace.LeveRoom();
+        RoomManager.instace.KICKROOM();
+
     }
 
 
     public void KickPlayer(Component _sender, object _playerID)
     {
-         Debug.Log("KickPlayer");
+
         FindPlayerForKick((string)_playerID);
     }
 
     public void LeaveGame(Component _sender, object _playerID)
     {
-        Debug.Log("LeaveGame");
-        //   photonView.RPC("ReviesLeaveGame", RpcTarget.MasterClient, (string)_playerID);
+        Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
+        if (_playerID is int && (int)_playerID == -999) return;
+        photonView.RPC("ReviesLeaveGame", RpcTarget.MasterClient, (string)_playerID);
+
     }
-    /*
+
     [PunRPC]
     private void ReviesLeaveGame(string _playerID)
     {
         FindPlayerForKick(_playerID);
     }
 
-*/
+
 
     public int GetAddTeamScore()
     {

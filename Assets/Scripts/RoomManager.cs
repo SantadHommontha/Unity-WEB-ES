@@ -15,7 +15,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent connectEvent;
     [SerializeField] private GameEvent chooseTeamEvent;
     [SerializeField] private GameEvent playEvent;
-    [SerializeField] private GameEvent leaveRoomEven;
+  //  [SerializeField] private GameEvent leaveRoomEven;
+  //  [SerializeField] private GameEvent KickEvent;
     [SerializeField] private GameEvent gameEndEvent;
 
 
@@ -86,11 +87,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // }
 
 
-    public void LeveRoom()
+    public void KICKROOM()
     {
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
-        leaveRoomEven.Raise(this, this);
         StartCoroutine(AfterLeveaServer());
     }
 
