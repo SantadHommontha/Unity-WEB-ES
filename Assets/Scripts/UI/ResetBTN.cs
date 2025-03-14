@@ -2,18 +2,18 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResetBTN : MonoBehaviourPunCallbacks
+public class ResetBTN : MonoBehaviour
 {
     [SerializeField] private Button startBtn;
     [SerializeField] private GameEvent reSetGameEvent;
 
-    public override void OnJoinedRoom()
+    [SerializeField] private BoolValue finishConnect;
+    [SerializeField] private BoolValue isMaster;
+    void OnEnable()
     {
-        base.OnJoinedRoom();
-
-        startBtn.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+        if (finishConnect.Value)
+            startBtn.gameObject.SetActive(isMaster.Value);
     }
-
     public void Click()
     {
         reSetGameEvent.Raise(this, -999);

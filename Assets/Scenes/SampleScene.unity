@@ -1979,7 +1979,6 @@ MonoBehaviour:
   intValue: {fileID: 0}
   floatValue: {fileID: 0}
   boolValue: {fileID: 0}
-  valueType: 0
   startText: 
   endText: 
 --- !u!1 &330585543
@@ -2748,7 +2747,9 @@ MonoBehaviour:
   chooseTeamEvent: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
   playEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
-  isMaster: 0
+  finishConnectToServerEvent: {fileID: 11400000, guid: ea763c0f91f81724c95fd079b1012df3, type: 2}
+  isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+  finishConnectToServer: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!4 &450206911
 Transform:
   m_ObjectHideFlags: 0
@@ -6255,6 +6256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startBtn: {fileID: 905159208}
   reSetGameEvent: {fileID: 11400000, guid: 763482f75484f094da6c9bfd4b44980c, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
+  isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
 --- !u!1 &965726277
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,6 +6406,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startBtn: {fileID: 965726279}
   startEvent: {fileID: 11400000, guid: 5c557ff27f29e9b4ea98810b90a6809d, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
+  isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
 --- !u!1 &967317895
 GameObject:
   m_ObjectHideFlags: 0
@@ -8401,7 +8406,6 @@ MonoBehaviour:
   intValue: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
   floatValue: {fileID: 0}
   boolValue: {fileID: 0}
-  valueType: 1
   startText: 'MineMine '
   endText: ' EIEI'
 --- !u!1 &1417949124
@@ -9323,7 +9327,6 @@ MonoBehaviour:
   intValue: {fileID: 0}
   floatValue: {fileID: 0}
   boolValue: {fileID: 0}
-  valueType: 0
   startText: P1
   endText: 
 --- !u!114 &1505098243
@@ -10310,7 +10313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTeamCount: 3
-  teamSetting: {fileID: 11400000, guid: 7666cdef52d023a48858f3ee3bf77c5f, type: 2}
   enterNameInput: {fileID: 216920431}
   btn1: {fileID: 336122620}
   btn2: {fileID: 525379616}

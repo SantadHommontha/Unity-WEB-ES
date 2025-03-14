@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent gameStartEvent;
     [SerializeField] private GameEvent scoreUpdateEvent;
+    
     [SerializeField] private GameEvent timerUpdateEvent;
 
 

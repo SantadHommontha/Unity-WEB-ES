@@ -13,6 +13,11 @@ public class TeamWin : TextUI
     {
         text.text = _text;
     }
+    void OnEnable()
+    {
+        UpdateText();
+        Debug.Log("OnEnable");
+    }
     public void UpdateText()
     {
         text.text = stringValue.Value;

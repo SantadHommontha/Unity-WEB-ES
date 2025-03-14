@@ -11,7 +11,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public static TeamManager instance;
     [SerializeField] private int maxTeamCount = 3;
     [Header("Team Setting")]
-    [SerializeField] private TeamSetting teamSetting;
+
     //--UI
     [Space]
     [SerializeField] private TMP_InputField enterNameInput;
@@ -92,7 +92,13 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            foreach (var v in team.GetAllPlayer())
+            {
+                Debug.Log("V " + v.playerName);
+            }
+        }
     }
     #endregion
 

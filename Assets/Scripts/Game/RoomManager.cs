@@ -15,14 +15,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent connectEvent;
     [SerializeField] private GameEvent chooseTeamEvent;
     [SerializeField] private GameEvent playEvent;
-  //  [SerializeField] private GameEvent leaveRoomEven;
-  //  [SerializeField] private GameEvent KickEvent;
+    //  [SerializeField] private GameEvent leaveRoomEven;
+    //  [SerializeField] private GameEvent KickEvent;
     [SerializeField] private GameEvent gameEndEvent;
+    [SerializeField] private GameEvent finishConnectToServerEvent;
+    [Header("Value")]
+
+    [SerializeField] private BoolValue isMaster;
+    [SerializeField] private BoolValue finishConnectToServer;
 
 
 
-
-    [SerializeField] private bool isMaster;
+    //  [SerializeField] private bool isMaster;
 
     void Awake()
     {
@@ -33,7 +37,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-
+        finishConnectToServer.Value = false;
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
 
@@ -55,7 +59,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnConnected();
 
-        Debug.Log("mine");
 
     }
 
@@ -78,7 +81,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        isMaster = PhotonNetwork.IsMasterClient;
+
+        isMaster.Value = PhotonNetwork.IsMasterClient;
+        finishConnectToServer.Value = true;
+        finishConnectToServerEvent.Raise(this, isMaster.Value);
         Debug.Log("Room");
     }
     // public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

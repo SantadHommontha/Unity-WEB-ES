@@ -23,7 +23,7 @@ public class PlayerData
 [System.Serializable]
 public class Team
 {
-    private TeamSetting teamSetting;
+   // private TeamSetting teamSetting;
 
 
     // string is playerID
