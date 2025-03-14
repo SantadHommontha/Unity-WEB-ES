@@ -1,9 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.InputSystem.iOS;
+
 public class PlayerNameBlock : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Button kick_Btn;
