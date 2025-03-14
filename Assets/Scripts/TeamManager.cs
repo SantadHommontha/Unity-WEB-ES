@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
 
-public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
+public class TeamManager : MonoBehaviourPunCallbacks
 {
     #region  Variable
     public static TeamManager instance;
@@ -20,15 +20,13 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 
     //--Canva
     [Space]
-    //  [SerializeField] private GameObject chooseTeamCanva;
-    //  [SerializeField] private GameObject playCanva;
+
     [Header("Event")]
     [SerializeField] private GameEvent chooseTeamEven;
     [SerializeField] private GameEvent playEvent;
+    [SerializeField] private GameEvent UpdatePlayerList;
     [Space]
-    //---Team
-    //[SerializeField] private Team addTeam;
-    // [SerializeField] private Team minusTeam;
+
     private Team team = new Team();
     private PlayerData myPlayerData;
     public PlayerData MyPlayerData => myPlayerData;
@@ -39,14 +37,9 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private Team myTeam;
     public Team MyTeam => myTeam;
-    //  public Team AddTeam => addTeam;
-    //   public Team MinusTeam => minusTeam;
-    //Var
-    //  public int AllPLayerCount => addTeam.PlayerCount + minusTeam.PlayerCount;
 
 
-    [SerializeField] private StringValue[] addTeamUI;
-    [SerializeField] private StringValue[] minusTeamUI;
+    [Header("Value")]
     [SerializeField] private StringValue reSpones;
 
 
@@ -60,27 +53,16 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         GameManager.instance.ResetGameEvent += Reset;
 
         team.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
-
-
     }
 
     private void Reset()
     {
-        // AddTeam.Reset();
-        //  minusTeam.Reset();
+
     }
 
     private void GameEnd()
     {
-        /*  if (PhotonNetwork.IsMasterClient)
-          {
-              ExitGames.Client.Photon.Hashtable teamScore = new Hashtable()
-              {
-                  { "AddScore", AddTeam.Score },
-                  { "MinusScore", MinusTeam.Score },
-              };
-              PhotonNetwork.CurrentRoom.SetCustomProperties(teamScore);
-          }*/
+
     }
     #endregion
 
@@ -97,37 +79,18 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        // playCanva.SetActive(false);
         SetupEvent();
-        //   addTeam = new Team(TeamName.Red, teamSetting);
-        //  minusTeam = new Team(TeamName.Blue, teamSetting);
+
 
         btn1.onClick.AddListener(() => RequestJoinTeam(ValueName.ADD_TEAM));
         btn2.onClick.AddListener(() => RequestJoinTeam(ValueName.MINUS_TEAM));
 
-        //    addTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
-        //   minusTeam.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
 
-        //  addTeam.OnPlayerTeamChange += UpdatePlayerAddTeam;
-        //  minusTeam.OnPlayerTeamChange += UpdatePlayerMinusTeam;
     }
 
     void Update()
     {
-        /*  if (Input.GetKeyDown(KeyCode.A))
-          {
-              foreach (var value in addTeam.GetAllPlayerData())
-              {
-                  Debug.Log("ADD TEAM: " + value.playerName);
-              }
-          }
-          if (Input.GetKeyDown(KeyCode.M))
-          {
-              foreach (var value in minusTeam.GetAllPlayerData())
-              {
-                  Debug.Log("MINUS TEAM: " + value.playerName);
-              }
-          }*/
+
     }
     #endregion
 
@@ -146,49 +109,35 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
             clickCount = 0
 
         };
-        /*   playerData.playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
-           playerData.playerID = PhotonNetwork.LocalPlayer.UserId;
-           playerData.info = new PhotonMessageInfo();
-           playerData.teamName = _teamName;*/
-
         string jsonData = JsonUtility.ToJson(playerData);
-        Debug.Log(jsonData);
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
     }
 
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
-        Debug.Log("fffffff " + _jsonData);
-
-
         if (!PhotonNetwork.IsMasterClient) return;
 
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
-
-
-
 
         var add_team = ValueName.ADD_TEAM;
         var minus_team = ValueName.MINUS_TEAM;
 
         if (data.teamName == add_team)
         {
-            //  Debug.Log("11111");
+
             if ((team.AddTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
             {
                 // add Complete
-
                 Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
-                //      photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
 
             }
             else
             {
-                // fail to add
-                //   Debug.Log("3333");
-                //       photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
+                // fail to addFD
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
             }
         }
         else if (data.teamName == minus_team)
@@ -198,207 +147,96 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 // add Complete
                 Debug.Log($"PLayer Join Minus Team:{data.playerName} {data.playerID}");
-                //      photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
             }
             else
             {
                 // fail to add
-                //      photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
             }
         }
         else
         {
             //    Debug.Log("4444");
             // fail not have this team name
-            //   photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Not Have this Team Name"));
+            photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Not Have this Team Name"));
         }
-
-        //    Debug.Log("5555");
-
-
-
-
-
-
-
-        /* switch (data.teamName)
-         {
-             case TeamName.Red:
-                 if (!addTeam.HavePlayer(data.playerID))
-                 {
-                     if (!addTeam.TeamFull())
-                     {
-
-                         addTeam.AddPlayer(data);
-                         myTeam = addTeam;
-                         Debug.Log($"PLayer Join AddTeam: {data.playerID}");
-                         //         UpdatePlayerListToRoomPorperties();
-                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "ADD"));
-                     }
-                     else
-                     {
-                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
-                     }
-                 }
-                 else
-                 {
-                     photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Red Team"));
-                 }
-
-                 break;
-             case TeamName.Blue:
-                 if (!minusTeam.HavePlayer(data.playerID))
-                 {
-                     if (!minusTeam.TeamFull())
-                     {
-                         minusTeam.AddPlayer(data);
-                         myTeam = minusTeam;
-                         Debug.Log($"PLayer Join MinusTeam: {data.playerID}");
-                         //      UpdatePlayerListToRoomPorperties();
-                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Complete, "Join Team Complete", "MINUS"));
-                     }
-                     else
-                     {
-                         photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "Team Have Full"));
-                     }
-                 }
-                 else
-                 {
-                     photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponseState.Fail, "You Have Join In Blue Team"));
-                 }
-                 break;
-         }*/
     }
 
 
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
-        Debug.Log("ReceiveJoinTeam 1111");
         var data = JsonUtility.FromJson<SendResponseJoinData>(_reportJson);
         if (data.responseState == ResponesState.COMPLETE)
         {
-
-            playEvent.Raise(this, this);
             myTeamType = data.myTeamType;
-            // AfterJoinTeam();
-            Debug.Log("ReceiveJoinTeam TRUE");
-            //  UpdatePlayerListToRoomPorperties();
-            GameManager.instance.RequstUpDataGameData();
+            playEvent.Raise(this, this);
         }
         else if (data.responseState == ResponesState.FAIL)
         {
-            Debug.Log("ReceiveJoinTeam FALSE");
             reportError.text = data.responseMessage;
         }
         reSpones.Value = data.responseMessage;
-
-        Debug.Log("ReceiveJoinTeam 22222");
         //   photonView.RPC("UpDatePlayerDate", RpcTarget.MasterClient);
     }
-    // private void UpdatePlayerListToRoomPorperties()
-    // {
-    //     if (!PhotonNetwork.IsMasterClient) return;
 
-    //     var a = addTeam.GetAllPlayerToPlayerTeamList();
-    //     var b = minusTeam.GetAllPlayerToPlayerTeamList();
-    //     ExitGames.Client.Photon.Hashtable playerList = new ExitGames.Client.Photon.Hashtable()
-    //     {
-    //         {ValueName.ADD_TEAM_PLAYER_LIST,a},
-    //         {ValueName.MINUS_TEAM_PLAYER_LIST,b}
-    //     };
-
-    //     PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
-
-    // }
 
 
     // Update When Player List In Team Change
     private void UpdatePlayerListToRoomPorperties()
     {
 
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        List<PlayerData> a = new List<PlayerData>();
-        List<PlayerData> m = new List<PlayerData>();
-        foreach (var v in team.GetAllPlayer())
+        if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("L: " + v.playerName);
-        }
-        /*  foreach (var v in team.GetAllPlayer())
-          {
-              Debug.Log("11111");
-              if (v.teamName == ValueName.ADD_TEAM)
-              {
-                  a.Add(v);
-                  Debug.Log("2222");
-              }
 
-             else if (v.teamName == ValueName.MINUS_TEAM)
-              {
-                  m.Add(v);
-                  Debug.Log("33333");
-              }
-          }
-          */
-        ExitGames.Client.Photon.Hashtable playerListSS = new ExitGames.Client.Photon.Hashtable()
+            int length = team.GetAllPlayer().Length;
+            TwoStringArrayDataJson a = new TwoStringArrayDataJson()
+            {
+                value1 = new string[length],
+                value2 = new string[length]
+            };
+            TwoStringArrayDataJson m = new TwoStringArrayDataJson()
+            {
+                value1 = new string[length],
+                value2 = new string[length]
+            };
+            int num = 0;
+            foreach (var v in team.GetAllPlayer())
+            {
+                if (v.teamName == ValueName.ADD_TEAM)
+                {
+                    a.value1[num] = v.playerName;
+                    a.value2[num] = v.playerID;
+                }
+
+                else if (v.teamName == ValueName.MINUS_TEAM)
+                {
+                    m.value1[num] = v.playerName;
+                    m.value2[num] = v.playerID;
+                }
+            }
+            var aJson = JsonUtility.ToJson(a);
+            var mJson = JsonUtility.ToJson(m);
+            ExitGames.Client.Photon.Hashtable playerListSS = new ExitGames.Client.Photon.Hashtable()
         {
-            {ValueName.ADD_TEAM_PLAYER_LIST,125}
-          //  {ValueName.MINUS_TEAM_PLAYER_LIST,m.ToArray()}
+            {ValueName.ADD_TEAM_PLAYER_LIST,aJson},
+            {ValueName.MINUS_TEAM_PLAYER_LIST,mJson}
         };
 
-        PhotonNetwork.CurrentRoom.SetCustomProperties(playerListSS);
-        playEvent.Raise(this, this);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(playerListSS);
+        }
+        else
+        {
+            UpdatePlayerList.Raise(this, -999);
+        }
     }
-
-    /*  public void UpdatePlayerAddTeam(PlayerData[] _playerDatas)
-      {
-          foreach (var t in addTeamUI) t.Clear();
-
-          for (int i = 0; i < _playerDatas.Length; i++)
-          {
-              PlayerDataForUI playerDataForUI = new PlayerDataForUI()
-              {
-                  playerName = _playerDatas[i].playerName,
-                  playerID = _playerDatas[i].playerID
-              };
-
-              addTeamUI[i].Value = JsonUtility.ToJson(playerDataForUI);
-          }
-      }*/
-
-    /*  public void UpdatePlayerMinusTeam(PlayerData[] _playerDatas)
-      {
-           foreach (var t in minusTeamUI) t.Clear();
-          for (int i = 0; i < _playerDatas.Length; i++)
-          {
-              PlayerDataForUI playerDataForUI = new PlayerDataForUI()
-              {
-                  playerName = _playerDatas[i].playerName,
-                  playerID = _playerDatas[i].playerID
-              };
-              minusTeamUI[i].Clear();
-              minusTeamUI[i].Value = JsonUtility.ToJson(playerDataForUI);
-          }
-      }
-    */
-
 
 
     [PunRPC]
     private void UpDatePlayerDate()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // Hashtable playerList = new Hashtable()
-            // {
-            //     {addTeam.TeamName,addTeam.GetAllPlayerListString()},
-            //     {minusTeam.TeamName,minusTeam.GetAllPlayerListString()}
-            // };
 
-            // PhotonNetwork.CurrentRoom.SetCustomProperties(playerList);
-            //        UpdatePlayerListToRoomPorperties();
-        }
     }
 
 
@@ -414,10 +252,6 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     // Utility Funcetion
     private string PackJsonData(string _responseState, string _responseMessage, string _teamType)
     {
-        // ResponsetData reportDate;
-        //  reportDate.responseState = _responseState.ToString();
-        //  reportDate.responseMessage = _responseMessage;
-
         SendResponseJoinData sendResponseJoinData = new SendResponseJoinData()
         {
             responseState = _responseState.ToString(),
@@ -436,15 +270,53 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
     #region PullDataFromRoomProperties
-    // Pull Data From Room 
+    // Fetch data from a room when joining a room without being the master
     public void PullData()
     {
+     
+        List<PlayerData> pd = new List<PlayerData>();
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
-
+            var aJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
+            for (int i = 0; i < a.value1.Length; i++)
+            {
+                pd.Add(new PlayerData()
+                {
+                    playerName = a.value1[i],
+                    playerID = a.value2[i]
+                });
+            }
         }
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
         {
+            var mJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.MINUS_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
+            for (int i = 0; i < m.value1.Length; i++)
+            {
+                pd.Add(new PlayerData()
+                {
+                    playerName = m.value1[i],
+                    playerID = m.value2[i]
+                });
+            }
+        }
+       
+        team.SetPlayerData(pd.ToArray());
+    }
+
+    #endregion
+
+
+    #region  Photon Function
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            PullData();
+
 
         }
     }
@@ -452,74 +324,19 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
 
-
-    #region  Photon Function
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-    }
-
-
-
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        Debug.Log("dEBUG.LOG");
-        /*   if (PhotonNetwork.IsMasterClient) return;
-           if (propertiesThatChanged.ContainsKey("AddScore"))
-           {
-               addTeam.SetScore((int)propertiesThatChanged["AddScore"]);
-           }
-           if (propertiesThatChanged.ContainsKey("MinusScore"))
-           {
-               minusTeam.SetScore((int)propertiesThatChanged["MinusScore"]);
-           }*/
-    }
-    #endregion
-
     #region Kick Player
-    /* private PlayerData GetPlayerFromID(string _playerID, out string _team)
-     {
-         /*  var a = addTeam.HavePlayerAndGet(_playerID);
-           var b = minusTeam.HavePlayerAndGet(_playerID);
-
-
-           if (a != null)
-           {
-               _team = "ADD";
-               return a;
-           }
-           else if (b != null)
-           {
-               _team = "MINUS";
-               return b;
-           }
-           else
-           {
-               _team = "NONE";
-               return null;
-           }
-         _team = "EIEI";
-         return null;
-     }*/
-
 
     private void FindPlayerForKick(string _playerID)
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        //   PlayerData playerData = GetPlayerFromID(_playerID, out var _team);
-
         if (!team.HavePlayer(_playerID, out var _player)) return;
+        team.RemovePlayer(_playerID);
 
-
-
-        //     UpdatePlayerListToRoomPorperties();
         photonView.RPC("Kick", _player.info.Sender);
 
-
-
     }
+    // Call From FindPlayerForKick 
     [PunRPC]
     private void Kick()
     {

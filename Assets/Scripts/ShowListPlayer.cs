@@ -1,14 +1,11 @@
 
 using ExitGames.Client.Photon;
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 
 public class ShowListPlayer : MonoBehaviourPunCallbacks
 {
     public static ShowListPlayer instance;
-    // [SerializeField] private PlayerNameBlock[] addTeam;
-    // [SerializeField] private PlayerNameBlock[] minusTeam;
 
     [SerializeField] private StringValue[] addTeam;
     [SerializeField] private StringValue[] minusTeam;
@@ -21,50 +18,52 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             instance = this;
 
     }
-    void Start()
-    {
-    //    TeamManager.instance.AddTeam.OnPlayerTeamChange += UpdatePlayerAddTeam;
-    //    TeamManager.instance.MinusTeam.OnPlayerTeamChange += UpdatePlayerMinusTeam;
-    }
 
-    public void UpdatePlayerAddTeam(PlayerData[] _playerDatas)
-    {
-        for (int i = 0; i < _playerDatas.Length; i++)
-        {
-            PlayerDataForUI playerDataForUI = new PlayerDataForUI()
-            {
-                playerName = _playerDatas[i].playerName,
-                playerID = _playerDatas[i].playerID
-            };
-
-            addTeam[i].Value = JsonUtility.ToJson(playerDataForUI);
-        }
-    }
-    public void UpdatePlayerMinusTeam(PlayerData[] _playerDatas)
-    {
-        for (int i = 0; i < _playerDatas.Length; i++)
-        {
-            PlayerDataForUI playerDataForUI = new PlayerDataForUI()
-            {
-                playerName = _playerDatas[i].playerName,
-                playerID = _playerDatas[i].playerID
-            };
-
-            minusTeam[i].Value = JsonUtility.ToJson(playerDataForUI);
-        }
-    }
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        // UpdatePlayerList();
-        // // if (propertiesThatChanged.ContainsKey(TeamName.Blue.ToString()))
-        // // {
-        // //     var allName = (string)propertiesThatChanged[TeamName.Blue.ToString()];
-        // //     teamName2.text = "Blue";
-        // //     Team2List.text = allName;
-        // //     Debug.Log($"Blue : {allName}");
-        // // }
+        if (propertiesThatChanged.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
+        {
+            var aJson = (string)propertiesThatChanged[ValueName.ADD_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
+            for (int i = 0; i < a.value1.Length; i++)
+            {
+                Debug.Log($"==={a.value1[i]},{a.value2[i]}===");
+                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+            }
+        }
+        if (propertiesThatChanged.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
+        {
+            var mJson = (string)propertiesThatChanged[ValueName.MINUS_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
+            for (int i = 0; i < m.value1.Length; i++)
+            {
+                minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+            }
+        }
     }
 
+    public void PlayerListUpdate()
+    {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
+        {
+            var aJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
+            for (int i = 0; i < a.value1.Length; i++)
+            {
+                Debug.Log($"==={a.value1[i]},{a.value2[i]}===");
+                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+            }
+        }
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
+        {
+            var mJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.MINUS_TEAM_PLAYER_LIST];
+            TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
+            for (int i = 0; i < m.value1.Length; i++)
+            {
+                minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+            }
+        }
+    }
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();

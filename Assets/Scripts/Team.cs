@@ -19,23 +19,37 @@ public class PlayerData
     public string playerName;
     public int clickCount;
 }
+
 [System.Serializable]
-public class Team 
+public class Team
 {
     private TeamSetting teamSetting;
 
-    
+
     // string is playerID
     private Dictionary<string, PlayerData> playerdata = new Dictionary<string, PlayerData>();
     public Action OnPlayerTeamChange;
 
+
+    public void SetPlayerData(PlayerData[] _playerData)
+    {
+        Dictionary<string, PlayerData> playerdatas = new Dictionary<string, PlayerData>();
+        foreach (var v in _playerData)
+        {
+            playerdatas.Add(v.playerID, v);
+        }
+        playerdata = playerdatas;
+        OnPlayerTeamChange?.Invoke();
+    }
+
+
     #region Team Count
-    public int  AddTeamCount()
+    public int AddTeamCount()
     {
         int count = 0;
-        foreach(var v in playerdata)
+        foreach (var v in playerdata)
         {
-            if (v.Value.teamName == ValueName.ADD_TEAM) count++ ;
+            if (v.Value.teamName == ValueName.ADD_TEAM) count++;
         }
         return count;
     }
@@ -48,7 +62,7 @@ public class Team
         }
         return count;
     }
-    public void TeamCount(out int _addTeam,out int _minusTeam)
+    public void TeamCount(out int _addTeam, out int _minusTeam)
     {
         _addTeam = AddTeamCount();
         _minusTeam = MinusTeamCount();
@@ -62,13 +76,13 @@ public class Team
 
     public void Change(ChangePlayerData _playerData)
     {
-        if(HavePlayer(_playerData.playerTargetID,out var _player))
+        if (HavePlayer(_playerData.playerTargetID, out var _player))
         {
-            if(_playerData.playerName != null)
+            if (_playerData.playerName != null)
             {
                 _player.playerName = _playerData.playerName;
             }
-            if(_playerData.teamName != null)
+            if (_playerData.teamName != null)
             {
                 _player.teamName = _playerData.teamName;
             }
@@ -80,8 +94,8 @@ public class Team
     #region  Add Player And Remove Player
     public bool TryToAddPlayer(PlayerData _data)
     {
-     
-        if(!HavePlayer(_data.playerID))
+
+        if (!HavePlayer(_data.playerID))
         {
             AddPlayer(_data);
             return true;
@@ -93,21 +107,21 @@ public class Team
     }
     public void AddPlayer(PlayerData _data)
     {
-       
+
         if (!playerdata.ContainsKey(_data.playerID))
         {
-           
+
             playerdata.Add(_data.playerID, _data);
-           OnPlayerTeamChange?.Invoke();
+            OnPlayerTeamChange?.Invoke();
         }
-      
+
     }
 
-    public void RemovePlayer(PlayerData _data)
+    public void RemovePlayer(string _playerID)
     {
-        if (playerdata.ContainsKey(_data.playerID))
+        if (playerdata.ContainsKey(_playerID))
         {
-            playerdata.Remove(_data.playerID);
+            playerdata.Remove(_playerID);
             OnPlayerTeamChange?.Invoke();
         }
     }
@@ -119,9 +133,9 @@ public class Team
     {
         return playerdata.ContainsKey(_playerID);
     }
-    public bool HavePlayer(string _playerID,out PlayerData _playerData)
+    public bool HavePlayer(string _playerID, out PlayerData _playerData)
     {
-        if(HavePlayer(_playerID))
+        if (HavePlayer(_playerID))
         {
             _playerData = GetPlayerData(_playerID);
             return true;
@@ -131,7 +145,7 @@ public class Team
             _playerData = new PlayerData();
             return false;
         }
-      
+
     }
     #endregion
 

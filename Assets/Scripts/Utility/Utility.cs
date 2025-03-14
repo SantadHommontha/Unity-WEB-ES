@@ -50,6 +50,16 @@ public struct PlayerTeamList
     public string[] playerID;
 }
 
+
+
+// Data
+[System.Serializable]
+public class TwoStringArrayDataJson
+{
+    public string[] value1;
+    public string[] value2;
+}
+
 public static class Utility
 {
    

@@ -7,11 +7,6 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Button kick_Btn;
     [SerializeField] private TMP_Text playerName_txt;
-    [SerializeField] private int index = 0;
-
-
-
-    public string teamType = "NOPE";
     private string playerID = "NOPE";
 
     [Header("Value")]
@@ -34,7 +29,6 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
     }
     private void KickBTN()
     {
-        Debug.Log("FFFFFFFFFFFFFFF: "+gameObject.name);
         if (playerID == "NOPE") return;
         TeamManager.instance.KickPlayer(playerID);
     }
@@ -54,11 +48,10 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
         }
         else
         {
-            PlayerDataForUI playerDataForUI = playerDataForUI = JsonUtility.FromJson<PlayerDataForUI>(stringValue.Value);
+            string[] data = stringValue.Value.Split(",");
 
-
-            playerName_txt.text = playerDataForUI.playerName;
-            playerID = playerDataForUI.playerID;
+            playerName_txt.text = data[0];
+            playerID = data[1];
         }
 
 
