@@ -11,6 +11,7 @@ public static class ValueName
     public static string GAME_START = "GAME_START";
     public static string END_GAME_SCORE = "END_GAME_SCORE";
     public static string TEAM_WIN = "TEAM_WIN";
+    public static string GAME_TIME = "GAME_TIME";
 
 
 

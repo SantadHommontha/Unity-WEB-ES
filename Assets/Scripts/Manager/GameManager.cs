@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Space]
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent gameStartEvent;
+    [SerializeField] private GameEvent scoreUpdateEvent;
+    [SerializeField] private GameEvent timerUpdateEvent;
 
 
     //--Var
@@ -102,23 +104,48 @@ public class GameManager : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
-    private void UpdateScoreToRoomProperties(bool _data)
+    private void UpdateTimer(float _time)
     {
+        timerUpdateEvent.Raise(this, _time);
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
-            {ValueName.GAME_SCORE,gameScore.Value}
+            {ValueName.GAME_TIME,_time}
         };
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
+
+    private void UpdateScoreGame(int _score)
+    {
+        scoreUpdateEvent.Raise(this, _score);
+        ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
+            {
+                {ValueName.GAME_SCORE, _score}
+            };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
+    }
+
+    private void UpdateTeamWin(string _name)
+    {
+        ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
+            {
+                {ValueName.TEAM_WIN,_name}
+            };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
+    }
+
     private void SetupEvents()
     {
         gameStart.OnValueChange += StartTimeCount;
+
         gameStart.OnValueChange += StartUpdateScore;
-        //   GameEndEvent += MasterGameEnd;
+
         gameStart.OnValueChange += UpdateGameStartToRoomProperties;
+
         gameScore.OnValueChange += UpdateScoreGame;
+
         teamWin.OnValueChange += UpdateTeamWin;
-        //    ResetGameEvent += Reset;
+
+        gameTimer.OnValueChange += UpdateTimer;
     }
 
 
@@ -265,7 +292,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private IEnumerator IEUpdaScore()
     {
-          
+
         while (gameStart)
         {
             yield return new WaitForSeconds(timeToUpdateScore);
@@ -278,7 +305,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void RequstClickScore()
     {
-        
+
         photonView.RPC("SendClickScore", RpcTarget.AllBuffered);
     }
     [PunRPC]
@@ -338,24 +365,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void UpdateScoreGame(int _score)
-    {
-        ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
-            {
-                {ValueName.GAME_SCORE, _score}
-            };
-        PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
-    }
 
-    public void UpdateTeamWin(string _name)
-    {
-        ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
-            {
-                {ValueName.TEAM_WIN,_name}
-            };
-        PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
-        Debug.Log($"JKJ {PhotonNetwork.CurrentRoom.CustomProperties[ValueName.TEAM_WIN]}");
-    }
     #endregion
 
 
@@ -445,6 +455,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
         {
             gameScore.Value = (int)propertiesThatChanged[ValueName.GAME_SCORE];
+        }
+
+         if (propertiesThatChanged.ContainsKey(ValueName.GAME_TIME))
+        {
+            gameTimer.Value = (float)propertiesThatChanged[ValueName.GAME_TIME];
         }
 
         if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
