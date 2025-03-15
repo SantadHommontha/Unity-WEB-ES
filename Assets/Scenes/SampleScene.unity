@@ -8701,7 +8701,7 @@ MonoBehaviour:
   intValue: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
   floatValue: {fileID: 0}
   boolValue: {fileID: 0}
-  startText: 'MineMine '
+  startText: 
   endText: ' EIEI'
 --- !u!1 &1417949124
 GameObject:
