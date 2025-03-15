@@ -25,10 +25,20 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
         {
             var aJson = (string)propertiesThatChanged[ValueName.ADD_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
+        //a    Debug.Log("Length " + a.value1.Length);
+         //   Debug.Log(aJson);
             for (int i = 0; i < a.value1.Length; i++)
             {
-                Debug.Log($"==={a.value1[i]},{a.value2[i]}===");
-                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+
+                if (a.value1[i] == "")
+                {
+                    addTeam[i].Value = "";
+                }
+                else
+                {
+              //      Debug.Log($"==ADD=1={i},{a.value1[i]},{a.value2[i]}===");
+                    addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+                }
             }
         }
         if (propertiesThatChanged.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
@@ -37,7 +47,15 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
             for (int i = 0; i < m.value1.Length; i++)
             {
-                minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+              //  Debug.Log($"==MINUD=1={m.value1[i]},{m.value2[i]}===");
+                if (m.value1[i] == "")
+                {
+                    minusTeam[i].Value = "";
+                }
+                else
+                {
+                    minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+                }
             }
         }
     }
@@ -50,8 +68,15 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
             for (int i = 0; i < a.value1.Length; i++)
             {
-                Debug.Log($"==={a.value1[i]},{a.value2[i]}===");
-                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+          //      Debug.Log($"==ADD=2={a.value1[i]},{a.value2[i]}===");
+                if (a.value1[i] == "")
+                {
+                    addTeam[i].Value = "";
+                }
+                else
+                {
+                    addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+                }
             }
         }
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
@@ -60,14 +85,22 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
             for (int i = 0; i < m.value1.Length; i++)
             {
-                minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+          //      Debug.Log($"==MINUD=2={m.value1[i]},{m.value2[i]}===");
+                if (m.value1[i] == "")
+                {
+                    minusTeam[i].Value = "";
+                }
+                else
+                {
+                    minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+                }
             }
         }
     }
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-
+        PlayerListUpdate();
 
         //  UpdatePlayerList();
 

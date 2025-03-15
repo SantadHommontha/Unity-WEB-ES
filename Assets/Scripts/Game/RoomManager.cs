@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent chooseTeamEvent;
     [SerializeField] private GameEvent playEvent;
     //  [SerializeField] private GameEvent leaveRoomEven;
-    //  [SerializeField] private GameEvent KickEvent;
+    [SerializeField] private GameEvent KickedOutEvent;
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent finishConnectToServerEvent;
     [Header("Value")]
@@ -93,10 +93,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // }
 
 
-    public void KICKROOM()
+    public void KICKROOM(Component _sender,object _data)
     {
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
+      
         StartCoroutine(AfterLeveaServer());
     }
 

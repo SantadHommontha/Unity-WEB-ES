@@ -435,6 +435,150 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30904875}
   m_CullTransparentMesh: 1
+--- !u!1 &41109441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 41109442}
+  - component: {fileID: 41109443}
+  m_Layer: 0
+  m_Name: Kicked out
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &41109442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41109441}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2055381471}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &41109443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41109441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9239407a7b4eb43a8513392a1f53b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1501601470}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1134546078}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1851072596}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1418561236}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1604511250}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 886253944}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1127628604}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 450206910}
+        m_TargetAssemblyTypeName: RoomManager, Game
+        m_MethodName: KICKROOM
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  gameEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
 --- !u!1 &110898805
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +836,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: KickEvent
       value: 
       objectReference: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
@@ -699,6 +847,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -826,6 +978,10 @@ PrefabInstance:
       value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
@@ -837,6 +993,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2746,6 +2906,7 @@ MonoBehaviour:
   connectEvent: {fileID: 11400000, guid: 1fe21bc028fc3734fadb489b911692ff, type: 2}
   chooseTeamEvent: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
   playEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
+  KickedOutEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
   finishConnectToServerEvent: {fileID: 11400000, guid: ea763c0f91f81724c95fd079b1012df3, type: 2}
   isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
@@ -3385,6 +3546,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
@@ -3396,6 +3561,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3678,6 +3847,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: KickEvent
       value: 
       objectReference: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
@@ -3685,6 +3858,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4058,6 +4235,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
@@ -4069,6 +4250,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5012,7 +5197,7 @@ GameObject:
   - component: {fileID: 845548803}
   - component: {fileID: 845548804}
   m_Layer: 0
-  m_Name: Kick
+  m_Name: Kick Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5048,92 +5233,8 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1501601470}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1134546078}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1851072596}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1418561236}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1604511250}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 886253944}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1127628604}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1736650175}
-        m_TargetAssemblyTypeName: TeamManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: TeamManager, Game
         m_MethodName: KickPlayer
         m_Mode: 0
         m_Arguments:
@@ -5142,7 +5243,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
 --- !u!1 &855123740
@@ -5951,6 +6052,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
@@ -5962,6 +6067,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7130,6 +7239,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: KickEvent
       value: 
       objectReference: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
@@ -7137,6 +7250,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7268,6 +7385,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: KickEvent
       value: 
       objectReference: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
@@ -7275,6 +7396,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7492,7 +7617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1134546079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8582,7 +8707,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1418561237
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9551,7 +9676,7 @@ GameObject:
   - component: {fileID: 1604511253}
   - component: {fileID: 1604511252}
   m_Layer: 5
-  m_Name: Leve
+  m_Name: Leave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10109,6 +10234,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: teamType
       value: MINUS
       objectReference: {fileID: 0}
@@ -10120,6 +10249,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10320,7 +10453,8 @@ MonoBehaviour:
   chooseTeamEven: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
   playEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
   UpdatePlayerList: {fileID: 11400000, guid: d36eec3f193f09c40b4efa04ff5fd62d, type: 2}
-  kickEvent: {fileID: 0}
+  kickEvent: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
+  KickedOutEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
   reSpones: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
 --- !u!4 &1736650176
 Transform:
@@ -11014,6 +11148,7 @@ Transform:
   - {fileID: 1011274967}
   - {fileID: 1659629737}
   - {fileID: 845548803}
+  - {fileID: 41109442}
   - {fileID: 1698536451}
   - {fileID: 830250224}
   - {fileID: 1827400713}
@@ -11363,6 +11498,10 @@ PrefabInstance:
       value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: isMaster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
       propertyPath: KickEvent
       value: 
       objectReference: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
@@ -11370,6 +11509,10 @@ PrefabInstance:
       propertyPath: stringValue
       value: 
       objectReference: {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
+    - target: {fileID: 6661504890255036733, guid: 9f043ae8733797848a93a4ff9b69189c, type: 3}
+      propertyPath: finishConnect
+      value: 
+      objectReference: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

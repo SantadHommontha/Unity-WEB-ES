@@ -12,27 +12,25 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent KickEvent;
     [Header("Value")]
     [SerializeField] private StringValue stringValue;
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        kick_Btn.gameObject.SetActive(PhotonNetwork.IsMasterClient);
-    }
+    [SerializeField] private BoolValue isMaster;
+    [SerializeField] private BoolValue finishConnect;
+
 
     private void SetEvent()
     {
-        //  GameManager.instance.ResetGameEvent += () => kick_Btn.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+        kick_Btn.onClick.AddListener(KickBTN);
     }
 
     void Start()
     {
         SetEvent();
-        kick_Btn.onClick.AddListener(KickBTN);
+        stringValue.OnValueChange += UpdateText;
     }
     private void KickBTN()
     {
         if (playerID == "NOPE") return;
         KickEvent.Raise(this, playerID);
-      //  TeamManager.instance.KickPlayer(playerID);
+        //  TeamManager.instance.KickPlayer(playerID);
     }
 
     private void Clear()
@@ -40,10 +38,10 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
         playerName_txt.text = "";
         playerID = "";
     }
-    public override void OnEnable()
-    {
-        base.OnEnable();
 
+
+    private void UpdateText(string _text)
+    {
         if (stringValue.Value == null || stringValue.Value == "")
         {
             Clear();
@@ -55,5 +53,21 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
             playerName_txt.text = data[0];
             playerID = data[1];
         }
+    }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+
+        if (finishConnect.Value)
+        {
+            kick_Btn.gameObject.SetActive(isMaster);
+            UpdateText("");
+        }
+
+
+
+
+
+
     }
 }

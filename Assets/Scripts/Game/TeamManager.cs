@@ -26,6 +26,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent playEvent;
     [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent kickEvent;
+    [SerializeField] private GameEvent KickedOutEvent;
 
     [Space]
 
@@ -219,9 +220,11 @@ public class TeamManager : MonoBehaviourPunCallbacks
                     m.value1[num] = v.playerName;
                     m.value2[num] = v.playerID;
                 }
+                num++;
             }
             var aJson = JsonUtility.ToJson(a);
             var mJson = JsonUtility.ToJson(m);
+    
             ExitGames.Client.Photon.Hashtable playerListSS = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.ADD_TEAM_PLAYER_LIST,aJson},
@@ -345,7 +348,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void Kick()
     {
-        RoomManager.instace.KICKROOM();
+       // RoomManager.instace.KICKROOM();
+         KickedOutEvent.Raise(this, -999);
 
     }
 
@@ -358,7 +362,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     public void LeaveGame(Component _sender, object _playerID)
     {
-        Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
+       // Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
         if (_playerID is int && (int)_playerID == -999) return;
         photonView.RPC("ReviesLeaveGame", RpcTarget.MasterClient, (string)_playerID);
 
