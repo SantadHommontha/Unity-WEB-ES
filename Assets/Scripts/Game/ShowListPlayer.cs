@@ -25,37 +25,31 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
         {
             var aJson = (string)propertiesThatChanged[ValueName.ADD_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
-        //a    Debug.Log("Length " + a.value1.Length);
-         //   Debug.Log(aJson);
+            //  Debug.Log("Length a " + aJson);
+            foreach (var v in addTeam)
+            {
+                v.Value = "";
+            }
             for (int i = 0; i < a.value1.Length; i++)
             {
 
-                if (a.value1[i] == "")
-                {
-                    addTeam[i].Value = "";
-                }
-                else
-                {
-              //      Debug.Log($"==ADD=1={i},{a.value1[i]},{a.value2[i]}===");
                     addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
-                }
+
             }
         }
         if (propertiesThatChanged.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
         {
             var mJson = (string)propertiesThatChanged[ValueName.MINUS_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
-            for (int i = 0; i < m.value1.Length; i++)
+            // Debug.Log("Length m " + mJson);
+            foreach (var v in minusTeam)
             {
-              //  Debug.Log($"==MINUD=1={m.value1[i]},{m.value2[i]}===");
-                if (m.value1[i] == "")
-                {
-                    minusTeam[i].Value = "";
-                }
-                else
-                {
-                    minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
-                }
+                v.Value = "";
+            }
+            for (int j = 0; j < m.value1.Length; j++)
+            {
+                    minusTeam[j].Value = $"{m.value1[j]},{m.value2[j]}";
+
             }
         }
     }
@@ -66,34 +60,27 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
         {
             var aJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
+            foreach (var v in addTeam)
+            {
+                v.Value = "";
+            }
             for (int i = 0; i < a.value1.Length; i++)
             {
-          //      Debug.Log($"==ADD=2={a.value1[i]},{a.value2[i]}===");
-                if (a.value1[i] == "")
-                {
-                    addTeam[i].Value = "";
-                }
-                else
-                {
                     addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
-                }
+
             }
         }
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.MINUS_TEAM_PLAYER_LIST))
         {
             var mJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.MINUS_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
-            for (int i = 0; i < m.value1.Length; i++)
+            foreach (var v in minusTeam)
             {
-          //      Debug.Log($"==MINUD=2={m.value1[i]},{m.value2[i]}===");
-                if (m.value1[i] == "")
-                {
-                    minusTeam[i].Value = "";
-                }
-                else
-                {
+                v.Value = "";
+            }
+            for (int i = 0; i < m.value1.Length; i++)
+            {        
                     minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
-                }
             }
         }
     }

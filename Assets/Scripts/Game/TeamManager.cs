@@ -51,22 +51,9 @@ public class TeamManager : MonoBehaviourPunCallbacks
     #region  GameEvent
     private void SetupEvent()
     {
-        GameManager.instance.GameStopEvent += GameEnd;
-
-        //   GameManager.instance.ResetGameEvent += Reset;
-
         team.OnPlayerTeamChange += UpdatePlayerListToRoomPorperties;
     }
 
-    private void Reset()
-    {
-
-    }
-
-    private void GameEnd()
-    {
-
-    }
     #endregion
 
 
@@ -191,40 +178,55 @@ public class TeamManager : MonoBehaviourPunCallbacks
     // Update When Player List In Team Change
     private void UpdatePlayerListToRoomPorperties()
     {
-
+       
         if (PhotonNetwork.IsMasterClient)
         {
 
             int length = team.GetAllPlayer().Length;
-            TwoStringArrayDataJson a = new TwoStringArrayDataJson()
-            {
-                value1 = new string[length],
-                value2 = new string[length]
-            };
-            TwoStringArrayDataJson m = new TwoStringArrayDataJson()
-            {
-                value1 = new string[length],
-                value2 = new string[length]
-            };
-            int num = 0;
+            List<PlayerData> at = new List<PlayerData>();
+            List<PlayerData> mt = new List<PlayerData>();
+
             foreach (var v in team.GetAllPlayer())
             {
                 if (v.teamName == ValueName.ADD_TEAM)
                 {
-                    a.value1[num] = v.playerName;
-                    a.value2[num] = v.playerID;
+                    at.Add(v);
                 }
 
                 else if (v.teamName == ValueName.MINUS_TEAM)
                 {
-                    m.value1[num] = v.playerName;
-                    m.value2[num] = v.playerID;
+                    mt.Add(v);
                 }
+            }
+
+            TwoStringArrayDataJson a = new TwoStringArrayDataJson()
+            {
+                value1 = new string[at.Count],
+                value2 = new string[at.Count]
+            };
+            TwoStringArrayDataJson m = new TwoStringArrayDataJson()
+            {
+                value1 = new string[mt.Count],
+                value2 = new string[mt.Count]
+            };
+            int num = 0;
+            foreach (var v in at)
+            {
+                a.value1[num] = at[num].playerName;
+                a.value2[num] = at[num].playerID;
                 num++;
             }
+            num = 0;
+            foreach (var v in mt)
+            {
+                m.value1[num] = mt[num].playerName;
+                m.value2[num] = mt[num].playerID;
+                num++;
+            }
+
             var aJson = JsonUtility.ToJson(a);
             var mJson = JsonUtility.ToJson(m);
-    
+
             ExitGames.Client.Photon.Hashtable playerListSS = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.ADD_TEAM_PLAYER_LIST,aJson},
@@ -348,8 +350,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void Kick()
     {
-       // RoomManager.instace.KICKROOM();
-         KickedOutEvent.Raise(this, -999);
+        // RoomManager.instace.KICKROOM();
+        KickedOutEvent.Raise(this, -999);
 
     }
 
@@ -362,7 +364,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     public void LeaveGame(Component _sender, object _playerID)
     {
-       // Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
+        // Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
         if (_playerID is int && (int)_playerID == -999) return;
         photonView.RPC("ReviesLeaveGame", RpcTarget.MasterClient, (string)_playerID);
 

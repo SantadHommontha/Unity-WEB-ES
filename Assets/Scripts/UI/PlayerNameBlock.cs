@@ -60,7 +60,7 @@ public class PlayerNameBlock : MonoBehaviourPunCallbacks
 
         if (finishConnect.Value)
         {
-            kick_Btn.gameObject.SetActive(isMaster);
+            kick_Btn.gameObject.SetActive(isMaster.Value);
             UpdateText("");
         }
 

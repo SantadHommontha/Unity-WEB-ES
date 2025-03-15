@@ -1985,6 +1985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 301944502}
   stringValue: {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &315797638
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,6 +3727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 582168428}
   stringValue: {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1001 &583270780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4553,6 +4555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 688168560}
   stringValue: {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &737932195
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,6 +4843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 783881033}
   stringValue: {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &825777767
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,7 +4986,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   response:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1051956782}
+        m_TargetAssemblyTypeName: GameManager, Game
+        m_MethodName: UpdateTimer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1051956782}
+        m_TargetAssemblyTypeName: GameManager, Game
+        m_MethodName: ChackGameTime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: a8f0c592eacec6e4a887674ab0c67f4b, type: 2}
 --- !u!1 &832575517
 GameObject:
@@ -5237,6 +5265,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: TeamManager, Game
         m_MethodName: KickPlayer
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1736650178}
+        m_TargetAssemblyTypeName: ShowListPlayer, Game
+        m_MethodName: PlayerListUpdate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5931,6 +5971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 892522885}
   stringValue: {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1001 &899344043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6515,6 +6556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startBtn: {fileID: 965726279}
   startEvent: {fileID: 11400000, guid: 5c557ff27f29e9b4ea98810b90a6809d, type: 2}
+  gamestart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
   finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
   isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
 --- !u!1 &967317895
@@ -6858,8 +6900,32 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1051956782}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ResetBTN
+        m_TargetAssemblyTypeName: GameManager, Game
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1051956785}
+        m_TargetAssemblyTypeName: GameTimer, Game
+        m_MethodName: StopTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1051956786}
+        m_TargetAssemblyTypeName: GameTimer, Game
+        m_MethodName: StopTimer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6882,6 +6948,8 @@ GameObject:
   - component: {fileID: 1051956783}
   - component: {fileID: 1051956782}
   - component: {fileID: 1051956784}
+  - component: {fileID: 1051956785}
+  - component: {fileID: 1051956786}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6916,20 +6984,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dc0aff242acee43b6dcf4d6f11e209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGameBTN: {fileID: 965726277}
-  resetGameBTN: {fileID: 905159206}
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
-  gameStartEvent: {fileID: 11400000, guid: 5c557ff27f29e9b4ea98810b90a6809d, type: 2}
   scoreUpdateEvent: {fileID: 11400000, guid: b7b31b2e7e4ab4d4186a0676562da267, type: 2}
-  timerUpdateEvent: {fileID: 11400000, guid: a8f0c592eacec6e4a887674ab0c67f4b, type: 2}
-  timeToUpdateScore: 0.2
-  currentLickCount: {fileID: 1051956784}
-  gameTime: 10
+  currentCickCount: {fileID: 1051956784}
   scoreForAddTeamWin: 50
   gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
   gameScore: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
   gameTimer: {fileID: 11400000, guid: ec0523ecd54ba534d82ac55456de2ff2, type: 2}
   teamWin: {fileID: 11400000, guid: 7ddd1265b10a4444b91443b6c9404065, type: 2}
+  isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+  finishConnectToServer: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!114 &1051956783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6967,6 +7031,39 @@ MonoBehaviour:
   currentCount: {fileID: 11400000, guid: cee57fcd44e307247b7b3a10f20dffe4, type: 2}
   allClick: {fileID: 11400000, guid: 69830fd146e77394fb86e3cdb15d8695, type: 2}
   gamestart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
+--- !u!114 &1051956785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051956780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c610315f71850a8428c12f6679fd5d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Game Timer
+  time: 10
+  timer: 0
+  timerUpdateEvent: {fileID: 11400000, guid: a8f0c592eacec6e4a887674ab0c67f4b, type: 2}
+--- !u!114 &1051956786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051956780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218b5d9f076b9a643a653da7e9ff5bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Fetch
+  time: 0.2
+  timer: 0
+  timerUpdateEvent: {fileID: 11400000, guid: 433fa759a93da384c9a6c2d5c6cf60a3, type: 2}
+  gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
 --- !u!1 &1072756332
 GameObject:
   m_ObjectHideFlags: 0
@@ -7118,6 +7215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 1072756334}
   stringValue: {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1001 &1083585442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7539,7 +7637,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1736650178}
+        m_TargetAssemblyTypeName: ShowListPlayer, Game
+        m_MethodName: PlayerListUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
 --- !u!1 &1127628604
@@ -7797,6 +7907,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1172789151}
   intValue: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
+--- !u!1 &1234461354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1234461355}
+  - component: {fileID: 1234461356}
+  m_Layer: 0
+  m_Name: Fetch Time Update
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1234461355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234461354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2055381471}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1234461356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234461354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9239407a7b4eb43a8513392a1f53b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1051956782}
+        m_TargetAssemblyTypeName: GameManager, Game
+        m_MethodName: RequstClickScore
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  gameEvent: {fileID: 11400000, guid: 433fa759a93da384c9a6c2d5c6cf60a3, type: 2}
 --- !u!1 &1256175686
 GameObject:
   m_ObjectHideFlags: 0
@@ -9062,6 +9232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 1478585284}
   stringValue: {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &1497969285
 GameObject:
   m_ObjectHideFlags: 0
@@ -9213,6 +9384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 1497969287}
   stringValue: {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &1501601470
 GameObject:
   m_ObjectHideFlags: 0
@@ -9230,7 +9402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1501601471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9307,7 +9479,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1505098239}
   - component: {fileID: 1505098241}
-  - component: {fileID: 1505098242}
   - component: {fileID: 1505098240}
   - component: {fileID: 1505098243}
   m_Layer: 5
@@ -9435,25 +9606,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505098238}
   m_CullTransparentMesh: 1
---- !u!114 &1505098242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1505098238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e982ad837fd14cc4d872066ce4dde403, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 1505098240}
-  stringValue: {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
-  intValue: {fileID: 0}
-  floatValue: {fileID: 0}
-  boolValue: {fileID: 0}
-  startText: P1
-  endText: 
 --- !u!114 &1505098243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9468,6 +9620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 1505098240}
   stringValue: {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &1532268549
 GameObject:
   m_ObjectHideFlags: 0
@@ -9874,6 +10027,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: TeamManager, Assembly-CSharp
         m_MethodName: LeaveGame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1736650178}
+        m_TargetAssemblyTypeName: ShowListPlayer, Game
+        m_MethodName: PlayerListUpdate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10414,6 +10579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName_txt: {fileID: 1735602046}
   stringValue: {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
+  finishConnect: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!1 &1736650174
 GameObject:
   m_ObjectHideFlags: 0
@@ -11026,9 +11192,21 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1051956782}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGameBTN
+      - m_Target: {fileID: 1051956785}
+        m_TargetAssemblyTypeName: GameTimer, Game
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1051956786}
+        m_TargetAssemblyTypeName: GameTimer, Game
+        m_MethodName: StartTimer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11151,6 +11329,7 @@ Transform:
   - {fileID: 41109442}
   - {fileID: 1698536451}
   - {fileID: 830250224}
+  - {fileID: 1234461355}
   - {fileID: 1827400713}
   m_Father: {fileID: 1679121460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

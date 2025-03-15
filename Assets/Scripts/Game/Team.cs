@@ -23,7 +23,7 @@ public class PlayerData
 [System.Serializable]
 public class Team
 {
-   // private TeamSetting teamSetting;
+    // private TeamSetting teamSetting;
 
 
     // string is playerID
@@ -121,6 +121,7 @@ public class Team
     {
         if (playerdata.ContainsKey(_playerID))
         {
+            Debug.Log("Remove Player Complete");
             playerdata.Remove(_playerID);
             OnPlayerTeamChange?.Invoke();
         }

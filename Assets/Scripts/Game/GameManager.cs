@@ -15,45 +15,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     #region  Variable
     public static GameManager instance;
-    [Header("UI")]
 
-
-    [SerializeField] private GameObject startGameBTN;
-    [SerializeField] private GameObject resetGameBTN;
     [Space]
-
 
     [Header("Event")]
     [Space]
     [SerializeField] private GameEvent gameEndEvent;
-    [SerializeField] private GameEvent gameStartEvent;
     [SerializeField] private GameEvent scoreUpdateEvent;
-    
-    [SerializeField] private GameEvent timerUpdateEvent;
-
 
     //--Var
     [Space]
-    [SerializeField] private float timeToUpdateScore = 0.2f;
-
-    [SerializeField] private ClickCount currentLickCount;
-    [SerializeField] private float gameTime = 10f;
+    [SerializeField] private ClickCount currentCickCount;
     [SerializeField] private int scoreForAddTeamWin = 50;
-
-
 
 
     //--Corutine
     private Coroutine coroutineUpdateScore;
     private Coroutine coroutineTimeUpdate;
 
-    //--Event
-    //   public event Action GameEndEvent;
-    public event Action<float> GameTimeUpdateEvent;
-
-    public event Action GameStopEvent;
-
-    // public event Action ResetGameEvent;
 
 
     [Header("Value")]
@@ -62,8 +41,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public IntValue gameScore;
     public FloatValue gameTimer;
     [SerializeField] StringValue teamWin;
-    // [SerializeField] StringValue gameScore;
 
+    [SerializeField] private BoolValue isMaster;
+    [SerializeField] private BoolValue finishConnectToServer;
+    
     #endregion
 
 
@@ -79,7 +60,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         gameScore.Value = 0;
-        SetupEvents();
+
 
     }
 
@@ -88,29 +69,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #region Setup Event
-
-    public override void OnEnable()
-    {
-
-        Debug.Log("Enable");
-    }
-
-
-
     private void UpdateGameStartToRoomProperties(bool _data)
     {
+        Debug.Log("UpdateGameStartToRoomProperties");
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.GAME_START,gameStart.Value}
         };
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
-    private void UpdateTimer(float _time)
+    // Call with Event
+    public void UpdateTimer(Component _sender, object _time)
     {
-        timerUpdateEvent.Raise(this, _time);
+        gameTimer.Value = (float)_time;
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
-            {ValueName.GAME_TIME,_time}
+            {ValueName.GAME_TIME,gameTimer.Value}
         };
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
@@ -136,39 +110,34 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void SetupEvents()
     {
-        gameStart.OnValueChange += StartTimeCount;
 
-        gameStart.OnValueChange += StartUpdateScore;
+        //   gameStart.OnValueChange += StartUpdateScore;
 
-        gameStart.OnValueChange += UpdateGameStartToRoomProperties;
+        if (isMaster.Value)
+        {
+            Debug.Log("SetupEvents ");
+            gameStart.OnValueChange += UpdateGameStartToRoomProperties;
 
-        gameScore.OnValueChange += UpdateScoreGame;
+            gameScore.OnValueChange += UpdateScoreGame;
 
-        teamWin.OnValueChange += UpdateTeamWin;
+            teamWin.OnValueChange += UpdateTeamWin;
+        }
 
-        gameTimer.OnValueChange += UpdateTimer;
     }
 
 
-    private void Reset()
+    // Call With Event
+    public void Reset()
     {
-
+        Debug.Log("Reset");
         gameScore.Value = 0;
-        currentLickCount.Reset();
+        currentCickCount.Reset();
         gameStart.Value = false;
         gameTimer.Value = 0;
         coroutineUpdateScore = null;
         coroutineTimeUpdate = null;
         StopAllCoroutines();
 
-
-        // ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable()
-        //     {
-        //         {ValueName.GAME_START,gameStart.Value},
-        //         {ValueName.GAME_SCORE, this.gameScore.Value}
-        //     };
-
-        // PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
 
     }
 
@@ -184,70 +153,29 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region Update Game Time
 
-    private void StartTimeCount(bool _data)
-    {
-        if (_data)
-        {
-            if (coroutineTimeUpdate != null) return;
-            gameTimer.Value = gameTime;
-            coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(gameTime));
-        }
-        else
-        {
-            if (coroutineTimeUpdate != null)
-                StopCoroutine(coroutineTimeUpdate);
-            coroutineTimeUpdate = null;
-        }
-
-    }
-    private IEnumerator GameTimerUpdate(float _gameTime)
-    {
-        while ((gameTimer.Value > 0) && gameStart.Value)
-        {
-            yield return new WaitForSeconds(1);
-
-            UpdateGameTime(0);
-        }
-        coroutineTimeUpdate = null;
-    }
-
-    private void UpdateGameTime(float _time)
+    // Call with Event
+    public void ChackGameTime(Component _sender, object _time)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            gameTimer.Value--;
-            gameTimer.Value = Mathf.Clamp(gameTimer.Value, 0, gameTime);
-
-            if (gameTimer.Value <= 0)
+            var timer = (float)_time;
+            if (timer <= 0)
             {
+                Debug.Log("ChackGameTime");
                 gameTimer.Value = 0;
                 gameStart.Value = false;
 
-                //  GameStopEvent?.Invoke();
                 GameEnd();
             }
-            else
-            {
-                GameTimeUpdateEvent?.Invoke(gameTimer.Value);
-            }
         }
-        else
-        {
-            gameTimer.Value = _time;
-            GameTimeUpdateEvent?.Invoke(gameTimer.Value);
-        }
-
     }
 
     private void GameEnd()
     {
+        Debug.Log("Game End");
+
         if (!PhotonNetwork.IsMasterClient) return;
-
-        EndGameScore endGameScore = new EndGameScore()
-        {
-            gameScore = gameScore.Value.ToString()
-        };
-
+        gameStart.Value = false;
         if (gameScore.Value > scoreForAddTeamWin)
         {
             teamWin.Value = "ADD TEAM WIN";
@@ -270,51 +198,19 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #region UpdateScore
-    private void StartUpdateScore(bool _data)
-    {
-        if (_data)
-        {
-            if (coroutineUpdateScore != null) return;
-
-            coroutineUpdateScore = StartCoroutine(IEUpdaScore());
-
-        }
-
-        else
-        {
-            if (coroutineUpdateScore != null)
-            {
-                StopCoroutine(coroutineUpdateScore);
-                coroutineUpdateScore = null;
-
-            }
-        }
-    }
-
-    private IEnumerator IEUpdaScore()
-    {
-
-        while (gameStart)
-        {
-            yield return new WaitForSeconds(timeToUpdateScore);
-            RequstClickScore();
-        }
-        coroutineUpdateScore = null;
-    }
-
-
-
-    private void RequstClickScore()
+    // Call with Event
+    public void RequstClickScore(Component _sender, object _data)
     {
 
         photonView.RPC("SendClickScore", RpcTarget.AllBuffered);
     }
+
     [PunRPC]
     private void SendClickScore()
     {
-        if (currentLickCount.CurrentClickCount == 0) return;
-        int currentClick = currentLickCount.CurrentClickCount;
-        currentLickCount.SetCurrentClick(0);
+        if (currentCickCount.CurrentClickCount == 0) return;
+        int currentClick = currentCickCount.CurrentClickCount;
+        currentCickCount.SetCurrentClick(0);
         string teamType = "Nope";
         teamType = TeamManager.instance.MyTeamType;
         ScoreSend data = new ScoreSend()
@@ -323,8 +219,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             score = currentClick
         };
 
-        var jsonData = JsonUtility.ToJson(data);
-        photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, jsonData);
+        var ScoreSendJson = JsonUtility.ToJson(data);
+        photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, ScoreSendJson);
     }
 
     [PunRPC]
@@ -332,7 +228,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            var data = JsonUtility.FromJson<ScoreSend>(_jsonData);
+            ScoreSend data = JsonUtility.FromJson<ScoreSend>(_jsonData);
             Debug.Log($"Receive:{_jsonData}");
             if (data.scoreType == ValueName.ADD_TEAM)
             {
@@ -341,30 +237,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else if (data.scoreType == ValueName.MINUS_TEAM)
             {
-                this.gameScore.Value -= data.score;
-                this.gameScore.Value = Mathf.Clamp(this.gameScore.Value, 0, int.MaxValue);
+                int gamescore = this.gameScore.Value;
+                gamescore -= data.score;
+                this.gameScore.Value = Mathf.Clamp(gamescore, 0, int.MaxValue);
 
             }
-            //       photonView.RPC("ReceviceResponse", _info.Sender, Utility.ResponseDataToJson(ResponesState.COMPLETE, "Update You Score To Master"));
         }
     }
 
-    [PunRPC]
-    private void ReceviceResponse(string _response)
-    {
-        Utility.ResponseDataFromJson(_response, out var _state, out var _mess);
 
-        if (_state == ResponesState.COMPLETE)
-        {
-            //  clickCount = 0;
-            //     UpdateScoreText();
-        }
-        else
-        {
-            Debug.LogError(_mess);
-        }
-
-    }
 
 
     #endregion
@@ -406,76 +287,45 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #region UI Button Funtion
-    //--Call in Button UI
-    public void StartGameBTN()
-    {
-        //   ResetGameEvent?.Invoke();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            gameStart.Value = true;
-        }
-    }
 
     //--Call in Button UI
-    public void ClickBTN()
-    {
-        if (!gameStart.Value) return;
-        currentLickCount.Click();
-    }
-    public void ResetBTN()
-    {
-
-        Reset();
-
-        //photonView.RPC("CallAllReSet", RpcTarget.AllBuffered);
-    }
     #endregion
 
 
     #region Phton Function And PropertiesUpdate
     //--CallBack
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            startGameBTN.SetActive(true);
-            resetGameBTN.SetActive(true);
-        }
-        else
-        {
-            startGameBTN.SetActive(false);
-            resetGameBTN.SetActive(false);
-        }
-    }
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
-
-        if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
+        if (!isMaster.Value)
         {
-            gameScore.Value = (int)propertiesThatChanged[ValueName.GAME_SCORE];
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
+            {
+                gameScore.Value = (int)propertiesThatChanged[ValueName.GAME_SCORE];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_TIME))
+            {
+                gameTimer.Value = (float)propertiesThatChanged[ValueName.GAME_TIME];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
+            {
+                gameStart.Value = (bool)propertiesThatChanged[ValueName.GAME_START];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.TEAM_WIN))
+            {
+                teamWin.Value = (string)propertiesThatChanged[ValueName.TEAM_WIN];
+            }
         }
-
-         if (propertiesThatChanged.ContainsKey(ValueName.GAME_TIME))
-        {
-            gameTimer.Value = (float)propertiesThatChanged[ValueName.GAME_TIME];
-        }
-
-        if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
-        {
-            gameStart.Value = (bool)propertiesThatChanged[ValueName.GAME_START];
-        }
-
-        if (propertiesThatChanged.ContainsKey(ValueName.TEAM_WIN))
-        {
-            teamWin.Value = (string)propertiesThatChanged[ValueName.TEAM_WIN];
-        }
-
-
     }
 
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        SetupEvents();
+    }
     #endregion
 
 

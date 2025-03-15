@@ -69,7 +69,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //  play_Canva.SetActive(false);
         //  connectCanva.SetActive(false);
         //  chooseTeamCanva.SetActive(true);
-        chooseTeamEvent.Raise(this, 0);
+
         Debug.Log("We're in a Room");
     }
 
@@ -81,7 +81,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-
+        chooseTeamEvent.Raise(this, -999);
         isMaster.Value = PhotonNetwork.IsMasterClient;
         finishConnectToServer.Value = true;
         finishConnectToServerEvent.Raise(this, isMaster.Value);
@@ -93,11 +93,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // }
 
 
-    public void KICKROOM(Component _sender,object _data)
+    public void KICKROOM(Component _sender, object _data)
     {
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
-      
+
         StartCoroutine(AfterLeveaServer());
     }
 

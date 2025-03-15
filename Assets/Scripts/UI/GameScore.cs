@@ -8,6 +8,10 @@ public class GameScore : TextUI
     {
         intValue.OnValueChange += UpdateText;
     }
+    void OnEnable()
+    {
+        UpdateText();
+    }
     public void UpdateText(int _score)
     {
         text.text = _score.ToString();

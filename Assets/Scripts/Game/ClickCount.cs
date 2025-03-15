@@ -10,6 +10,8 @@ public class ClickCount : MonoBehaviour
     [SerializeField] private BoolValue gamestart;
     public int CurrentClickCount => currentCount.Value;
 
+
+    
     public void Click()
     {
         if (!gamestart.Value) return;
