@@ -23,7 +23,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent masterPanelEvent;
     [Header("Value")]
 
-    [SerializeField] private BoolValue isMaster;
+  //  [SerializeField] private BoolValue isMaster;
+    [SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
 
 
