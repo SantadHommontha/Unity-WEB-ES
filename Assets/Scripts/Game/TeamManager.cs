@@ -24,6 +24,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [Header("Event")]
     [SerializeField] private GameEvent chooseTeamEven;
     [SerializeField] private GameEvent playEvent;
+    [SerializeField] private GameEvent afterJoinTeamComplete;
     [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent kickEvent;
     [SerializeField] private GameEvent KickedOutEvent;
@@ -163,11 +164,12 @@ public class TeamManager : MonoBehaviourPunCallbacks
         if (data.responseState == ResponesState.COMPLETE)
         {
             myTeamType = data.myTeamType;
-            playEvent.Raise(this, this);
+            afterJoinTeamComplete.Raise(this, true);
         }
         else if (data.responseState == ResponesState.FAIL)
         {
             reportError.text = data.responseMessage;
+            afterJoinTeamComplete.Raise(this, false);
         }
         reSpones.Value = data.responseMessage;
         //   photonView.RPC("UpDatePlayerDate", RpcTarget.MasterClient);

@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public abstract class ScriptableValue<T> : ScriptableObject
 {
+    [SerializeField][TextArea] private string description;
+    
     [SerializeField] protected T value;
     public Action<T> OnValueChange;
     public T Value

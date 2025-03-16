@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b35934d41945748b97261ce0017020, type: 3}
   m_Name: Play
   m_EditorClassIdentifier: 
+  description: Play Canvas Show
   listeners: []

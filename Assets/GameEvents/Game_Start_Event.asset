@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b35934d41945748b97261ce0017020, type: 3}
   m_Name: Game_Start_Event
   m_EditorClassIdentifier: 
+  description: when host click start btn
   listeners: []

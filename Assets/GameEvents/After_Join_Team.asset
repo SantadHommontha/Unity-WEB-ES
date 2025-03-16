@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4b35934d41945748b97261ce0017020, type: 3}
-  m_Name: Player_List_Update_Event
+  m_Name: After_Join_Team
   m_EditorClassIdentifier: 
-  description: When Add or Remove Player
+  description: after join team complete or fail
   listeners: []

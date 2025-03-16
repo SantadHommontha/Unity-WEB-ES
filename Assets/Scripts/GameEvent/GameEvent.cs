@@ -9,7 +9,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Events/Game Event")]
 public class GameEvent : ScriptableObject
 {
-
+    [SerializeField] [TextArea] private string description;
     public List<GameEventListener> listeners = new List<GameEventListener>();
 
     public void Raise(Component _sender,object _data)

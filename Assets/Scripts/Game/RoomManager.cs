@@ -18,7 +18,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //  [SerializeField] private GameEvent leaveRoomEven;
     [SerializeField] private GameEvent KickedOutEvent;
     [SerializeField] private GameEvent gameEndEvent;
-    [SerializeField] private GameEvent finishConnectToServerEvent;
+    [SerializeField] private GameEvent finishConnectToRoomEvent;
+    [SerializeField] private GameEvent afterJoinTeamComplete;
+    [SerializeField] private GameEvent masterPanelEvent;
     [Header("Value")]
 
     [SerializeField] private BoolValue isMaster;
@@ -47,7 +49,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        Debug.Log("Connected To Master");
+      //  Debug.Log("OnConnectedToMaster : "+PhotonNetwork.IsMasterClient );
         PhotonNetwork.JoinLobby();
 
 
@@ -58,7 +60,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnected()
     {
         base.OnConnected();
-
+      //  Debug.Log("OnConnected : " + PhotonNetwork.IsMasterClient);
 
     }
 
@@ -66,11 +68,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
-        //  play_Canva.SetActive(false);
+        // play_Canva.SetActive(false);
+        Debug.Log("Join a Lobby");
         //  connectCanva.SetActive(false);
         //  chooseTeamCanva.SetActive(true);
 
-        Debug.Log("We're in a Room");
+   //     Debug.Log("We're in a Room");
     }
 
     // public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -81,23 +84,36 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        chooseTeamEvent.Raise(this, -999);
+        //chooseTeamEvent.Raise(this, -999);
         isMaster.Value = PhotonNetwork.IsMasterClient;
+       
         finishConnectToServer.Value = true;
-        finishConnectToServerEvent.Raise(this, isMaster.Value);
-        Debug.Log("Room");
+        finishConnectToRoomEvent.Raise(this, isMaster.Value);
+        Debug.Log("JoinedRoom");
     }
     // public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     // {
     //     base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
     // }
 
+    // Call With Event
+    public void AfterJoinRoom(Component _sender,object _data)
+    {
+        if (isMaster.Value && (bool)_data)
+        {
+            masterPanelEvent.Raise(this, isMaster.Value);
+        }
+        else
+        {
+            chooseTeamEvent.Raise(this, isMaster.Value);
+        }
+    }
 
     public void KICKROOM(Component _sender, object _data)
     {
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
-
+        Debug.Log("Kicked out");
         StartCoroutine(AfterLeveaServer());
     }
 

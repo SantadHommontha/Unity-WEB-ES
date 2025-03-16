@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Space]
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent scoreUpdateEvent;
+    [SerializeField] private GameEvent playCanvasEvent;
 
     //--Var
     [Space]
@@ -329,5 +330,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
 
+
+    #region Event Call
+
+    public void AfterJoinTeam(Component _sender,object _data)
+    {
+        if((bool)_data)
+        {
+            playCanvasEvent.Raise(this, -999);
+        }
+    }
+
+
+
+
+    #endregion
 
 }
