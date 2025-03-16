@@ -180,5 +180,16 @@ public class Team
         return playerDatas;
 
     }
+    public string[] GetAllPlayerID()
+    {
+        string[] ids = new string[playerdata.Count];
+        int num = 0;
+      foreach(var t in playerdata)
+        {
+            ids[num] = t.Value.playerID;
+            num++;
+        }
+        return ids;
+    }
     #endregion
 }

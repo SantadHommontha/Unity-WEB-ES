@@ -114,6 +114,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
         Debug.Log("Kicked out");
+       // DisconnectServer();
         StartCoroutine(AfterLeveaServer());
     }
 

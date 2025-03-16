@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-
     #region Setup Event
     private void UpdateGameStartToRoomProperties(bool _data)
     {
@@ -162,7 +161,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             var timer = (float)_time;
             if (timer <= 0)
             {
-                Debug.Log("ChackGameTime");
+               // Debug.Log("ChackGameTime");
                 gameTimer.Value = 0;
                 gameStart.Value = false;
 
@@ -191,12 +190,55 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ReceiveGameEnd()
     {
-        gameEndEvent.Raise(this, -999);
+        if(!isMaster.Value)
+        {
+            gameEndEvent.Raise(this, -999);
+        }
 
     }
 
     #endregion
 
+    #region UI Button Funtion
+
+    //--Call in Button UI
+    #endregion
+
+    #region Phton Function And PropertiesUpdate
+    //--CallBack
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        if (!isMaster.Value)
+        {
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
+            {
+                gameScore.Value = (int)propertiesThatChanged[ValueName.GAME_SCORE];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_TIME))
+            {
+                gameTimer.Value = (float)propertiesThatChanged[ValueName.GAME_TIME];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
+            {
+                gameStart.Value = (bool)propertiesThatChanged[ValueName.GAME_START];
+            }
+
+            if (propertiesThatChanged.ContainsKey(ValueName.TEAM_WIN))
+            {
+                teamWin.Value = (string)propertiesThatChanged[ValueName.TEAM_WIN];
+            }
+        }
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        SetupEvents();
+    }
+    #endregion
 
     #region UpdateScore
     // Call with Event
@@ -251,7 +293,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-
     #region Update Game Data when Join Team
     public void RequstUpDataGameData()
     {
@@ -285,50 +326,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #endregion
-
-
-    #region UI Button Funtion
-
-    //--Call in Button UI
-    #endregion
-
-
-    #region Phton Function And PropertiesUpdate
-    //--CallBack
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        if (!isMaster.Value)
-        {
-            if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
-            {
-                gameScore.Value = (int)propertiesThatChanged[ValueName.GAME_SCORE];
-            }
-
-            if (propertiesThatChanged.ContainsKey(ValueName.GAME_TIME))
-            {
-                gameTimer.Value = (float)propertiesThatChanged[ValueName.GAME_TIME];
-            }
-
-            if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
-            {
-                gameStart.Value = (bool)propertiesThatChanged[ValueName.GAME_START];
-            }
-
-            if (propertiesThatChanged.ContainsKey(ValueName.TEAM_WIN))
-            {
-                teamWin.Value = (string)propertiesThatChanged[ValueName.TEAM_WIN];
-            }
-        }
-    }
-
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        SetupEvents();
-    }
-    #endregion
-
 
 
     #region Event Call

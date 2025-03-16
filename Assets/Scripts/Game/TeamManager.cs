@@ -242,20 +242,6 @@ public class TeamManager : MonoBehaviourPunCallbacks
             UpdatePlayerList.Raise(this, -999);
         }
     }
-
-
-    [PunRPC]
-    private void UpDatePlayerDate()
-    {
-
-    }
-
-
-    private void AfterJoinTeam()
-    {
-
-
-    }
     #endregion
 
 
@@ -352,18 +338,25 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void Kick()
     {
-        // RoomManager.instace.KICKROOM();
         KickedOutEvent.Raise(this, -999);
-
     }
-
 
     public void KickPlayer(Component _sender, object _playerID)
     {
 
         FindPlayerForKick((string)_playerID);
-    }
+    }// Call With Event
+    public void KickAllPlayer()
+    {
+        var ids = team.GetAllPlayerID();
+        
+        foreach (var id in ids)
+        {
+           
+            FindPlayerForKick(id);
+        }
 
+    }
     public void LeaveGame(Component _sender, object _playerID)
     {
         // Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
@@ -379,18 +372,9 @@ public class TeamManager : MonoBehaviourPunCallbacks
     }
 
 
-
-    public int GetAddTeamScore()
-    {
-        return 0;
-    }
-
-    public int GetMinusTeamScore()
-    {
-        return 0;
-    }
-
     #endregion
 
+
+   
 }
 
