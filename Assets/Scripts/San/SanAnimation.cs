@@ -5,8 +5,9 @@ public class SanAnimation : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] allSprtite;
-
+    [SerializeField] private SanAnimation sanHeadAnimation;
     [SerializeField] private float framePerSecond;
+
     private int spriteIndex = 0;
 
     private float time;
@@ -19,13 +20,20 @@ public class SanAnimation : MonoBehaviour
 
     void Start()
     {
+        SetUp();
+    }
+
+
+    private void SetUp()
+    {
         spriteRenderer.sprite = allSprtite[0];
         time = 1f / framePerSecond;
         spriteIndex = 0;
     }
-    [ContextMenu("Player Animation")]
-    private void PlayerAnimation()
+    [ContextMenu("Play Animation")]
+    public void PlayAnimation()
     {
+        SetUp();
         if (timeAnimation != null)
         {
             StopCoroutine(timeAnimation);
@@ -45,6 +53,7 @@ public class SanAnimation : MonoBehaviour
             ShowSprite();
         }
         timeAnimation = null;
+        if (sanHeadAnimation) CreateHead();
     }
 
     private int NextSprite()
@@ -57,6 +66,19 @@ public class SanAnimation : MonoBehaviour
     private void ShowSprite()
     {
         spriteRenderer.sprite = allSprtite[NextSprite()];
+    }
+
+    private void CreateHead()
+    {
+        float height = spriteRenderer.bounds.size.y;
+        Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height / 2f, 0);
+        var sh = Instantiate(sanHeadAnimation, newPosition, Quaternion.identity);
+        var sp = sh.GetComponent<SpriteRenderer>().bounds.size.y;
+        sh.transform.position += new Vector3(0, sp / 2f, 0);
+        if (sh.TryGetComponent<SanAnimation>(out var component))
+        {
+            component.PlayAnimation();
+        }
     }
 
 }
