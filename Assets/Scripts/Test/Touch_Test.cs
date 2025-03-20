@@ -5,10 +5,13 @@ public class Touch_Test : MonoBehaviour
     [SerializeField] private IntValue score;
     public void AddClick()
     {
-        score.Value += 1;
+        score.Value += 4;
     }
     public void MinusClick()
     {
-        score.Value -= 1;
+        int scoreValue = score.Value;
+        scoreValue -= 4;
+        
+        score.Value = Mathf.Clamp(scoreValue, 0, int.MaxValue);
     }
 }
