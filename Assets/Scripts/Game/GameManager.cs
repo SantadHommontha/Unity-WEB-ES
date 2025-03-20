@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private BoolValue isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
-    
+
     #endregion
 
 
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Call With Event
     public void Reset()
     {
-        Debug.Log("Reset");
+        Debug.Log("Game Reset");
         gameScore.Value = 0;
         currentCickCount.Reset();
         gameStart.Value = false;
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             var timer = (float)_time;
             if (timer <= 0)
             {
-               // Debug.Log("ChackGameTime");
+                // Debug.Log("ChackGameTime");
                 gameTimer.Value = 0;
                 gameStart.Value = false;
 
@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ReceiveGameEnd()
     {
-        if(!isMaster.Value)
+        if (!isMaster.Value)
         {
             gameEndEvent.Raise(this, -999);
         }
@@ -330,17 +330,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region Event Call
 
-    public void AfterJoinTeam(Component _sender,object _data)
+    public void AfterJoinTeam(Component _sender, object _data)
     {
-        if((bool)_data)
+        if ((bool)_data)
         {
             playCanvasEvent.Raise(this, -999);
         }
     }
 
 
+    public void GameStart()
 
-
+    {
+        gameStart.Value = true;
+    }
     #endregion
 
 }
