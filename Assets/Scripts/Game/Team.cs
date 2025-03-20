@@ -18,6 +18,7 @@ public class PlayerData
     public string teamName;
     public string playerName;
     public int clickCount;
+    public string code;
 }
 
 [System.Serializable]

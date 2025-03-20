@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BoolValueHandle : ValueHandle
 {
+    public bool localValue = false;
     [SerializeField] private BoolValue boolValue;
    
-    [SerializeField] private bool localValue = false;
     public bool Value
     {
         get

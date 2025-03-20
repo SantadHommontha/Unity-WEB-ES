@@ -15,6 +15,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     //--UI
     [Space]
     [SerializeField] private TMP_InputField enterNameInput;
+    [SerializeField] private TMP_InputField enterRoomCodeInput;
     [SerializeField] private Button btn1, btn2;
     [SerializeField] private TMP_Text reportError;
 
@@ -45,6 +46,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     [Header("Value")]
     [SerializeField] private StringValue reSpones;
+    [SerializeField] private StringValue roomCode;
 
 
     #endregion
@@ -103,8 +105,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
             playerID = PhotonNetwork.LocalPlayer.UserId,
             teamName = _teamName,
             playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text,
-            clickCount = 0
-
+            clickCount = 0,
+            code = roomCode.Value
         };
         string jsonData = JsonUtility.ToJson(playerData);
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
@@ -114,46 +116,55 @@ public class TeamManager : MonoBehaviourPunCallbacks
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
+        Debug.Log(_info);
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
-        if (data.teamName == ValueName.ADD_TEAM)
+
+        if (data.code == roomCode.Value)
         {
-
-            if ((team.AddTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
+            if (data.teamName == ValueName.ADD_TEAM)
             {
-                // add Complete
-                Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
-                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.ADD_TEAM));
 
+                if ((team.AddTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
+                {
+                    // add Complete
+                    Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.ADD_TEAM));
+
+                }
+                else
+                {
+                    // fail to addFD
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
+                }
+            }
+            else if (data.teamName == ValueName.MINUS_TEAM)
+            {
+
+                if ((team.MinusTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
+                {
+                    // add Complete
+                    Debug.Log($"PLayer Join Minus Team:{data.playerName} {data.playerID}");
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
+                }
+                else
+                {
+                    // fail to add
+                    photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
+                }
             }
             else
             {
-                // fail to addFD
-                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
+                // fail not have this team name
+                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Not Have this Team Name"));
             }
         }
-        else if (data.teamName == ValueName.MINUS_TEAM)
-        {
 
-            if ((team.MinusTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
-            {
-                // add Complete
-                Debug.Log($"PLayer Join Minus Team:{data.playerName} {data.playerID}");
-                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
-            }
-            else
-            {
-                // fail to add
-                photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Team Have Full"));
-            }
-        }
         else
         {
-            //    Debug.Log("4444");
-            // fail not have this team name
-            photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Not Have this Team Name"));
+            photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.FAIL, "Invalid code"));
         }
+
     }
 
 
@@ -180,7 +191,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     // Update When Player List In Team Change
     private void UpdatePlayerListToRoomPorperties()
     {
-       
+
         if (PhotonNetwork.IsMasterClient)
         {
 
@@ -349,10 +360,10 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public void KickAllPlayer()
     {
         var ids = team.GetAllPlayerID();
-        
+
         foreach (var id in ids)
         {
-           
+
             FindPlayerForKick(id);
         }
 
@@ -375,6 +386,6 @@ public class TeamManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-   
+
 }
 

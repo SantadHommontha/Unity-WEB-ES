@@ -23,8 +23,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent masterPanelEvent;
     [Header("Value")]
 
-  //  [SerializeField] private BoolValue isMaster;
+    //  [SerializeField] private BoolValue isMaster;
     [SerializeField] private BoolValueHandle isMaster;
+    //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
 
 
@@ -50,7 +51,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-      //  Debug.Log("OnConnectedToMaster : "+PhotonNetwork.IsMasterClient );
+        //  Debug.Log("OnConnectedToMaster : "+PhotonNetwork.IsMasterClient );
         PhotonNetwork.JoinLobby();
 
 
@@ -61,7 +62,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnected()
     {
         base.OnConnected();
-      //  Debug.Log("OnConnected : " + PhotonNetwork.IsMasterClient);
+        //  Debug.Log("OnConnected : " + PhotonNetwork.IsMasterClient);
 
     }
 
@@ -74,7 +75,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //  connectCanva.SetActive(false);
         //  chooseTeamCanva.SetActive(true);
 
-   //     Debug.Log("We're in a Room");
+        //     Debug.Log("We're in a Room");
     }
 
     // public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -86,8 +87,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         //chooseTeamEvent.Raise(this, -999);
-        isMaster.Value = PhotonNetwork.IsMasterClient;
-       
+        if (!isMaster.localValue)
+            isMaster.Value = PhotonNetwork.IsMasterClient;
+
         finishConnectToServer.Value = true;
         finishConnectToRoomEvent.Raise(this, isMaster.Value);
         Debug.Log("JoinedRoom");
@@ -98,7 +100,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // }
 
     // Call With Event
-    public void AfterJoinRoom(Component _sender,object _data)
+    public void AfterJoinRoom(Component _sender, object _data)
     {
         if (isMaster.Value && (bool)_data)
         {
@@ -115,7 +117,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
         Debug.Log("Kicked out");
-       // DisconnectServer();
+        // DisconnectServer();
         StartCoroutine(AfterLeveaServer());
     }
 

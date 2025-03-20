@@ -1636,6 +1636,9 @@ GameObject:
   - component: {fileID: 199947496}
   - component: {fileID: 199947495}
   - component: {fileID: 199947494}
+  - component: {fileID: 199947497}
+  - component: {fileID: 199947498}
+  - component: {fileID: 199947499}
   m_Layer: 5
   m_Name: Room code
   m_TagString: Untagged
@@ -1742,7 +1745,31 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 199947497}
+        m_TargetAssemblyTypeName: RoomCodeUI, Assembly-CSharp
+        m_MethodName: CharacterUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 199947498}
+        m_TargetAssemblyTypeName: SetRoomCode, Game
+        m_MethodName: SetRoomCodeToValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1802,6 +1829,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199947492}
   m_CullTransparentMesh: 1
+--- !u!114 &199947497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199947492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4727cd1724968548a9defeb957cba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 199947494}
+--- !u!114 &199947498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199947492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a34ffb98f590174f934e6a11f81d022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  code: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
+--- !u!114 &199947499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199947492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96512c5124797447bde07237e00766b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tMP_InputField: {fileID: 199947494}
 --- !u!1 &208317203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +2027,7 @@ GameObject:
   - component: {fileID: 216920433}
   - component: {fileID: 216920432}
   - component: {fileID: 216920431}
+  - component: {fileID: 216920434}
   m_Layer: 5
   m_Name: EnterName
   m_TagString: Untagged
@@ -2127,6 +2194,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216920429}
   m_CullTransparentMesh: 1
+--- !u!114 &216920434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216920429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96512c5124797447bde07237e00766b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tMP_InputField: {fileID: 216920431}
 --- !u!1 &226777311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,6 +2793,7 @@ GameObject:
   - component: {fileID: 315797641}
   - component: {fileID: 315797640}
   - component: {fileID: 315797642}
+  - component: {fileID: 315797643}
   m_Layer: 5
   m_Name: ErrorReport_text
   m_TagString: Untagged
@@ -2857,6 +2938,20 @@ MonoBehaviour:
   boolValue: {fileID: 0}
   startText: 
   endText: 
+--- !u!114 &315797643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315797638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f36b464c3664fb4983657fefeb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmp_text: {fileID: 315797640}
+  text: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,6 +3834,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1388602598}
+        m_TargetAssemblyTypeName: ClearText, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 836129342}
+        m_TargetAssemblyTypeName: ClearText, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
 --- !u!1 &450206909
 GameObject:
@@ -3809,8 +3928,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Is Master
   useLocalValue: 0
-  boolValue: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
   localValue: 0
+  boolValue: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
 --- !u!1 &476096887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4413,6 +4532,7 @@ GameObject:
   - component: {fileID: 547922646}
   - component: {fileID: 547922645}
   - component: {fileID: 547922644}
+  - component: {fileID: 547922648}
   m_Layer: 5
   m_Name: Room Code Inpit
   m_TagString: Untagged
@@ -4453,7 +4573,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 547922645}
-  code: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
 --- !u!114 &547922645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4546,6 +4665,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 547922648}
+        m_TargetAssemblyTypeName: SetRoomCode, Game
+        m_MethodName: SetRoomCodeToValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4605,6 +4736,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547922642}
   m_CullTransparentMesh: 1
+--- !u!114 &547922648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547922642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a34ffb98f590174f934e6a11f81d022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  code: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
 --- !u!1 &556367261
 GameObject:
   m_ObjectHideFlags: 0
@@ -6002,7 +6146,7 @@ GameObject:
   - component: {fileID: 718953426}
   - component: {fileID: 718953425}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7047,6 +7191,7 @@ GameObject:
   - component: {fileID: 836129340}
   - component: {fileID: 836129339}
   - component: {fileID: 836129341}
+  - component: {fileID: 836129342}
   m_Layer: 5
   m_Name: Time
   m_TagString: Untagged
@@ -7188,6 +7333,20 @@ MonoBehaviour:
   startText: 
   endText: 
   timerValue: {fileID: 11400000, guid: ec0523ecd54ba534d82ac55456de2ff2, type: 2}
+--- !u!114 &836129342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836129337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f36b464c3664fb4983657fefeb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmp_text: {fileID: 836129339}
+  text: TIME
 --- !u!1 &845548802
 GameObject:
   m_ObjectHideFlags: 0
@@ -9442,8 +9601,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 62
+  m_fontSizeBase: 62
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10298,6 +10457,42 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 216920434}
+        m_TargetAssemblyTypeName: InputText, Assembly-CSharp
+        m_MethodName: ClearInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 315797643}
+        m_TargetAssemblyTypeName: ClearText, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 199947499}
+        m_TargetAssemblyTypeName: InputText, Assembly-CSharp
+        m_MethodName: ClearInput
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11808,6 +12003,7 @@ GameObject:
   - component: {fileID: 1388602596}
   - component: {fileID: 1388602595}
   - component: {fileID: 1388602597}
+  - component: {fileID: 1388602598}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -11952,6 +12148,20 @@ MonoBehaviour:
   boolValue: {fileID: 0}
   startText: 
   endText: ' EIEI'
+--- !u!114 &1388602598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388602593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb4f36b464c3664fb4983657fefeb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmp_text: {fileID: 1388602595}
+  text: Score
 --- !u!1 &1417949124
 GameObject:
   m_ObjectHideFlags: 0
@@ -14320,6 +14530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTeamCount: 3
   enterNameInput: {fileID: 216920431}
+  enterRoomCodeInput: {fileID: 547922645}
   btn1: {fileID: 336122620}
   btn2: {fileID: 525379616}
   reportError: {fileID: 315797640}
@@ -14330,6 +14541,7 @@ MonoBehaviour:
   kickEvent: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
   KickedOutEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
   reSpones: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
+  roomCode: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
 --- !u!4 &1736650176
 Transform:
   m_ObjectHideFlags: 0
