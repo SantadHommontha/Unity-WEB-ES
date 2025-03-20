@@ -6,7 +6,7 @@ public class TouchUI : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameEvent touchAreaCkicl;
     public void OnPointerDown(PointerEventData eventData)
     {
-        touchAreaCkicl.Raise(this,0);
+        touchAreaCkicl.Raise(this,-999);
     }
 
 }

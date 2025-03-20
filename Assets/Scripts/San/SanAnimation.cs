@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class SanAnimation : MonoBehaviour
     [SerializeField] private Sprite[] allSprtite;
     [SerializeField] private SanAnimation sanHeadAnimation;
     [SerializeField] private float framePerSecond;
-
+    [SerializeField] private float second = 1f;
     private int spriteIndex = 0;
 
     private float time;
@@ -24,14 +25,29 @@ public class SanAnimation : MonoBehaviour
     }
 
 
-    private void SetUp()
+    public void SetUp()
     {
         spriteRenderer.sprite = allSprtite[0];
-        time = 1f / framePerSecond;
+        time = second / framePerSecond;
         spriteIndex = 0;
+        if(sanHeadAnimation)
+        {
+            sanHeadAnimation.SetUp();
+        }
+        else
+        {
+            spriteRenderer.enabled = false;
+        }
     }
-    [ContextMenu("Play Animation")]
-    public void PlayAnimation()
+
+    #region UP
+   // -----------------------------------------UP----------------
+    [ContextMenu("Play Animation Up")]
+    public void PlayAnimationUP()
+    {
+        PlayAnimationUP(() => { });
+    }
+    public void PlayAnimationUP(Action _callback)
     {
         SetUp();
         if (timeAnimation != null)
@@ -40,45 +56,98 @@ public class SanAnimation : MonoBehaviour
             timeAnimation = null;
         }
         spriteIndex = 0;
-        timeAnimation = StartCoroutine(TimeAnimation(time));
-
-
-
+        timeAnimation = StartCoroutine(TimeAnimationUP(time, _callback));
     }
-    IEnumerator TimeAnimation(float _time)
+    IEnumerator TimeAnimationUP(float _time,Action _callback)
     {
+        spriteRenderer.enabled = true;
         while (spriteIndex < allSprtite.Length)
         {
             yield return new WaitForSeconds(_time);
-            ShowSprite();
+            ShowSpriteUP();
         }
         timeAnimation = null;
+        _callback?.Invoke();
         if (sanHeadAnimation) CreateHead();
     }
-
     private int NextSprite()
     {
         int rt = spriteIndex;
         spriteIndex++;
         return rt;
     }
-
-    private void ShowSprite()
+    private void ShowSpriteUP()
     {
         spriteRenderer.sprite = allSprtite[NextSprite()];
     }
+    #endregion
 
+    #region Down
+    // -----------------------------------------Down----------------
+
+    [ContextMenu("Play Animation Down")]
+    public void PlayAnimationDown()
+    {
+        AnimationDown(() => { StartDown(()=> { }); });
+    }
+    public void PlayAnimationDown(Action _callback)
+    {
+        AnimationDown(() => { StartDown(() => { _callback?.Invoke(); }); });
+    }
+    private void AnimationDown(Action _callback)
+    {
+       if(sanHeadAnimation)
+        {
+            sanHeadAnimation.AnimationDown(() => _callback?.Invoke());
+        }
+       else
+        {
+            StartDown( _callback);
+        }
+    }
+    public void StartDown(Action _callback)
+    {
+        if (timeAnimation != null)
+        {
+            StopCoroutine(timeAnimation);
+            timeAnimation = null;
+        }
+        timeAnimation = StartCoroutine(TimeAnimationDown(time, _callback));
+    }
+    IEnumerator TimeAnimationDown(float _time, Action _callback)
+    {
+        while (spriteIndex > 0)
+        {
+            yield return new WaitForSeconds(_time);
+            ShowSpriteDown();
+        }
+        timeAnimation = null;
+        spriteRenderer.enabled = false;
+        _callback?.Invoke();
+    }
+    private int PreviousSprite()
+    {
+       spriteIndex--;
+       spriteIndex = Mathf.Clamp(spriteIndex, 0, allSprtite.Length - 1);
+      return spriteIndex;
+    }
+    private void ShowSpriteDown()
+    {
+        spriteRenderer.sprite = allSprtite[PreviousSprite()];
+    }
+    #endregion
+
+
+
+    // -----------------------------------------CreateHead----------------
     private void CreateHead()
     {
         float height = spriteRenderer.bounds.size.y;
-        Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height / 2f, 0);
-        var sh = Instantiate(sanHeadAnimation, newPosition, Quaternion.identity);
-        var sp = sh.GetComponent<SpriteRenderer>().bounds.size.y;
-        sh.transform.position += new Vector3(0, sp / 2f, 0);
-        if (sh.TryGetComponent<SanAnimation>(out var component))
-        {
-            component.PlayAnimation();
-        }
+        Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height/2f, 0);
+        var sp = sanHeadAnimation.GetComponent<SpriteRenderer>().bounds.size.y;
+        sanHeadAnimation.transform.position = (newPosition += new Vector3(0,sp/2f,0));
+        sanHeadAnimation.PlayAnimationUP();
     }
+    
 
 }

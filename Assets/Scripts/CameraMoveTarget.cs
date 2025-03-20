@@ -29,7 +29,7 @@ public class CameraMoveTarget : MonoBehaviour
 
     private void OnSanTranformChange(Vector3 _newTranform)
     {
-        var newPosition = new Vector3(transform.position.x, Mathf.Clamp(_newTranform.y,minYPosition,float.MaxValue), transform.position.z);
+        var newPosition = new Vector3(0f, Mathf.Clamp(_newTranform.y,minYPosition,float.MaxValue),-10f);
 
         targetPosition = newPosition;
     }

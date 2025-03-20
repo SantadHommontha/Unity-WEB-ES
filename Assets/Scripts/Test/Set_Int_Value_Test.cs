@@ -10,4 +10,16 @@ public class Set_Int_Value_Test : MonoBehaviour
     {
         intValue.Value = newInt; 
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            intValue.Value += 10;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            intValue.Value -= 10;
+        }
+    }
 }

@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -6,8 +7,11 @@ public class SpriteStacker : MonoBehaviour
 {
     [SerializeField] private Transform startPosition;
     [SerializeField] private SanAnimation[] sanAnimationsSet;
-    private int nextScoreTarget;
+  [SerializeField]  private int nextScoreTarget;
+   [SerializeField] private int perviousScore;
     [SerializeField] private int nextScore = 10;
+
+    [SerializeField] private List<SanAnimation> allSanAnimation = new List<SanAnimation>();
     [Header("Value")]
     [SerializeField] private Vector3Value lastSanTranform;
     [SerializeField] private IntValue gameScore;
@@ -16,6 +20,7 @@ public class SpriteStacker : MonoBehaviour
     void Start()
     {
         nextScoreTarget = 10;
+        perviousScore = 0;
         CreateNewSprite();
     }
 
@@ -29,47 +34,80 @@ public class SpriteStacker : MonoBehaviour
         gameScore.OnValueChange -= GameScoreUpdate;
     }
 
-
+    private void Update()
+    {
+       /* if(Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            CreateNewSprite();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            DestroySprite();
+        }*/
+    }
     private GameObject RandomSprite()
     {
-        return sanAnimationsSet[Random.Range(0, sanAnimationsSet.Length - 1)].gameObject;
+        return sanAnimationsSet[Random.Range(0, sanAnimationsSet.Length)].gameObject;
     }
 
     [ContextMenu("Create New Sprite")]
     private void CreateNewSprite()
     {
-        if (lastSprite == null)
+        if (allSanAnimation.Count == 0)
         {
+            Debug.Log("111");
             CreateNewSprite(startPosition.position);
         }
         else
         {
-            float height = lastSprite.GetComponent<SpriteRenderer>().bounds.size.y;
-            Vector3 newPosition = lastSprite.transform.position + new Vector3(0, height, 0);
+            Debug.Log("222");
+            float height = allSanAnimation[allSanAnimation.Count-1].GetComponent<SpriteRenderer>().bounds.size.y;
+            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, height, 0);
 
             CreateNewSprite(newPosition);
         }
-
-
     }
     private void CreateNewSprite(Vector3 _position)
     {
-
-        lastSprite = Instantiate(RandomSprite(), _position, Quaternion.identity);
+        var t = Instantiate(RandomSprite(), _position, Quaternion.identity);
+        var sa = t.GetComponent<SanAnimation>();
+        
+        allSanAnimation.Add(sa);
+        sa.PlayAnimationUP();
+       
         lastSanTranform.Value = _position;
-        if (lastSprite.TryGetComponent<SanAnimation>(out var component))
-        {
-            component.PlayAnimation();
-        }
-
     }
+    [ContextMenu("Destroy Sprite")]
+    private void DestroySprite()
+    {
+        if (allSanAnimation.Count <= 0) return;
+
+        var ls = allSanAnimation[allSanAnimation.Count - 1];
+        
+        lastSprite = ls.gameObject;
+      //  ls.PlayAnimationDown(()=> { Destroy(ls.gameObject); });
+        ls.PlayAnimationDown(() => { Destroy(ls.gameObject); });
+        lastSanTranform.Value = ls.transform.position;
+        allSanAnimation.Remove(ls);          
+    }
+
 
      private void GameScoreUpdate(int _score)
     {
+        
+
+
         if(_score >= nextScoreTarget)
-        {
+        {   
+            perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
+        }
+       else if(_score <= perviousScore)
+        {
+            nextScoreTarget = perviousScore;
+            perviousScore -= nextScore;
+            DestroySprite();
         }
     }
 
