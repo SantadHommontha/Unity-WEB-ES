@@ -1,19 +1,33 @@
 
+using System.ComponentModel;
 using UnityEngine;
 
 public class SpriteStacker : MonoBehaviour
 {
     [SerializeField] private Transform startPosition;
     [SerializeField] private SanAnimation[] sanAnimationsSet;
-   
-
+    private int nextScoreTarget;
+    [SerializeField] private int nextScore = 10;
+    [Header("Value")]
+    [SerializeField] private Vector3Value lastSanTranform;
+    [SerializeField] private IntValue gameScore;
 
     private GameObject lastSprite;
     void Start()
     {
+        nextScoreTarget = 10;
         CreateNewSprite();
     }
 
+    private void OnEnable()
+    {
+        gameScore.OnValueChange += GameScoreUpdate;
+    }
+
+    private void OnDisable()
+    {
+        gameScore.OnValueChange -= GameScoreUpdate;
+    }
 
 
     private GameObject RandomSprite()
@@ -42,6 +56,7 @@ public class SpriteStacker : MonoBehaviour
     {
 
         lastSprite = Instantiate(RandomSprite(), _position, Quaternion.identity);
+        lastSanTranform.Value = _position;
         if (lastSprite.TryGetComponent<SanAnimation>(out var component))
         {
             component.PlayAnimation();
@@ -49,6 +64,13 @@ public class SpriteStacker : MonoBehaviour
 
     }
 
-
+     private void GameScoreUpdate(int _score)
+    {
+        if(_score >= nextScoreTarget)
+        {
+            nextScoreTarget += nextScore;
+            CreateNewSprite();
+        }
+    }
 
 }

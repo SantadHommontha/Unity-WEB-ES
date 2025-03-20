@@ -250,8 +250,8 @@ GameObject:
   m_Component:
   - component: {fileID: 211751522}
   - component: {fileID: 211751521}
-  - component: {fileID: 211751520}
   - component: {fileID: 211751523}
+  - component: {fileID: 211751524}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -259,14 +259,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &211751520
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211751519}
-  m_Enabled: 1
 --- !u!20 &211751521
 Camera:
   m_ObjectHideFlags: 0
@@ -377,6 +369,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &211751524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211751519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22e24f280b3e5b47aa11081693a75de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minYPosition: 1
+  speed: 2
+  lastSanValue: {fileID: 11400000, guid: c7a94b8331ec3cd41860dcab3572c4c9, type: 2}
 --- !u!1 &540042470
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,8 +541,9 @@ MonoBehaviour:
   sanAnimationsSet:
   - {fileID: 7886130184241835429, guid: 6d3167152b94262468b778c6b993f535, type: 3}
   - {fileID: 1177066621919188035, guid: e89073482132db5498d10a026cf65022, type: 3}
-  sanHeadAnimation:
-  - {fileID: 3644200166335562505, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
+  nextScore: 10
+  lastSanTranform: {fileID: 11400000, guid: c7a94b8331ec3cd41860dcab3572c4c9, type: 2}
+  gameScore: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
