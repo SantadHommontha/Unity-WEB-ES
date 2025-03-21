@@ -35,10 +35,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     private Team team = new Team();
     private PlayerData myPlayerData;
     public PlayerData MyPlayerData => myPlayerData;
-    private string myName;
-    public string MyName => myName;
-    private string myTeamType;
-    public string MyTeamType => myTeamType;
+
 
     private Team myTeam;
     public Team MyTeam => myTeam;
@@ -48,6 +45,10 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private StringValue reSpones;
     [SerializeField] private StringValue roomCode;
     [SerializeField] private BoolValue isEnterToGame;
+    [SerializeField] private StringValue myName;
+    public string MyName => myName.Value;
+    [SerializeField] private StringValue myTeamType;
+    public string MyTeamType => myTeamType.Value;
 
 
     #endregion
@@ -110,6 +111,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             code = roomCode.Value
         };
         string jsonData = JsonUtility.ToJson(playerData);
+        myName.Value = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
     }
 
@@ -176,7 +178,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         var data = JsonUtility.FromJson<SendResponseJoinData>(_reportJson);
         if (data.responseState == ResponesState.COMPLETE)
         {
-            myTeamType = data.myTeamType;
+            myTeamType.Value = data.myTeamType;
             isEnterToGame.Value = true;
             afterJoinTeamComplete.Raise(this, true);
         }
