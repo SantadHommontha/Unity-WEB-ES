@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 953cb932684726142a47db24f12ccf9b, type: 3}
-  m_Name: Is_Ready
+  m_Name: Is_Enter_To_Game
   m_EditorClassIdentifier: 
-  description: 
+  description: is Player Join Game Team Complete this Value will be True
   value: 0

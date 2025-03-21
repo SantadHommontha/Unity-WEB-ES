@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953cb932684726142a47db24f12ccf9b, type: 3}
   m_Name: Finish_Connect_To_Server
   m_EditorClassIdentifier: 
+  description: 'When finish Connect to server '
   value: 0

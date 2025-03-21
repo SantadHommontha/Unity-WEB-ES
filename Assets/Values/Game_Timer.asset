@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be49615d42150704fa049cc9c9fa1009, type: 3}
   m_Name: Game_Timer
   m_EditorClassIdentifier: 
+  description: Game Timer
   value: 0

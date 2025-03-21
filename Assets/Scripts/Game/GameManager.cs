@@ -38,13 +38,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [Header("Value")]
     [Space]
-    public BoolValue gameStart;
-    public IntValue gameScore;
-    public FloatValue gameTimer;
+    [SerializeField] private BoolValue gameStart;
+    [SerializeField] private IntValue gameScore;
+    [SerializeField] private FloatValue gameTimer;
     [SerializeField] StringValue teamWin;
+    [SerializeField] private BoolValue isEnterToGame;
 
     [SerializeField] private BoolValue isMaster;
-    [SerializeField] private BoolValue finishConnectToServer;
+
 
     #endregion
 
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             };
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
     }
-
+    // call in OnJoinRoom Function
     private void SetupEvents()
     {
 
@@ -161,7 +162,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             var timer = (float)_time;
             if (timer <= 0)
             {
-                // Debug.Log("ChackGameTime");
                 gameTimer.Value = 0;
                 gameStart.Value = false;
 
@@ -205,10 +205,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region Phton Function And PropertiesUpdate
-    //--CallBack
+    //-- if not master this function will receive data form master
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
+        if (!isEnterToGame.Value) return;
         if (!isMaster.Value)
         {
             if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))

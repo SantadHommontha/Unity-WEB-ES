@@ -5,7 +5,7 @@ public class GameTimer : MonoBehaviour
 {
     [SerializeField][TextArea] protected string description;
     [SerializeField] protected float time;
-    [SerializeField] protected float timer;
+    protected float timer;
     protected Coroutine coroutineTimeUpdate;
 
     [Header("Event")]

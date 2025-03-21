@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953cb932684726142a47db24f12ccf9b, type: 3}
   m_Name: Is_Master
   m_EditorClassIdentifier: 
+  description: First player at enter to server will be set to True
   value: 0

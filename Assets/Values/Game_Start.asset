@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953cb932684726142a47db24f12ccf9b, type: 3}
   m_Name: Game_Start
   m_EditorClassIdentifier: 
+  description: Is Just Game Score
   value: 0

@@ -4950,6 +4950,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 547922644}
+        m_TargetAssemblyTypeName: RoomCodeUI, Assembly-CSharp
+        m_MethodName: GenerateRandom
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 2c79c5c4eb6b617448853172d20ab2fa, type: 2}
 --- !u!1001 &579154627
 PrefabInstance:
@@ -8021,6 +8033,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 547922644}
+        m_TargetAssemblyTypeName: RoomCodeUI, Assembly-CSharp
+        m_MethodName: GenerateRandom
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 42999f44b5e529540803cc5a405be407, type: 2}
 --- !u!1 &886253944
 GameObject:
@@ -9794,8 +9818,8 @@ MonoBehaviour:
   gameScore: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
   gameTimer: {fileID: 11400000, guid: ec0523ecd54ba534d82ac55456de2ff2, type: 2}
   teamWin: {fileID: 11400000, guid: 7ddd1265b10a4444b91443b6c9404065, type: 2}
+  isEnterToGame: {fileID: 11400000, guid: 13b04c4025ba1654c95ff99942067702, type: 2}
   isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
-  finishConnectToServer: {fileID: 11400000, guid: a7503b95fa816824ba3c2639f7339294, type: 2}
 --- !u!114 &1051956783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9846,8 +9870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: Game Timer
-  time: 10
-  timer: 0
+  time: 20
   timerUpdateEvent: {fileID: 11400000, guid: a8f0c592eacec6e4a887674ab0c67f4b, type: 2}
 --- !u!114 &1051956786
 MonoBehaviour:
@@ -9861,9 +9884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b5d9f076b9a643a653da7e9ff5bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Fetch
+  description: Time for Fetch score
   time: 0.2
-  timer: 0
   timerUpdateEvent: {fileID: 11400000, guid: 433fa759a93da384c9a6c2d5c6cf60a3, type: 2}
   gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
 --- !u!1 &1072756332
@@ -10492,6 +10514,18 @@ MonoBehaviour:
       - m_Target: {fileID: 199947499}
         m_TargetAssemblyTypeName: InputText, Assembly-CSharp
         m_MethodName: ClearInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1736650175}
+        m_TargetAssemblyTypeName: TeamManager, Game
+        m_MethodName: ResetIsEnterTogame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14542,6 +14576,7 @@ MonoBehaviour:
   KickedOutEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
   reSpones: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
   roomCode: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
+  isEnterToGame: {fileID: 11400000, guid: 13b04c4025ba1654c95ff99942067702, type: 2}
 --- !u!4 &1736650176
 Transform:
   m_ObjectHideFlags: 0

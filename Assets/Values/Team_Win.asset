@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1371c55b8203c4eb2fed9481df19ed, type: 3}
   m_Name: Team_Win
   m_EditorClassIdentifier: 
+  description: Name of team Win
   value: 

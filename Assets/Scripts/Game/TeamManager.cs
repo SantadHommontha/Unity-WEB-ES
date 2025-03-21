@@ -47,6 +47,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [Header("Value")]
     [SerializeField] private StringValue reSpones;
     [SerializeField] private StringValue roomCode;
+    [SerializeField] private BoolValue isEnterToGame;
 
 
     #endregion
@@ -96,7 +97,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     #region Join Team
 
-
+    // send playerdata to master to join team
     private void RequestJoinTeam(string _teamName)
     {
         PlayerData playerData = new PlayerData()
@@ -112,6 +113,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
     }
 
+    // receive player data at RequestJoinTeam Funcetion Send
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
@@ -175,11 +177,13 @@ public class TeamManager : MonoBehaviourPunCallbacks
         if (data.responseState == ResponesState.COMPLETE)
         {
             myTeamType = data.myTeamType;
+            isEnterToGame.Value = true;
             afterJoinTeamComplete.Raise(this, true);
         }
         else if (data.responseState == ResponesState.FAIL)
         {
             reportError.text = data.responseMessage;
+            isEnterToGame.Value = false;
             afterJoinTeamComplete.Raise(this, false);
         }
         reSpones.Value = data.responseMessage;
@@ -356,7 +360,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     {
 
         FindPlayerForKick((string)_playerID);
-    }// Call With Event
+    }
+    // Call With kick Event
     public void KickAllPlayer()
     {
         var ids = team.GetAllPlayerID();
@@ -368,6 +373,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         }
 
     }
+    // Call With LeaveGame Event
     public void LeaveGame(Component _sender, object _playerID)
     {
         // Debug.Log("LeaveGame Called by: " + _sender.name + " | PlayerID: " + _playerID);
@@ -385,7 +391,13 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Event Call
 
+    public void ResetIsEnterTogame()
+    {
+        isEnterToGame.Value = false;
+    }
+    #endregion
 
 }
 
