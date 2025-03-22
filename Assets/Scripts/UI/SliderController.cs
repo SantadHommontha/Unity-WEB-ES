@@ -18,10 +18,6 @@ public class SliderController : MonoBehaviour
     {
         gameScore.OnValueChange -= GameScoreUpdate;
     }
-    public void SetUP()
-    {
-        slider.value = 0;
-    }
 
     private void GameScoreUpdate(int _score)
     {

@@ -55,7 +55,6 @@ MonoBehaviour:
   allSanAnimation: []
   lastSanTranform: {fileID: 11400000, guid: c7a94b8331ec3cd41860dcab3572c4c9, type: 2}
   gameScore: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
-  gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
 --- !u!1 &5344497911853548072
 GameObject:
   m_ObjectHideFlags: 0

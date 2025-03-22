@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Game_Start
   m_EditorClassIdentifier: 
   description: Is Just Game Score
-  value: 1
+  value: 0
