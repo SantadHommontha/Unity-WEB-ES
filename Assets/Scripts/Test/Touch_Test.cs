@@ -1,17 +1,30 @@
 using UnityEngine;
-
-public class Touch_Test : MonoBehaviour
+using UnityEngine.EventSystems;
+public class Touch_Test : MonoBehaviour, IPointerDownHandler
 {
+    [SerializeField] private int scorevalue = 5;
     [SerializeField] private IntValue score;
+    [SerializeField] private bool red;
+
     public void AddClick()
     {
-        score.Value += 4;
+        score.Value += scorevalue;
     }
     public void MinusClick()
     {
-        int scoreValue = score.Value;
-        scoreValue -= 4;
-        
-        score.Value = Mathf.Clamp(scoreValue, 0, int.MaxValue);
+        score.Value -= scorevalue;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (red)
+        {
+            AddClick();
+        }
+        else
+        {
+            MinusClick();
+        }
     }
 }
+
