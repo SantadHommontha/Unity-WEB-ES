@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &331998192683248380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137039364592195472}
+  - component: {fileID: 3022909782703154342}
+  - component: {fileID: 6712174560301927632}
+  - component: {fileID: 301884525874884692}
+  - component: {fileID: 1856633610334374602}
+  - component: {fileID: 444655599180237928}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &137039364592195472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3022909782703154342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6712174560301927632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dc0aff242acee43b6dcf4d6f11e209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
+  scoreUpdateEvent: {fileID: 11400000, guid: b7b31b2e7e4ab4d4186a0676562da267, type: 2}
+  playCanvasEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
+  currentCickCount: {fileID: 301884525874884692}
+  scoreForAddTeamWin: 50
+  gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
+  gameScore: {fileID: 11400000, guid: 97acd88cfc5e3af46b1b82449ccedd69, type: 2}
+  gameTimer: {fileID: 11400000, guid: ec0523ecd54ba534d82ac55456de2ff2, type: 2}
+  teamWin: {fileID: 11400000, guid: 7ddd1265b10a4444b91443b6c9404065, type: 2}
+  isEnterToGame: {fileID: 11400000, guid: 13b04c4025ba1654c95ff99942067702, type: 2}
+  isMaster: {fileID: 11400000, guid: 80dadd69c07ab72488af2957572c90a3, type: 2}
+--- !u!114 &301884525874884692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6531d1ad9fd844b83f49e4994fb1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCount: {fileID: 11400000, guid: cee57fcd44e307247b7b3a10f20dffe4, type: 2}
+  allClick: {fileID: 11400000, guid: 69830fd146e77394fb86e3cdb15d8695, type: 2}
+  gamestart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
+--- !u!114 &1856633610334374602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c610315f71850a8428c12f6679fd5d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Game Timer
+  time: 20
+  timerUpdateEvent: {fileID: 11400000, guid: a8f0c592eacec6e4a887674ab0c67f4b, type: 2}
+--- !u!114 &444655599180237928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218b5d9f076b9a643a653da7e9ff5bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Time for Fetch score
+  time: 0.2
+  timerUpdateEvent: {fileID: 11400000, guid: 433fa759a93da384c9a6c2d5c6cf60a3, type: 2}
+  gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}

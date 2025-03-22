@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8682884732644535106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3579377340543612480}
+  - component: {fileID: 1349852734543011911}
+  - component: {fileID: 5799045452314376292}
+  - component: {fileID: 8242063231650472516}
+  m_Layer: 0
+  m_Name: TeamManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3579377340543612480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682884732644535106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 336.4845, y: 392.33615, z: -1.0397527}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1349852734543011911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682884732644535106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5799045452314376292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682884732644535106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713b1d0e4820504449eec776c30edf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTeamCount: 3
+  enterNameInput: {fileID: 0}
+  enterRoomCodeInput: {fileID: 0}
+  btn1: {fileID: 0}
+  btn2: {fileID: 0}
+  reportError: {fileID: 0}
+  chooseTeamEven: {fileID: 11400000, guid: 2e13b4e30566c394f90c657deb0dea4c, type: 2}
+  playEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
+  afterJoinTeamComplete: {fileID: 11400000, guid: 1ced6560085ff794cb1f264f1fe2f449, type: 2}
+  UpdatePlayerList: {fileID: 11400000, guid: d36eec3f193f09c40b4efa04ff5fd62d, type: 2}
+  kickEvent: {fileID: 11400000, guid: eb8993ae340292b43adb07e5c9143377, type: 2}
+  KickedOutEvent: {fileID: 11400000, guid: 6fb814fbc60f1e04ba764aaba2a201eb, type: 2}
+  reSpones: {fileID: 11400000, guid: b97971c611ae4484aaba957dc7c4b9c3, type: 2}
+  roomCode: {fileID: 11400000, guid: 0f4346c06b2588b4caf81d3e0544c9a9, type: 2}
+  isEnterToGame: {fileID: 11400000, guid: 13b04c4025ba1654c95ff99942067702, type: 2}
+  myName: {fileID: 11400000, guid: f126156eb902e2a499ee2d704e288a57, type: 2}
+  myTeamType: {fileID: 11400000, guid: 16fe1ff2bc8c49b44add1a35db8e708f, type: 2}
+--- !u!114 &8242063231650472516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682884732644535106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082a949320d64974b9051cb86661f114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addTeam:
+  - {fileID: 11400000, guid: 5fef469aae4f22644938af742ab515a0, type: 2}
+  - {fileID: 11400000, guid: a7af868f250e8f441b317c5fb3b48b1b, type: 2}
+  - {fileID: 11400000, guid: fb3e8496dc19cb84e8dfa27a0637f875, type: 2}
+  - {fileID: 11400000, guid: 9f3a471024b15764d88b10d5254385c2, type: 2}
+  - {fileID: 11400000, guid: 7b98c5d700a72c34ca4059dfc955b591, type: 2}
+  minusTeam:
+  - {fileID: 11400000, guid: b839d2a9b0a118648a140d997a4cbdfa, type: 2}
+  - {fileID: 11400000, guid: a8f7455adb42cac46891a9f3e98ea95c, type: 2}
+  - {fileID: 11400000, guid: 75d868cdd19e08d49afe81b9cb5d537c, type: 2}
+  - {fileID: 11400000, guid: 9ccb6912c7773024c889dceb9bd383c2, type: 2}
+  - {fileID: 11400000, guid: cec6e34fbc61b1d49aee3a34407ee841, type: 2}
