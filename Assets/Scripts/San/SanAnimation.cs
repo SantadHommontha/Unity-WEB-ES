@@ -22,6 +22,7 @@ public class SanAnimation : MonoBehaviour
     void Start()
     {
         SetUp();
+        
     }
 
 
