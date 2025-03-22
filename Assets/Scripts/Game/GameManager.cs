@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsMasterClient) return;
         gameStart.Value = false;
-        if (gameScore.Value > scoreForAddTeamWin)
+        if (gameScore.Value > 0)
         {
             teamWin.Value = "ADD TEAM WIN";
         }
@@ -286,14 +286,17 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log($"Receive:{_jsonData}");
             if (data.scoreType == ValueName.ADD_TEAM)
             {
-                this.gameScore.Value += data.score;
-
+                var gamescore = this.gameScore.Value;
+                gamescore += data.score;
+                gamescore = Mathf.Clamp(gamescore, -100, 100);
+                this.gameScore.Value = gamescore;
             }
             else if (data.scoreType == ValueName.MINUS_TEAM)
             {
                 int gamescore = this.gameScore.Value;
                 gamescore -= data.score;
-                this.gameScore.Value = Mathf.Clamp(gamescore, 0, int.MaxValue);
+                gamescore = Mathf.Clamp(gamescore, -100, 100);
+                this.gameScore.Value = gamescore;
 
             }
         }

@@ -15,11 +15,11 @@ public class Set_Int_Value_Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            intValue.Value += 10;
+            intValue.Value += newInt;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            intValue.Value -= 10;
+            intValue.Value -= newInt;
         }
     }
 }
