@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Coroutine coroutineUpdateScore;
     private Coroutine coroutineTimeUpdate;
 
-
+    [SerializeField] private int startScore = 10;
 
     [Header("Value")]
     [Space]
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (isMaster.Value)
         {
-            Debug.Log("SetupEvents T");
+            //   Debug.Log("SetupEvents T");
             gameStart.OnValueChange += UpdateGameStartToRoomProperties;
 
             gameScore.OnValueChange += UpdateScoreGame;
@@ -126,12 +126,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         else
         {
-            Debug.Log("SetupEvents F");
-            gameStart.ClearAction();
+            //    Debug.Log("SetupEvents F");
+            //   gameStart.ClearAction();
 
-            gameScore.ClearAction();
+            //  gameScore.ClearAction();
 
-            teamWin.ClearAction();
+            //   teamWin.ClearAction();
+            gameStart.OnValueChange -= UpdateGameStartToRoomProperties;
+
+            gameScore.OnValueChange -= UpdateScoreGame;
+
+            teamWin.OnValueChange -= UpdateTeamWin;
         }
 
     }
@@ -141,14 +146,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void Reset()
     {
         Debug.Log("Game Reset");
+        SetupEvents();
+        StopAllCoroutines();
         gameScore.Value = 0;
         currentCickCount.Reset();
         gameStart.Value = false;
         gameTimer.Value = 0;
         coroutineUpdateScore = null;
         coroutineTimeUpdate = null;
-        StopAllCoroutines();
-        SetupEvents();
+
+
 
     }
 
