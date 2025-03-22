@@ -120,11 +120,19 @@ public class TeamManager : MonoBehaviourPunCallbacks
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        Debug.Log(_info);
+
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
 
-        if (data.code == roomCode.Value)
+        if (data.playerName == ValueName.ADMIN_NAME)
+        {
+            RoomManager.instace.ChangeMaster(data.info.Sender);
+
+            return;
+        }
+
+
+        if (data.code == roomCode.Value && data.code != "")
         {
             if (data.teamName == ValueName.ADD_TEAM)
             {

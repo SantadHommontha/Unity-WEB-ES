@@ -3,6 +3,7 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
 using System.Collections;
+using Photon.Pun.UtilityScripts;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager instace;
@@ -14,9 +15,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameEvent connectEvent;
     [SerializeField] private GameEvent chooseTeamEvent;
-    [SerializeField] private GameEvent playEvent;
-    //  [SerializeField] private GameEvent leaveRoomEven;
-    [SerializeField] private GameEvent KickedOutEvent;
+    [SerializeField] private GameEvent resetGameEvent;
+    [SerializeField] private GameEvent leaveRoomEven;
+    [SerializeField] private GameEvent resetRoomEvent;
     [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent finishConnectToRoomEvent;
     [SerializeField] private GameEvent afterJoinTeamComplete;
@@ -102,17 +103,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // Call With Event
     public void AfterJoinRoom(Component _sender, object _data)
     {
-        if (isMaster.Value && (bool)_data)
-        {
-            masterPanelEvent.Raise(this, isMaster.Value);
-        }
-        else
-        {
-            chooseTeamEvent.Raise(this, isMaster.Value);
-        }
+        // if (isMaster.Value && (bool)_data)
+        // {
+        //     masterPanelEvent.Raise(this, isMaster.Value);
+        // }
+        // else
+        // {
+        //     chooseTeamEvent.Raise(this, isMaster.Value);
+        // }
+
+        chooseTeamEvent.Raise(this, isMaster.Value);
     }
 
-    public void KICKROOM(Component _sender, object _data)
+    public void LeaveRoom(Component _sender, object _data)
     {
         //   PhotonNetwork.LeaveRoom();
         //  PhotonNetwork.Disconnect();
@@ -137,5 +140,44 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
         Debug.Log($"Player Left Room: {otherPlayer.UserId}");
+    }
+    public void ChangeMaster(Player _newMaster)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("ChangeMaster 1: " + PhotonNetwork.IsMasterClient);
+            PhotonNetwork.SetMasterClient(_newMaster);
+            Debug.Log("ChangeMaster 2: " + PhotonNetwork.IsMasterClient);
+            resetRoomEvent.Raise(this, -999);
+            StartCoroutine(CountDownAfterStartNewMaster());
+        }
+    }
+    IEnumerator CountDownAfterStartNewMaster()
+    {
+        yield return new WaitForSeconds(2);
+
+        chooseTeamEvent.Raise(this, -999);
+        photonView.RPC("NewMaster", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void NewMaster()
+    {
+
+        isMaster.Value = PhotonNetwork.IsMasterClient;
+
+        if (isMaster.Value)
+        {
+
+            masterPanelEvent.Raise(this, isMaster.Value);
+            // resetGameEvent.Raise(this, -999);
+
+        }
+        resetGameEvent.Raise(this, -999);
+    }
+
+    public void UpdateMasterClient()
+    {
+        isMaster.Value = PhotonNetwork.IsMasterClient;
     }
 }

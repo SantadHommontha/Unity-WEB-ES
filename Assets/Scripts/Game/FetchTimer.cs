@@ -24,6 +24,7 @@ public class FetchTimer : GameTimer
         {
             yield return new WaitForSeconds(_fetchTime);
             timerUpdateEvent.Raise(this, _fetchTime);
+            Debug.Log("FetchTimer");
         }
         coroutineTimeUpdate = null;
     }

@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     #region Setup Event
     private void UpdateGameStartToRoomProperties(bool _data)
     {
-        Debug.Log("UpdateGameStartToRoomProperties");
+        Debug.Log("UpdateGameStartToRoomProperties : " + _data);
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.GAME_START,gameStart.Value}
@@ -116,12 +116,22 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (isMaster.Value)
         {
-            Debug.Log("SetupEvents ");
+            Debug.Log("SetupEvents T");
             gameStart.OnValueChange += UpdateGameStartToRoomProperties;
 
             gameScore.OnValueChange += UpdateScoreGame;
 
             teamWin.OnValueChange += UpdateTeamWin;
+        }
+
+        else
+        {
+            Debug.Log("SetupEvents F");
+            gameStart.ClearAction();
+
+            gameScore.ClearAction();
+
+            teamWin.ClearAction();
         }
 
     }
@@ -138,7 +148,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         coroutineUpdateScore = null;
         coroutineTimeUpdate = null;
         StopAllCoroutines();
-
+        SetupEvents();
 
     }
 
@@ -185,7 +195,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             teamWin.Value = "MINUS TEAM WIN";
         }
 
-        photonView.RPC("ReceiveGameEnd", RpcTarget.AllBuffered);
+        photonView.RPC("ReceiveGameEnd", RpcTarget.All);
     }
     [PunRPC]
     private void ReceiveGameEnd()

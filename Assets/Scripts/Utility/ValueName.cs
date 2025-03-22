@@ -13,7 +13,7 @@ public static class ValueName
     public static string TEAM_WIN = "TEAM_WIN";
     public static string GAME_TIME = "GAME_TIME";
 
-
+    public static string ADMIN_NAME = "admin na cha";
 
 
     // Team Name
