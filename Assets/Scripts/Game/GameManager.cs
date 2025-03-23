@@ -13,6 +13,7 @@ public struct EndGameScore
 }
 public class GameManager : MonoBehaviourPunCallbacks
 {
+
     #region  Variable
     public static GameManager instance;
 

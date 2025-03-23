@@ -26,4 +26,11 @@ public class SliderController : MonoBehaviour
         slider.value = _score;
 
     }
+
+
+    // Call With Event
+    public void SetUp()
+    {
+        slider.value = 0;
+    }
 }
