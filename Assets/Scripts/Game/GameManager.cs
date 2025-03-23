@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-
     #region Unity Function
     void Awake()
     {
@@ -340,7 +339,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     #endregion
-
 
     #region Event Call
 

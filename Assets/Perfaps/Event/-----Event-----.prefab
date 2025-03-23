@@ -42,6 +42,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6764708352613340513}
     m_Modifications:
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1995533075469988241, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5474260754308145950, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -86,6 +110,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game
       objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_IntArgument
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027881690769927093, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9196868215511457926, guid: 7903cd44f186ede439b2d40c9e7dc4ed, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -107,6 +183,30 @@ PrefabInstance:
     - target: {fileID: 2602991186125765371, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3492129135637211716, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5903472328992914143, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -147,6 +247,66 @@ PrefabInstance:
     - target: {fileID: 5903472328992914143, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_MethodName
+      value: SetUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[9].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[7].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962855438327804132, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[8].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[14].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[14].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[14].m_MethodName
+      value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[14].m_TargetAssemblyTypeName
+      value: SpriteStacker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636537336838810028, guid: f865bb674573e3447a6155ea6ba057eb, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[14].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

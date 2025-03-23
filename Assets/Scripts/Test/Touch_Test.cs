@@ -8,10 +8,12 @@ public class Touch_Test : MonoBehaviour, IPointerDownHandler
 
     public void AddClick()
     {
+        Debug.Log("ADD");
         score.Value += scorevalue;
     }
     public void MinusClick()
     {
+        Debug.Log("MINUS");
         score.Value -= scorevalue;
     }
 
