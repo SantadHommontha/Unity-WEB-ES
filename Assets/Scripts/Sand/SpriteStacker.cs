@@ -33,17 +33,6 @@ public class SpriteStacker : MonoBehaviour
         gameScore.OnValueChange -= GameScoreUpdate;
     }
 
-    private void Update()
-    {
-       /* if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            CreateNewSprite();
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            DestroySprite();
-        }*/
-    }
     private GameObject RandomSprite()
     {
         return sanAnimationsSet[Random.Range(0, sanAnimationsSet.Length)].gameObject;
@@ -53,17 +42,27 @@ public class SpriteStacker : MonoBehaviour
     private void CreateNewSprite()
     {
         if (allSanAnimation.Count == 0)
-        {
-         //   Debug.Log("111");
+        {     
             CreateNewSprite(startPosition.position);
         }
         else
         {
-          //  Debug.Log("222");
             float height = allSanAnimation[allSanAnimation.Count-1].GetComponent<SpriteRenderer>().bounds.size.y;
             Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, height, 0);
-
             CreateNewSprite(newPosition);
+        }
+    }
+    private void CreateNewSprite(bool _s)
+    {
+        if (allSanAnimation.Count == 0)
+        {
+            CreateNewSprite(startPosition.position);
+        }
+        else
+        {
+            float height = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SpriteRenderer>().bounds.size.y;
+            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, height, 0);
+            CreateNewSprite(newPosition, _s);
         }
     }
     private void CreateNewSprite(Vector3 _position)
@@ -74,6 +73,16 @@ public class SpriteStacker : MonoBehaviour
         allSanAnimation.Add(sa);
         sa.PlayAnimationUP();
        
+        lastSanTranform.Value = _position;
+    }
+    private void CreateNewSprite(Vector3 _position , bool _s)
+    {
+        var t = Instantiate(RandomSprite(), _position, Quaternion.identity, parentSpawn);
+        var sa = t.GetComponent<SanAnimation>();
+
+        allSanAnimation.Add(sa);
+        sa.SkipToLstSprite();
+
         lastSanTranform.Value = _position;
     }
     [ContextMenu("Destroy Sprite")]
@@ -91,27 +100,21 @@ public class SpriteStacker : MonoBehaviour
 
 
      private void GameScoreUpdate(int _score)
-    {
-
-
-       
+    {    
         if (_score >= nextScoreTarget)
         {   
-          //  Debug.Log($"_score {_score}:{nextScoreTarget}:{perviousScore} == 1");
             perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
         }
        else if(_score < perviousScore)
         {
-         //   Debug.Log($"_score {_score}:{nextScoreTarget}:{perviousScore} == 2");
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
             DestroySprite();
         }
         else if (_score <= 0)
         {
-           // Debug.Log($"_score {_score}:{nextScoreTarget} == else");
             nextScoreTarget = 10;
             perviousScore = 0;
         }
@@ -119,30 +122,36 @@ public class SpriteStacker : MonoBehaviour
     public void SetUp()
 
     {
-        Debug.Log("SetUp");
         CreateNewSprite();
     }
     public void Reset()
     {
-        Debug.Log("Reset");
         nextScoreTarget = 10;
         perviousScore = 0;
 
         var num = parentSpawn.childCount;
 
-
         for (int i =0; i < num; i++)
         {
             Destroy(parentSpawn.GetChild(i).gameObject);    
         }
-
         allSanAnimation.Clear();
 
     }
 
 
 
+    public void CheckScore()
+    {
+        int sum = (gameScore.Value / nextScore) - allSanAnimation.Count;
+        if(sum > 0)
+        {
+            CreateNewSprite(true);
+            nextScoreTarget += gameScore.Value / nextScore;
+            perviousScore = nextScoreTarget - nextScore;
+        }
 
+    }
     
 
 }
