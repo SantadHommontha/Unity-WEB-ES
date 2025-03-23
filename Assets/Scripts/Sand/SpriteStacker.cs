@@ -92,23 +92,26 @@ public class SpriteStacker : MonoBehaviour
 
      private void GameScoreUpdate(int _score)
     {
-        
 
 
-        if(_score >= nextScoreTarget)
+       
+        if (_score >= nextScoreTarget)
         {   
-            perviousScore = nextScoreTarget - nextScore;
+          //  Debug.Log($"_score {_score}:{nextScoreTarget}:{perviousScore} == 1");
+            perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
         }
-       else if(_score <= perviousScore)
+       else if(_score < perviousScore)
         {
+         //   Debug.Log($"_score {_score}:{nextScoreTarget}:{perviousScore} == 2");
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
             DestroySprite();
         }
-        else
+        else if (_score <= 0)
         {
+           // Debug.Log($"_score {_score}:{nextScoreTarget} == else");
             nextScoreTarget = 10;
             perviousScore = 0;
         }
@@ -116,10 +119,12 @@ public class SpriteStacker : MonoBehaviour
     public void SetUp()
 
     {
+        Debug.Log("SetUp");
         CreateNewSprite();
     }
     public void Reset()
     {
+        Debug.Log("Reset");
         nextScoreTarget = 10;
         perviousScore = 0;
 
@@ -128,10 +133,16 @@ public class SpriteStacker : MonoBehaviour
 
         for (int i =0; i < num; i++)
         {
-            Destroy(parentSpawn.GetChild(i));    
+            Destroy(parentSpawn.GetChild(i).gameObject);    
         }
 
         allSanAnimation.Clear();
 
     }
+
+
+
+
+    
+
 }

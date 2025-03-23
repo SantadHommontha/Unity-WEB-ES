@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class SanAnimation : MonoBehaviour
@@ -150,5 +151,24 @@ public class SanAnimation : MonoBehaviour
         sanHeadAnimation.PlayAnimationUP();
     }
     
+    public void SkipToLstSprite()
+    {
+        if (timeAnimation != null)
+        {
+            StopCoroutine(timeAnimation);
+            timeAnimation = null;
+        }
+        spriteRenderer.sprite = allSprtite[allSprtite.Length - 1];
+    }
+    public void SkipToFristSprite()
+    {
+        if (timeAnimation != null)
+        {
+            StopCoroutine(timeAnimation);
+            timeAnimation = null;
+        }
+        spriteRenderer.sprite = allSprtite[0];
+
+    }
 
 }

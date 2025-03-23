@@ -14,7 +14,9 @@ public class ClickCount : MonoBehaviour
     
     public void Click()
     {
+        Debug.Log("ClickCount");
         if (!gamestart.Value) return;
+        Debug.Log("Click");
         currentCount.Value++;
         allClick.Value++;
     }

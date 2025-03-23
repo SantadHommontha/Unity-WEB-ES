@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-#if UNITY_EDITOR
+
 public class BuildCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
@@ -34,4 +34,4 @@ public class BuildCount : MonoBehaviour
         text.text = $"{major}.{minor}.{patch}";
     }
 }
-#endif
+

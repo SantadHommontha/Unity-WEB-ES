@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 301884525874884692}
   - component: {fileID: 1856633610334374602}
   - component: {fileID: 444655599180237928}
+  - component: {fileID: 5536591974976209301}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -73,6 +74,7 @@ MonoBehaviour:
   gameEndEvent: {fileID: 11400000, guid: 3b57b1b17c7a9fe458238499b4a8d2d4, type: 2}
   scoreUpdateEvent: {fileID: 11400000, guid: b7b31b2e7e4ab4d4186a0676562da267, type: 2}
   playCanvasEvent: {fileID: 11400000, guid: d3cb66b75b3f2524bb079b2cfd5794cb, type: 2}
+  gameEndMasterEvent: {fileID: 0}
   currentCickCount: {fileID: 301884525874884692}
   scoreForAddTeamWin: 50
   gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
@@ -127,3 +129,18 @@ MonoBehaviour:
   time: 0.2
   timerUpdateEvent: {fileID: 11400000, guid: 433fa759a93da384c9a6c2d5c6cf60a3, type: 2}
   gameStart: {fileID: 11400000, guid: 829a2bf46bbf3b64bbfce712dd3f78f6, type: 2}
+--- !u!114 &5536591974976209301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331998192683248380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d536434935536e948b3de6793b664ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spectator: {fileID: 11400000, guid: bc1d6e3e624312748a58287437143f8d, type: 2}
+  spectatorCanvasEvent: {fileID: 11400000, guid: 9201e5ce06676cb40adc4b085117bbbd, type: 2}
+  masterCanvasEvent: {fileID: 11400000, guid: 42999f44b5e529540803cc5a405be407, type: 2}
