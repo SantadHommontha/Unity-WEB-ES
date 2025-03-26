@@ -22,8 +22,8 @@ public class BtnUI : MonoBehaviour
     }
     private void finishUpdate(bool _conect)
     {
-        if (finishConnect.Value && button != null)
-            button.gameObject.SetActive(isMaster.Value);
+       // if (finishConnect.Value && button != null)
+         //   button.gameObject.SetActive(isMaster.Value);
     }
     public void Click()
     {

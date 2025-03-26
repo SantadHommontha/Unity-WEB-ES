@@ -61,6 +61,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     public void PlayerListUpdate()
     {
         if (!finishConnectToServer.Value) return;
+        if (PhotonNetwork.CurrentRoom.CustomProperties == null) return;
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
             var aJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST];

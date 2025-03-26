@@ -24,7 +24,7 @@ public class SliderController : MonoBehaviour
     {
         if (slider == null) return;
 
-        slider.value = _score;
+        slider.value = _score * -1;
 
     }
 

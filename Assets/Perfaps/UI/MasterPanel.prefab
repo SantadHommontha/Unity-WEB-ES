@@ -3299,7 +3299,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!114 &562329652364600993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3313,6 +3313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setSpectator: {fileID: 11400000, guid: bc1d6e3e624312748a58287437143f8d, type: 2}
+  toggle: {fileID: 0}
 --- !u!1 &9170000695887915975
 GameObject:
   m_ObjectHideFlags: 0

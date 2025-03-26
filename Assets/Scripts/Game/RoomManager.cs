@@ -223,7 +223,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     #region Update 
     void Update()
     {
-        if (!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected && finishConnectToServer.Value)
         {
             if (co_Reconnect == null)
             {
