@@ -87,6 +87,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 15000;
+        PhotonNetwork.KeepAliveInBackground = 60f;
         //chooseTeamEvent.Raise(this, -999);
         if (!isMaster.localValue)
             isMaster.Value = PhotonNetwork.IsMasterClient;
@@ -145,9 +147,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("ChangeMaster 1: " + PhotonNetwork.IsMasterClient);
             PhotonNetwork.SetMasterClient(_newMaster);
-            Debug.Log("ChangeMaster 2: " + PhotonNetwork.IsMasterClient);
             resetRoomEvent.Raise(this, -999);
             StartCoroutine(CountDownAfterStartNewMaster());
         }
@@ -168,9 +168,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         if (isMaster.Value)
         {
-
+            resetRoomEvent.Raise(this, -999);
             masterPanelEvent.Raise(this, isMaster.Value);
-            // resetGameEvent.Raise(this, -999);
 
         }
         resetGameEvent.Raise(this, -999);
@@ -180,4 +179,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         isMaster.Value = PhotonNetwork.IsMasterClient;
     }
+
+
+
+
+
+
 }

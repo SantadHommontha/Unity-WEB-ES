@@ -32,6 +32,9 @@ public class Team
     public Action OnPlayerTeamChange;
 
 
+
+
+
     public void SetPlayerData(PlayerData[] _playerData)
     {
         Dictionary<string, PlayerData> playerdatas = new Dictionary<string, PlayerData>();
@@ -127,6 +130,12 @@ public class Team
             OnPlayerTeamChange?.Invoke();
         }
     }
+
+    public void ClearAll()
+    {
+        playerdata.Clear();
+        OnPlayerTeamChange?.Invoke();
+    }
     #endregion
 
 
@@ -185,7 +194,7 @@ public class Team
     {
         string[] ids = new string[playerdata.Count];
         int num = 0;
-      foreach(var t in playerdata)
+        foreach (var t in playerdata)
         {
             ids[num] = t.Value.playerID;
             num++;

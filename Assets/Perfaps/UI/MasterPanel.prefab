@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50.240234, y: -354.4945}
+  m_AnchoredPosition: {x: 50.240234, y: -161.70782}
   m_SizeDelta: {x: 227.341, y: 114.620605}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5731507300036841214
@@ -608,7 +608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 49.863037, y: -542.9191}
+  m_AnchoredPosition: {x: 49.863037, y: -350.13245}
   m_SizeDelta: {x: 98, y: 56.3333}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7774212079034378509
@@ -1159,7 +1159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50.240234, y: -719.4945}
+  m_AnchoredPosition: {x: 50.240234, y: -526.7078}
   m_SizeDelta: {x: 227.341, y: 114.620605}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5396132963856299014
@@ -1293,7 +1293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 49.160156, y: -63.786682}
+  m_AnchoredPosition: {x: 49.160156, y: 129}
   m_SizeDelta: {x: 228.34106, y: 127.30664}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7121887351999362688
@@ -1735,7 +1735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50.240234, y: -210.4945}
+  m_AnchoredPosition: {x: 50.240234, y: -17.707825}
   m_SizeDelta: {x: 227.341, y: 114.620605}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &268347114372900022
@@ -2069,7 +2069,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 200.14}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8902729924396067413
@@ -2750,7 +2750,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2791044852282600733}
-  - component: {fileID: 6995041856843401062}
   m_Layer: 5
   m_Name: List Name
   m_TagString: Untagged
@@ -2779,28 +2778,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6995041856843401062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8394467469904163284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &8658316555200440928
 GameObject:
   m_ObjectHideFlags: 0

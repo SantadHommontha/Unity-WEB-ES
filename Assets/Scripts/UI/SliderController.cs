@@ -13,6 +13,7 @@ public class SliderController : MonoBehaviour
     void OnEnable()
     {
         gameScore.OnValueChange += GameScoreUpdate;
+        GameScoreUpdate(gameScore.Value);
     }
     void OnDisable()
     {

@@ -205,7 +205,6 @@ public class TeamManager : MonoBehaviourPunCallbacks
     // Update When Player List In Team Change
     private void UpdatePlayerListToRoomPorperties()
     {
-
         if (PhotonNetwork.IsMasterClient)
         {
 
@@ -330,6 +329,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     #endregion
 
 
+
     #region  Photon Function
 
     public override void OnJoinedRoom()
@@ -398,6 +398,24 @@ public class TeamManager : MonoBehaviourPunCallbacks
         FindPlayerForKick(_playerID);
     }
 
+
+    public void ClearAll()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            team.ClearAll();
+            photonView.RPC("KickServer", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    private void KickServer()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            RoomManager.instace.DisconnectServer();
+        }
+    }
 
     #endregion
 
