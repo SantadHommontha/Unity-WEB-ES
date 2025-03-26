@@ -50,6 +50,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         finishConnectToServer.Value = false;
+        reconnectCount = 0;
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
 
@@ -60,7 +61,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         PhotonNetwork.JoinLobby();
-
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
     }
 
     public override void OnConnected()
@@ -209,9 +210,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         while (!PhotonNetwork.IsConnected && reconnectCount < maxReconnectCount)
         {
+            PhotonNetwork.Reconnect();
             yield return new WaitForSeconds(1);
             reconnectCount++;
-            PhotonNetwork.Reconnect();
+            Debug.Log("Reconnect");
         }
         disconnectServer.Raise(this, -999);
     }
@@ -230,4 +232,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
+    private void OnApplicationFocus(bool focus)
+    {
+
+        if (focus && !PhotonNetwork.IsConnected)
+        {
+            Debug.Log("Reconnecting to Photon...");
+            PhotonNetwork.Reconnect();
+        }
+
+    }
 }

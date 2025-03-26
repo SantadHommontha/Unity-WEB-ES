@@ -33,7 +33,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             for (int i = 0; i < a.value1.Length; i++)
             {
 
-                    addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
 
             }
         }
@@ -48,7 +48,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             }
             for (int j = 0; j < m.value1.Length; j++)
             {
-                    minusTeam[j].Value = $"{m.value1[j]},{m.value2[j]}";
+                minusTeam[j].Value = $"{m.value1[j]},{m.value2[j]}";
 
             }
         }
@@ -66,7 +66,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             }
             for (int i = 0; i < a.value1.Length; i++)
             {
-                    addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
+                addTeam[i].Value = $"{a.value1[i]},{a.value2[i]}";
 
             }
         }
@@ -79,8 +79,8 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
                 v.Value = "";
             }
             for (int i = 0; i < m.value1.Length; i++)
-            {        
-                    minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
+            {
+                minusTeam[i].Value = $"{m.value1[i]},{m.value2[i]}";
             }
         }
     }
@@ -91,5 +91,12 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
         //  UpdatePlayerList();
 
+    }
+    void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            PlayerListUpdate();
+        }
     }
 }

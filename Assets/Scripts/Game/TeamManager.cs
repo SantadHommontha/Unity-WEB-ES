@@ -50,9 +50,9 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private StringValue myTeamType;
     public string MyTeamType => myTeamType.Value;
     // [Space]
-    // [SerializeField] private int maxPlayerInTeam = 3;
-    // private int addTeamCount;
-    // private int minusTeamCount;
+    [SerializeField] private int maxPlayerInTeam = 3;
+    private int addTeamCount;
+    private int minusTeamCount;
     #endregion
 
     #region  GameEvent
@@ -139,10 +139,11 @@ public class TeamManager : MonoBehaviourPunCallbacks
             if (data.teamName == ValueName.ADD_TEAM)
             {
 
-                if ((team.AddTeamCount() < maxTeamCount) && team.TryToAddPlayer(data))
+                if (addTeamCount < maxTeamCount && team.TryToAddPlayer(data))
                 {
                     // add Complete
                     Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
+                    addTeamCount++;
                     photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.ADD_TEAM));
 
                 }
@@ -155,10 +156,11 @@ public class TeamManager : MonoBehaviourPunCallbacks
             else if (data.teamName == ValueName.MINUS_TEAM)
             {
 
-                if ((team.MinusTeamCount() < maxTeamCount) && team.TryToAddPlayer(data))
+                if (minusTeamCount < maxTeamCount && team.TryToAddPlayer(data))
                 {
                     // add Complete
                     Debug.Log($"PLayer Join Minus Team:{data.playerName} {data.playerID}");
+                    minusTeamCount++;
                     photonView.RPC("ReceiveJoinTeam", _info.Sender, PackJsonData(ResponesState.COMPLETE, "Join Team Complete", ValueName.MINUS_TEAM));
                 }
                 else
@@ -428,6 +430,12 @@ public class TeamManager : MonoBehaviourPunCallbacks
         isEnterToGame.Value = false;
     }
     #endregion
-
+    #region  Reset
+    public void Reset()
+    {
+        addTeamCount = 0;
+        minusTeamCount = 0;
+    }
+    #endregion
 }
 
