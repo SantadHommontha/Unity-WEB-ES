@@ -22,6 +22,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent finishConnectToRoomEvent;
     [SerializeField] private GameEvent afterJoinTeamComplete;
     [SerializeField] private GameEvent masterPanelEvent;
+
+    [SerializeField] private GameEvent disconnectServer;
+
+    private Coroutine co_SendKeepAlive;
+    private Coroutine co_Reconnect;
+    private int reconnectCount;
+    private int maxReconnectCount = 5;
     [Header("Value")]
 
     //  [SerializeField] private BoolValue isMaster;
@@ -52,77 +59,60 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        //  Debug.Log("OnConnectedToMaster : "+PhotonNetwork.IsMasterClient );
         PhotonNetwork.JoinLobby();
-
-
-
 
     }
 
     public override void OnConnected()
     {
         base.OnConnected();
-        //  Debug.Log("OnConnected : " + PhotonNetwork.IsMasterClient);
 
     }
-
+    #region  OnJoinedLobby
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
-        // play_Canva.SetActive(false);
+
         Debug.Log("Join a Lobby");
-        //  connectCanva.SetActive(false);
-        //  chooseTeamCanva.SetActive(true);
-
-        //     Debug.Log("We're in a Room");
     }
-
+    #endregion
     // public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     // {
     //     base.OnRoomPropertiesUpdate(propertiesThatChanged);
     // }
-
+    #region  OnJoinedRoom
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 15000;
-        PhotonNetwork.KeepAliveInBackground = 60f;
-        //chooseTeamEvent.Raise(this, -999);
-        if (!isMaster.localValue)
-            isMaster.Value = PhotonNetwork.IsMasterClient;
 
+
+        if (!isMaster.localValue)
+        {
+            isMaster.Value = PhotonNetwork.IsMasterClient;
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+            PhotonNetwork.KeepAliveInBackground = 60f;
+        }
+        else
+        {
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
+            PhotonNetwork.KeepAliveInBackground = 300f;
+        }
         finishConnectToServer.Value = true;
         finishConnectToRoomEvent.Raise(this, isMaster.Value);
         Debug.Log("JoinedRoom");
     }
-    // public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    // {
-    //     base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
-    // }
-
+    #endregion
     // Call With Event
     public void AfterJoinRoom(Component _sender, object _data)
     {
-        // if (isMaster.Value && (bool)_data)
-        // {
-        //     masterPanelEvent.Raise(this, isMaster.Value);
-        // }
-        // else
-        // {
-        //     chooseTeamEvent.Raise(this, isMaster.Value);
-        // }
-
         chooseTeamEvent.Raise(this, isMaster.Value);
     }
-
+    #region Kick And Leave Room
     public void LeaveRoom(Component _sender, object _data)
     {
-        //   PhotonNetwork.LeaveRoom();
-        //  PhotonNetwork.Disconnect();
+
         Debug.Log("Kicked out");
-        // DisconnectServer();
         StartCoroutine(AfterLeveaServer());
     }
 
@@ -138,11 +128,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
     }
 
+    #endregion
+    #region OnPlayerLeftRoom
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
         Debug.Log($"Player Left Room: {otherPlayer.UserId}");
     }
+    #endregion
+
+    #region ChangeMaster
     public void ChangeMaster(Player _newMaster)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -166,11 +161,22 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         isMaster.Value = PhotonNetwork.IsMasterClient;
 
+        if (co_SendKeepAlive != null)
+            StopCoroutine(co_SendKeepAlive);
+
+
         if (isMaster.Value)
         {
             resetRoomEvent.Raise(this, -999);
             masterPanelEvent.Raise(this, isMaster.Value);
-
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+            PhotonNetwork.KeepAliveInBackground = 60f;
+            co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+        }
+        else
+        {
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
+            PhotonNetwork.KeepAliveInBackground = 300f;
         }
         resetGameEvent.Raise(this, -999);
     }
@@ -179,10 +185,49 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         isMaster.Value = PhotonNetwork.IsMasterClient;
     }
+    #endregion
+    #region  SendKeepAlive
+    IEnumerator IE_SendKeepAlive()
+    {
+        while (isMaster.Value && PhotonNetwork.InRoom)
+        {
+            yield return new WaitForSeconds(10);
+            photonView.RPC("SendKeepAlive", RpcTarget.MasterClient);
+        }
+    }
+    [PunRPC]
+    private void SendKeepAlive()
+    {
+        Debug.Log("Sending KeepAlive RPC...");
+    }
+    #endregion
 
 
+    #region When Disconnect
+
+    private IEnumerator IE_Reconncet()
+    {
+        while (!PhotonNetwork.IsConnected && reconnectCount < maxReconnectCount)
+        {
+            yield return new WaitForSeconds(1);
+            reconnectCount++;
+            PhotonNetwork.Reconnect();
+        }
+        disconnectServer.Raise(this, -999);
+    }
 
 
-
-
+    #endregion
+    #region Update 
+    void Update()
+    {
+        if (!PhotonNetwork.IsConnected)
+        {
+            if (co_Reconnect == null)
+            {
+                co_Reconnect = StartCoroutine(IE_Reconncet());
+            }
+        }
+    }
+    #endregion
 }

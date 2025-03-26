@@ -60,6 +60,7 @@ MonoBehaviour:
   - NewMaster
   - NewMasterEIEI
   - KickServer
+  - SendKeepAlive
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

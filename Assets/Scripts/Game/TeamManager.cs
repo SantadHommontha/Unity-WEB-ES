@@ -49,8 +49,10 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public string MyName => myName.Value;
     [SerializeField] private StringValue myTeamType;
     public string MyTeamType => myTeamType.Value;
-
-
+    // [Space]
+    // [SerializeField] private int maxPlayerInTeam = 3;
+    // private int addTeamCount;
+    // private int minusTeamCount;
     #endregion
 
     #region  GameEvent
@@ -137,7 +139,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             if (data.teamName == ValueName.ADD_TEAM)
             {
 
-                if ((team.AddTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
+                if ((team.AddTeamCount() < maxTeamCount) && team.TryToAddPlayer(data))
                 {
                     // add Complete
                     Debug.Log($"PLayer Join Add Team:{data.playerName} {data.playerID}");
@@ -153,7 +155,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             else if (data.teamName == ValueName.MINUS_TEAM)
             {
 
-                if ((team.MinusTeamCount() <= maxTeamCount) && team.TryToAddPlayer(data))
+                if ((team.MinusTeamCount() < maxTeamCount) && team.TryToAddPlayer(data))
                 {
                     // add Complete
                     Debug.Log($"PLayer Join Minus Team:{data.playerName} {data.playerID}");
