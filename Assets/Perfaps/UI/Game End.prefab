@@ -340,7 +340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 780781376, guid: 3baf4b59d199fb14ea7e0b790744e34c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ef18ffb9c506847b364fa987730d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterPanelCanvas: {fileID: 0}
+  masterPanelCanvas: {fileID: 11400000, guid: 42999f44b5e529540803cc5a405be407, type: 2}
 --- !u!1 &2238385643968551805
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 780781376, guid: 3baf4b59d199fb14ea7e0b790744e34c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1004,6 +1004,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 7662659151396253634}
   stringValue: {fileID: 11400000, guid: 7ddd1265b10a4444b91443b6c9404065, type: 2}
+  start: 
+  end: '  TEAM WIN'
+  redColor: {r: 1, g: 0.1764706, b: 0.20784314, a: 1}
+  blueColor: {r: 0.1764706, g: 0.21568628, b: 1, a: 1}
+  image: {fileID: 2542219778885771189}
 --- !u!1 &4967884456834931274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,15 +1073,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 0.17647058, b: 0.2074463, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 6ddb06cec8822e949ad0281d57ad66a5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

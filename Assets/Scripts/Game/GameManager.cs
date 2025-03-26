@@ -194,11 +194,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (gameScore.Value > 0)
         {
   
-            teamWin.Value = "ADD TEAM WIN";
+            teamWin.Value = ValueName.ADD_TEAM;
         }
         else
         {
-            teamWin.Value = "MINUS TEAM WIN";
+            teamWin.Value = ValueName.MINUS_TEAM;
         }
         gameEndMasterEvent.Raise(this, -999);
         photonView.RPC("ReceiveGameEnd", RpcTarget.All);

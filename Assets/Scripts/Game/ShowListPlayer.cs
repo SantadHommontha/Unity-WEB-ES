@@ -9,6 +9,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
     [SerializeField] private StringValue[] addTeam;
     [SerializeField] private StringValue[] minusTeam;
+    [SerializeField] private BoolValue finishConnectToServer;
 
     void Awake()
     {
@@ -21,11 +22,13 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
+        //  Debug.Log("111");
         if (propertiesThatChanged.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
             var aJson = (string)propertiesThatChanged[ValueName.ADD_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson a = JsonUtility.FromJson<TwoStringArrayDataJson>(aJson);
             //  Debug.Log("Length a " + aJson);
+            //    Debug.Log("222");
             foreach (var v in addTeam)
             {
                 v.Value = "";
@@ -42,6 +45,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
             var mJson = (string)propertiesThatChanged[ValueName.MINUS_TEAM_PLAYER_LIST];
             TwoStringArrayDataJson m = JsonUtility.FromJson<TwoStringArrayDataJson>(mJson);
             // Debug.Log("Length m " + mJson);
+            //   Debug.Log("333");
             foreach (var v in minusTeam)
             {
                 v.Value = "";
@@ -56,6 +60,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
     public void PlayerListUpdate()
     {
+        if (!finishConnectToServer.Value) return;
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(ValueName.ADD_TEAM_PLAYER_LIST))
         {
             var aJson = (string)PhotonNetwork.CurrentRoom.CustomProperties[ValueName.ADD_TEAM_PLAYER_LIST];

@@ -4,6 +4,11 @@ using UnityEngine.UI;
 public class TeamWin : TextUI
 {
     [SerializeField] private StringValue stringValue;
+    [SerializeField] private string start;
+    [SerializeField] private string end;
+    [SerializeField] private Color redColor;
+    [SerializeField] private Color blueColor;
+    [SerializeField] private Image image;
 
     void Start()
     {
@@ -11,15 +16,18 @@ public class TeamWin : TextUI
     }
     public void UpdateText(string _text)
     {
-        text.text = _text;
+        if (_text == ValueName.ADD_TEAM)
+            image.color = redColor;
+        else
+            image.color = blueColor;
+        text.text = $"{start}{_text}{end}";
     }
     void OnEnable()
     {
         UpdateText();
-        Debug.Log("OnEnable");
     }
     public void UpdateText()
     {
-        text.text = stringValue.Value;
+        UpdateText(stringValue.Value);
     }
 }

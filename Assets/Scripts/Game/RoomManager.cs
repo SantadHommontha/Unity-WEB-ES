@@ -16,13 +16,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent connectEvent;
     [SerializeField] private GameEvent chooseTeamEvent;
     [SerializeField] private GameEvent resetGameEvent;
-    [SerializeField] private GameEvent leaveRoomEven;
+    // [SerializeField] private GameEvent leaveRoomEven;
     [SerializeField] private GameEvent resetRoomEvent;
-    [SerializeField] private GameEvent gameEndEvent;
+    //  [SerializeField] private GameEvent gameEndEvent;
     [SerializeField] private GameEvent finishConnectToRoomEvent;
-    [SerializeField] private GameEvent afterJoinTeamComplete;
+    //  [SerializeField] private GameEvent afterJoinTeamComplete;
     [SerializeField] private GameEvent masterPanelEvent;
-
+    [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent disconnectServer;
 
     private Coroutine co_SendKeepAlive;
@@ -193,7 +193,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         while (isMaster.Value && PhotonNetwork.InRoom)
         {
             yield return new WaitForSeconds(10);
-            photonView.RPC("SendKeepAlive", RpcTarget.MasterClient);
+            photonView.RPC("SendKeepAlive", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -215,7 +215,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             reconnectCount++;
             Debug.Log("Reconnect");
         }
-        disconnectServer.Raise(this, -999);
+//        disconnectServer.Raise(this, -999);
     }
 
 
