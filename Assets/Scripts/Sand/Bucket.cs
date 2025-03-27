@@ -15,7 +15,7 @@ public class Bucket : MonoBehaviour
     [ContextMenu("PlayAnimation")]
     public void PlayAnimation()
     {
-        if (isPlaying) return;
+        if (isPlaying && bucketPR.gameObject.activeSelf) return;
         bucketPR.SetSpriteRDToFirstSprite();
         bucketAC.SetSpriteRDToNone();
         isPlaying = true;

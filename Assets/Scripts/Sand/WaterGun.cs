@@ -12,7 +12,7 @@ public class WaterGun : MonoBehaviour
     [ContextMenu("PlayAnimation")]
     public void PlayAnimation()
     {
-        if (isPlaying) return;
+        if (isPlaying && waterGun.gameObject.activeSelf) return;
         waterGun.SetSpriteRDToFirstSprite();
         isPlaying = true;
         waterGun.Play(AfterPlay);

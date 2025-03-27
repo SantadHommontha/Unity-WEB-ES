@@ -246,6 +246,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void RESETROOMM()
     {
+        photonView.RPC("RRRRR", RpcTarget.All);
+    }
+    [PunRPC]
+    private void RRRRR()
+    {
         if (!PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LeaveRoom();

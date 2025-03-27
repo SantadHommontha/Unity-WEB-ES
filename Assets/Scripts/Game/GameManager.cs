@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Call with Event
     public void UpdateTimer(Component _sender, object _time)
     {
-      
+
         gameTimer.Value = (float)_time;
         if (!PhotonNetwork.IsMasterClient) return;
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (isMaster.Value)
         {
-           
+
             gameStart.OnValueChange += UpdateGameStartToRoomProperties;
 
             gameScore.OnValueChange += UpdateScoreGame;
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameStart.Value = false;
         if (gameScore.Value > 0)
         {
-  
+
             teamWin.Value = ValueName.ADD_TEAM;
         }
         else
@@ -356,6 +356,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+    public void StartScore()
+    {
+        gameScore.Value = 10;
+    }
 
     public void GameStart()
 

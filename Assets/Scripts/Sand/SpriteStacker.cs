@@ -128,9 +128,9 @@ public class SpriteStacker : MonoBehaviour
             nextScoreTarget += nextScore;
             CreateNewSprite();
         }
-        else if (_score < perviousScore)
+        else if (_score < perviousScore && parentSpawn.transform.childCount > 0)
         {
-            // Debug.Log("222");
+            //  Debug.Log("222");
             waterGun.PlayAnimation();
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
@@ -139,7 +139,7 @@ public class SpriteStacker : MonoBehaviour
         else if (_score <= 0)
         {
             //  Debug.Log("333");
-          //  waterGun.PlayAnimation();
+        //    waterGun.PlayAnimation();
             nextScoreTarget = 10;
             perviousScore = 0;
         }
@@ -147,6 +147,7 @@ public class SpriteStacker : MonoBehaviour
     public void SetUp()
 
     {
+
         CreateNewSprite();
     }
     public void Reset()
