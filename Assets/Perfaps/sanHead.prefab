@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1602687450, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  m_Color: {r: 0.9716981, g: 0.19989002, b: 0.0045834924, a: 1}
+  m_Sprite: {fileID: 949402905, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -102,17 +102,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8028191302624290032}
   allSprtite:
-  - {fileID: 568267098, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -1301141945, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 178266369, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1987115958, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1277413278, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -1990529053, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 782001285, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1823560688, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 369932943, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -971975908, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1602687450, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
+  - {fileID: 949402905, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 385528965, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 1531467090, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 1917008722, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: -823812282, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 241905921, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 2047483489, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: 417692709, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: -194431536, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
+  - {fileID: -357641569, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
   sanHeadAnimation: {fileID: 0}
-  framePerSecond: 24
-  second: 1
+  framePerSecond: 12
+  second: 0.5
