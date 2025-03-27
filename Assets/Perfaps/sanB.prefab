@@ -78,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1602687450, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  m_Color: {r: 1, g: 0.67091835, b: 0, a: 1}
+  m_Sprite: {fileID: -2076173148, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,20 +103,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7039827093858415006}
   allSprtite:
-  - {fileID: 568267098, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -1301141945, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 178266369, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1987115958, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1277413278, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -1990529053, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 782001285, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1823560688, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 369932943, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: -971975908, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
-  - {fileID: 1602687450, guid: 2ac01c3ffe972614c80ac2987e4d1701, type: 3}
+  - {fileID: -2076173148, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: 1239643663, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: 2137634451, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: 1791314886, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: -577237633, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: -1120590593, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: -1717822065, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: -1265178808, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: 900065243, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  - {fileID: -1645879846, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
   sanHeadAnimation: {fileID: 3534341145410550407}
-  framePerSecond: 24
-  second: 1
+  framePerSecond: 10
+  second: 0.5
 --- !u!1001 &260729621432498574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -171,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3644200166335562505, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
       propertyPath: framePerSecond
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6255715767392807579, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
       propertyPath: m_Name

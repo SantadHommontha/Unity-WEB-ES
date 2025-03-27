@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.3, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.3, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,5 +113,5 @@ MonoBehaviour:
   - {fileID: -194431536, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
   - {fileID: -357641569, guid: d5cf6f6d766d7da4db0b47a0c456b250, type: 3}
   sanHeadAnimation: {fileID: 0}
-  framePerSecond: 12
+  framePerSecond: 10
   second: 0.5

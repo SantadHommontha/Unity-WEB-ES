@@ -7,7 +7,7 @@ public class SanAnimation : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] allSprtite;
-    [SerializeField] private SanAnimation sanHeadAnimation;
+   public SanAnimation sanHeadAnimation;
     [SerializeField] private float framePerSecond;
     [SerializeField] private float second = 1f;
     private int spriteIndex = 0;
@@ -58,6 +58,7 @@ public class SanAnimation : MonoBehaviour
             timeAnimation = null;
         }
         spriteIndex = 0;
+        spriteRenderer.enabled = true;
         timeAnimation = StartCoroutine(TimeAnimationUP(time, _callback));
     }
     IEnumerator TimeAnimationUP(float _time,Action _callback)
@@ -70,7 +71,12 @@ public class SanAnimation : MonoBehaviour
         }
         timeAnimation = null;
         _callback?.Invoke();
-        if (sanHeadAnimation) CreateHead();
+       
+        if (sanHeadAnimation)
+        {
+           // spriteRenderer.sortingOrder = 2;
+            CreateHead();
+        }
     }
     private int NextSprite()
     {
@@ -109,6 +115,7 @@ public class SanAnimation : MonoBehaviour
     }
     public void StartDown(Action _callback)
     {
+        spriteRenderer.enabled = true;
         if (timeAnimation != null)
         {
             StopCoroutine(timeAnimation);

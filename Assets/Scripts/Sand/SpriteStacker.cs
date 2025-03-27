@@ -15,8 +15,9 @@ public class SpriteStacker : MonoBehaviour
     [Header("Value")]
     [SerializeField] private Vector3Value lastSanTranform;
     [SerializeField] private IntValue gameScore;
-
+    public float nnn = 1;
     private GameObject lastSprite;
+    public int zCount = 1;
     void Start()
     {
         nextScoreTarget = 10;
@@ -48,7 +49,7 @@ public class SpriteStacker : MonoBehaviour
         else
         {
             float height = allSanAnimation[allSanAnimation.Count-1].GetComponent<SpriteRenderer>().bounds.size.y;
-            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, height, 0);
+            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, (height / 2f) - nnn, zCount);
             CreateNewSprite(newPosition);
         }
     }
@@ -61,7 +62,7 @@ public class SpriteStacker : MonoBehaviour
         else
         {
             float height = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SpriteRenderer>().bounds.size.y;
-            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, height, 0);
+            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, (height / 2f)- nnn, zCount);
             CreateNewSprite(newPosition, _s);
         }
     }
@@ -69,8 +70,11 @@ public class SpriteStacker : MonoBehaviour
     {
         var t = Instantiate(RandomSprite(), _position, Quaternion.identity, parentSpawn);
         var sa = t.GetComponent<SanAnimation>();
-        
+        zCount++;
         allSanAnimation.Add(sa);
+        var lasp = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SanAnimation>();
+        if (lasp.sanHeadAnimation != null)
+            lasp.sanHeadAnimation.enabled = false;
         sa.PlayAnimationUP();
        
         lastSanTranform.Value = _position;
@@ -91,7 +95,7 @@ public class SpriteStacker : MonoBehaviour
         if (allSanAnimation.Count <= 0) return;
 
         var ls = allSanAnimation[allSanAnimation.Count - 1];
-        
+        zCount--;
         lastSprite = ls.gameObject;
         ls.PlayAnimationDown(() => { Destroy(ls.gameObject); });
         lastSanTranform.Value = ls.transform.position;
