@@ -3,7 +3,7 @@ using UnityEngine;
 public class WaterGun : MonoBehaviour
 {
     [SerializeField] private PlayAnimation waterGun;
-   
+    private bool isPlaying = false;
     void Start()
     {
         waterGun.SetSpriteRDToFirstSprite();
@@ -12,7 +12,9 @@ public class WaterGun : MonoBehaviour
     [ContextMenu("PlayAnimation")]
     public void PlayAnimation()
     {
+        if (isPlaying) return;
         waterGun.SetSpriteRDToFirstSprite();
-        waterGun.Play();
+        isPlaying = true;
+        waterGun.Play(() => isPlaying = false);
     }
 }

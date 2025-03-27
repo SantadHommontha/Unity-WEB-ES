@@ -6,8 +6,9 @@ using UnityEngine;
 public class SanAnimation : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    public SpriteRenderer GetSpriteRenderer => spriteRenderer;
     [SerializeField] private Sprite[] allSprtite;
-   public SanAnimation sanHeadAnimation;
+    public SanAnimation sanHeadAnimation;
     [SerializeField] private float framePerSecond;
     [SerializeField] private float second = 1f;
     private int spriteIndex = 0;
@@ -23,7 +24,7 @@ public class SanAnimation : MonoBehaviour
     void Start()
     {
         SetUp();
-        
+
     }
 
 
@@ -32,7 +33,7 @@ public class SanAnimation : MonoBehaviour
         spriteRenderer.sprite = allSprtite[0];
         time = second / framePerSecond;
         spriteIndex = 0;
-        if(sanHeadAnimation)
+        if (sanHeadAnimation)
         {
             sanHeadAnimation.SetUp();
         }
@@ -43,7 +44,7 @@ public class SanAnimation : MonoBehaviour
     }
 
     #region UP
-   // -----------------------------------------UP----------------
+    // -----------------------------------------UP----------------
     [ContextMenu("Play Animation Up")]
     public void PlayAnimationUP()
     {
@@ -61,7 +62,7 @@ public class SanAnimation : MonoBehaviour
         spriteRenderer.enabled = true;
         timeAnimation = StartCoroutine(TimeAnimationUP(time, _callback));
     }
-    IEnumerator TimeAnimationUP(float _time,Action _callback)
+    IEnumerator TimeAnimationUP(float _time, Action _callback)
     {
         spriteRenderer.enabled = true;
         while (spriteIndex < allSprtite.Length)
@@ -71,10 +72,10 @@ public class SanAnimation : MonoBehaviour
         }
         timeAnimation = null;
         _callback?.Invoke();
-       
+
         if (sanHeadAnimation)
         {
-           // spriteRenderer.sortingOrder = 2;
+            // spriteRenderer.sortingOrder = 2;
             CreateHead();
         }
     }
@@ -96,7 +97,7 @@ public class SanAnimation : MonoBehaviour
     [ContextMenu("Play Animation Down")]
     public void PlayAnimationDown()
     {
-        AnimationDown(() => { StartDown(()=> { }); });
+        AnimationDown(() => { StartDown(() => { }); });
     }
     public void PlayAnimationDown(Action _callback)
     {
@@ -104,13 +105,13 @@ public class SanAnimation : MonoBehaviour
     }
     private void AnimationDown(Action _callback)
     {
-       if(sanHeadAnimation)
+        if (sanHeadAnimation)
         {
             sanHeadAnimation.AnimationDown(() => _callback?.Invoke());
         }
-       else
+        else
         {
-            StartDown( _callback);
+            StartDown(_callback);
         }
     }
     public void StartDown(Action _callback)
@@ -136,9 +137,9 @@ public class SanAnimation : MonoBehaviour
     }
     private int PreviousSprite()
     {
-       spriteIndex--;
-       spriteIndex = Mathf.Clamp(spriteIndex, 0, allSprtite.Length - 1);
-      return spriteIndex;
+        spriteIndex--;
+        spriteIndex = Mathf.Clamp(spriteIndex, 0, allSprtite.Length - 1);
+        return spriteIndex;
     }
     private void ShowSpriteDown()
     {
@@ -152,14 +153,14 @@ public class SanAnimation : MonoBehaviour
     private void CreateHead()
     {
         float height = spriteRenderer.bounds.size.y;
-        Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height/2f, 0);
-       
+        Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height / 2f, 0);
+
         var sp = sanHeadAnimation.GetComponent<SpriteRenderer>().bounds.size.y;
-        Debug.Log(newPosition += new Vector3(0, sp / 2f, 0));
+      
         sanHeadAnimation.transform.position = newPosition -= new Vector3(0, sp / 2f, 0);
         sanHeadAnimation.PlayAnimationUP();
     }
-    
+
     public void SkipToLstSprite()
     {
         if (timeAnimation != null)

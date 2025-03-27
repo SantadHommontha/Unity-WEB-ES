@@ -5,9 +5,20 @@ public class GameTimer : MonoBehaviour
 {
     [SerializeField][TextArea] protected string description;
     [SerializeField] protected float time;
+    protected float TIME
+    {
+        get
+        {
+            if (gameTime != null)
+                return gameTime.Value;
+            else
+                return time;
+        }
+    }
     protected float timer;
     protected Coroutine coroutineTimeUpdate;
-
+    [Header("Value")]
+    [SerializeField] private FloatValue gameTime;
     [Header("Event")]
     [SerializeField] protected GameEvent timerUpdateEvent;
 
@@ -17,8 +28,8 @@ public class GameTimer : MonoBehaviour
     public void StartTimer()
     {
         if (coroutineTimeUpdate != null) return;
-        timer = time;
-        coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(time));
+        timer = TIME;
+        coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(TIME));
     }
     public void StopTimer()
     {
@@ -33,8 +44,8 @@ public class GameTimer : MonoBehaviour
         if (_data)
         {
             if (coroutineTimeUpdate != null) return;
-            timer = time;
-            coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(time));
+            timer = TIME;
+            coroutineTimeUpdate = StartCoroutine(GameTimerUpdate(TIME));
         }
         else
         {

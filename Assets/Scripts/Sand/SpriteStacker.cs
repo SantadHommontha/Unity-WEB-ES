@@ -7,8 +7,8 @@ public class SpriteStacker : MonoBehaviour
 {
     [SerializeField] private Transform startPosition;
     [SerializeField] private SanAnimation[] sanAnimationsSet;
-  [SerializeField]  private int nextScoreTarget;
-   [SerializeField] private int perviousScore;
+    [SerializeField] private int nextScoreTarget;
+    [SerializeField] private int perviousScore;
     [SerializeField] private int nextScore = 10;
     [SerializeField] private Transform parentSpawn;
     [SerializeField] private List<SanAnimation> allSanAnimation = new List<SanAnimation>();
@@ -17,7 +17,15 @@ public class SpriteStacker : MonoBehaviour
     [SerializeField] private IntValue gameScore;
     public float nnn = 1;
     private GameObject lastSprite;
+
+
+
     public int zCount = 1;
+
+    [SerializeField] private Bucket bucket;
+    [SerializeField] private WaterGun waterGun;
+
+
     void Start()
     {
         nextScoreTarget = 10;
@@ -43,12 +51,12 @@ public class SpriteStacker : MonoBehaviour
     private void CreateNewSprite()
     {
         if (allSanAnimation.Count == 0)
-        {     
+        {
             CreateNewSprite(startPosition.position);
         }
         else
         {
-            float height = allSanAnimation[allSanAnimation.Count-1].GetComponent<SpriteRenderer>().bounds.size.y;
+            float height = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SpriteRenderer>().bounds.size.y;
             Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, (height / 2f) - nnn, zCount);
             CreateNewSprite(newPosition);
         }
@@ -62,7 +70,7 @@ public class SpriteStacker : MonoBehaviour
         else
         {
             float height = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SpriteRenderer>().bounds.size.y;
-            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, (height / 2f)- nnn, zCount);
+            Vector3 newPosition = allSanAnimation[allSanAnimation.Count - 1].transform.position + new Vector3(0, (height / 2f) - nnn, zCount);
             CreateNewSprite(newPosition, _s);
         }
     }
@@ -71,22 +79,27 @@ public class SpriteStacker : MonoBehaviour
         var t = Instantiate(RandomSprite(), _position, Quaternion.identity, parentSpawn);
         var sa = t.GetComponent<SanAnimation>();
         zCount++;
+        // if (allSanAnimation.Count > 0)
+        // {
+        //     var lasp = allSanAnimation[allSanAnimation.Count - 1];
+        //     //  if (lasp.sanHeadAnimation != null)
+
+        //     //  lasp.sanHeadAnimation.GetSpriteRenderer.enabled = false;
+        // }
+
         allSanAnimation.Add(sa);
-        var lasp = allSanAnimation[allSanAnimation.Count - 1].GetComponent<SanAnimation>();
-        if (lasp.sanHeadAnimation != null)
-            lasp.sanHeadAnimation.enabled = false;
         sa.PlayAnimationUP();
-       
+        bucket.PlayAnimation();
         lastSanTranform.Value = _position;
     }
-    private void CreateNewSprite(Vector3 _position , bool _s)
+    private void CreateNewSprite(Vector3 _position, bool _s)
     {
         var t = Instantiate(RandomSprite(), _position, Quaternion.identity, parentSpawn);
         var sa = t.GetComponent<SanAnimation>();
 
         allSanAnimation.Add(sa);
         sa.SkipToLstSprite();
-
+        bucket.PlayAnimation();
         lastSanTranform.Value = _position;
     }
     [ContextMenu("Destroy Sprite")]
@@ -99,19 +112,20 @@ public class SpriteStacker : MonoBehaviour
         lastSprite = ls.gameObject;
         ls.PlayAnimationDown(() => { Destroy(ls.gameObject); });
         lastSanTranform.Value = ls.transform.position;
-        allSanAnimation.Remove(ls);          
+        waterGun.PlayAnimation();
+        allSanAnimation.Remove(ls);
     }
 
 
-     private void GameScoreUpdate(int _score)
-    {    
+    private void GameScoreUpdate(int _score)
+    {
         if (_score >= nextScoreTarget)
-        {   
+        {
             perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
         }
-       else if(_score < perviousScore)
+        else if (_score < perviousScore)
         {
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
@@ -135,9 +149,9 @@ public class SpriteStacker : MonoBehaviour
 
         var num = parentSpawn.childCount;
 
-        for (int i =0; i < num; i++)
+        for (int i = 0; i < num; i++)
         {
-            Destroy(parentSpawn.GetChild(i).gameObject);    
+            Destroy(parentSpawn.GetChild(i).gameObject);
         }
         allSanAnimation.Clear();
 
@@ -148,7 +162,7 @@ public class SpriteStacker : MonoBehaviour
     public void CheckScore()
     {
         int sum = (gameScore.Value / nextScore) - allSanAnimation.Count;
-        if(sum > 0)
+        if (sum > 0)
         {
             CreateNewSprite(true);
             nextScoreTarget += gameScore.Value / nextScore;
@@ -156,6 +170,6 @@ public class SpriteStacker : MonoBehaviour
         }
 
     }
-    
+
 
 }

@@ -4,6 +4,8 @@ public class Bucket : MonoBehaviour
 {
     [SerializeField] private PlayAnimation bucketPR;
     [SerializeField] private PlayAnimation bucketAC;
+
+    private bool isPlaying = false;
     void Start()
     {
         bucketPR.SetSpriteRDToFirstSprite();
@@ -13,10 +15,12 @@ public class Bucket : MonoBehaviour
     [ContextMenu("PlayAnimation")]
     public void PlayAnimation()
     {
+        if (isPlaying) return;
         bucketPR.SetSpriteRDToFirstSprite();
         bucketAC.SetSpriteRDToNone();
-        bucketPR.Play(() => bucketAC.Play());
+        isPlaying = true;
+        bucketPR.Play(() => bucketAC.Play(() => isPlaying = false));
     }
-   
-   
+
+
 }
