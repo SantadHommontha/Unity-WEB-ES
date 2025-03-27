@@ -254,6 +254,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96512c5124797447bde07237e00766b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &263666217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263666218}
+  m_Layer: 0
+  m_Name: Bucket And WaterGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263666218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263666217}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9720774, y: -1.1992823, z: -0.022752887}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &315797640 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 796980954077081902, guid: f6bf81bde7379674bbf1fe20f668f93d, type: 3}
@@ -3275,6 +3306,7 @@ SceneRoots:
   - {fileID: 7334348322193333977}
   - {fileID: 1470669785}
   - {fileID: 461540932}
+  - {fileID: 263666218}
   - {fileID: 2109203184548424742}
   - {fileID: 1792370294}
   - {fileID: 663345183}
