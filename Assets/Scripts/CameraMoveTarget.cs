@@ -5,6 +5,7 @@ public class CameraMoveTarget : MonoBehaviour
 {
     [SerializeField] private float minYPosition;
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float z = 10;
     [Header("Value")]
     [SerializeField] private Vector3Value lastSanValue;
 
@@ -29,8 +30,8 @@ public class CameraMoveTarget : MonoBehaviour
 
     private void OnSanTranformChange(Vector3 _newTranform)
     {
-        var newPosition = new Vector3(0f, Mathf.Clamp(_newTranform.y,minYPosition,float.MaxValue),-10f);
-
+        var newPosition = new Vector3(0f, Mathf.Clamp(_newTranform.y, minYPosition, float.MaxValue), z);
+        Debug.Log(newPosition);
         targetPosition = newPosition;
     }
 }

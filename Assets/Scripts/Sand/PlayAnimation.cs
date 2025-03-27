@@ -6,8 +6,8 @@ public class PlayAnimation : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] allSprtite;
-
-
+    public SpriteRenderer GetSpriteRenderer =>spriteRenderer;
+    [SerializeField] private bool backToFirst = false;
 
     private int spriteIndex = 0;
     private Coroutine co_timeAnimation;
@@ -60,6 +60,8 @@ public class PlayAnimation : MonoBehaviour
             spriteRenderer.sprite = allSprtite[NextSprite()];
         }
         co_timeAnimation = null;
+        if (backToFirst)
+            SetUp();
         _callback?.Invoke();
     }
 
@@ -69,4 +71,9 @@ public class PlayAnimation : MonoBehaviour
         spriteIndex++;
         return rt;
     }
+    public void SetSpriteByIndex(int _index)
+    {
+        spriteRenderer.sprite = allSprtite[_index];
+    }
+
 }

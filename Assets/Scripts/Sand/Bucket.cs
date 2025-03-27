@@ -19,8 +19,18 @@ public class Bucket : MonoBehaviour
         bucketPR.SetSpriteRDToFirstSprite();
         bucketAC.SetSpriteRDToNone();
         isPlaying = true;
-        bucketPR.Play(() => bucketAC.Play(() => isPlaying = false));
+        bucketPR.Play(AfterPlay);
     }
-
+    private void AfterPlay()
+    {
+        bucketPR.SetSpriteRDToNone();
+        bucketAC.Play(AfterACPlay);
+    }
+    private void AfterACPlay()
+    {
+        bucketPR.SetSpriteRDToFirstSprite();
+        bucketAC.SetSpriteRDToNone();
+        isPlaying = false;
+    }
 
 }

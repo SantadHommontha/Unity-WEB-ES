@@ -15,6 +15,11 @@ public class WaterGun : MonoBehaviour
         if (isPlaying) return;
         waterGun.SetSpriteRDToFirstSprite();
         isPlaying = true;
-        waterGun.Play(() => isPlaying = false);
+        waterGun.Play(AfterPlay);
+    }
+    private void AfterPlay()
+    {
+        isPlaying = false;
+        waterGun.SetSpriteByIndex(0);
     }
 }

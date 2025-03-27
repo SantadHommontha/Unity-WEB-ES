@@ -156,8 +156,8 @@ public class SanAnimation : MonoBehaviour
         Vector3 newPosition = spriteRenderer.transform.position + new Vector3(0, height / 2f, 0);
 
         var sp = sanHeadAnimation.GetComponent<SpriteRenderer>().bounds.size.y;
-      
-        sanHeadAnimation.transform.position = newPosition -= new Vector3(0, sp / 2f, 0);
+
+        sanHeadAnimation.transform.position = newPosition -= new Vector3(0, (sp / 2f) - 2, 0);
         sanHeadAnimation.PlayAnimationUP();
     }
 

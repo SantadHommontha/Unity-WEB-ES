@@ -215,7 +215,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             reconnectCount++;
             Debug.Log("Reconnect");
         }
-//        disconnectServer.Raise(this, -999);
+        //        disconnectServer.Raise(this, -999);
     }
 
 
@@ -242,5 +242,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Reconnect();
         }
 
+    }
+
+    public void RESETROOMM()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LeaveRoom();
+            StartCoroutine(GGG());
+        }
+    }
+    private IEnumerator GGG()
+    {
+        yield return new WaitForSeconds(1f);
+        PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
     }
 }

@@ -89,7 +89,7 @@ public class SpriteStacker : MonoBehaviour
 
         allSanAnimation.Add(sa);
         sa.PlayAnimationUP();
-        bucket.PlayAnimation();
+        // bucket.PlayAnimation();
         lastSanTranform.Value = _position;
     }
     private void CreateNewSprite(Vector3 _position, bool _s)
@@ -99,7 +99,7 @@ public class SpriteStacker : MonoBehaviour
 
         allSanAnimation.Add(sa);
         sa.SkipToLstSprite();
-        bucket.PlayAnimation();
+        // bucket.PlayAnimation();
         lastSanTranform.Value = _position;
     }
     [ContextMenu("Destroy Sprite")]
@@ -112,27 +112,34 @@ public class SpriteStacker : MonoBehaviour
         lastSprite = ls.gameObject;
         ls.PlayAnimationDown(() => { Destroy(ls.gameObject); });
         lastSanTranform.Value = ls.transform.position;
-        waterGun.PlayAnimation();
+        //   waterGun.PlayAnimation();
         allSanAnimation.Remove(ls);
     }
 
 
     private void GameScoreUpdate(int _score)
     {
+        Debug.Log("score " + _score);
         if (_score >= nextScoreTarget)
         {
+            //  Debug.Log("111");
+            bucket.PlayAnimation();
             perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
         }
         else if (_score < perviousScore)
         {
+            // Debug.Log("222");
+            waterGun.PlayAnimation();
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
             DestroySprite();
         }
         else if (_score <= 0)
         {
+            //  Debug.Log("333");
+          //  waterGun.PlayAnimation();
             nextScoreTarget = 10;
             perviousScore = 0;
         }
@@ -161,13 +168,13 @@ public class SpriteStacker : MonoBehaviour
 
     public void CheckScore()
     {
-        int sum = (gameScore.Value / nextScore) - allSanAnimation.Count;
-        if (sum > 0)
-        {
-            CreateNewSprite(true);
-            nextScoreTarget += gameScore.Value / nextScore;
-            perviousScore = nextScoreTarget - nextScore;
-        }
+        // int sum = (gameScore.Value / nextScore) - allSanAnimation.Count;
+        // if (sum > 0)
+        // {
+        //     CreateNewSprite(true);
+        //     nextScoreTarget += gameScore.Value / nextScore;
+        //     perviousScore = nextScoreTarget - nextScore;
+        // }
 
     }
 
