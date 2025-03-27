@@ -26,7 +26,12 @@ public class PlayAnimation : MonoBehaviour
         time = second / framePerSecond;
         spriteIndex = 0;
     }
-    public void PlayAnimationUP(Action _callback)
+    [ContextMenu("Play")]
+    public void Play()
+    {
+        Play(() => { });
+    }
+    public void Play(Action _callback)
     {
         SetUp();
         if (co_timeAnimation != null)
