@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class WaterGun : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private PlayAnimation waterGun;
+   
     void Start()
     {
-        
+        waterGun.SetSpriteRDToFirstSprite();
     }
 
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("PlayAnimation")]
+    public void PlayAnimation()
     {
-        
+        waterGun.SetSpriteRDToFirstSprite();
+        waterGun.Play();
     }
 }

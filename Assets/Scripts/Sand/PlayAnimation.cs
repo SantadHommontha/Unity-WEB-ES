@@ -20,6 +20,15 @@ public class PlayAnimation : MonoBehaviour
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    public void SetSpriteRDToFirstSprite()
+    {
+        spriteRenderer.sprite = allSprtite[0];
+    }
+    public void SetSpriteRDToNone()
+    {
+        spriteRenderer.sprite = null;
+    }
     private void SetUp()
     {
         spriteRenderer.sprite = allSprtite[0];
