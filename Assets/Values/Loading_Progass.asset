@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b35934d41945748b97261ce0017020, type: 3}
-  m_Name: Player_List_Update_Event
+  m_Script: {fileID: 11500000, guid: be49615d42150704fa049cc9c9fa1009, type: 3}
+  m_Name: Loading_Progass
   m_EditorClassIdentifier: 
-  description: When Add or Remove Player
-  listeners: []
+  description: 
+  value: 0

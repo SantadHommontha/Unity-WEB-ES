@@ -25,6 +25,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent disconnectServer;
 
+
     private Coroutine co_SendKeepAlive;
     private Coroutine co_Reconnect;
     private int reconnectCount;
@@ -35,7 +36,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private BoolValueHandle isMaster;
     //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
-
+    [SerializeField] private FloatValue connectTOserver;
 
 
     //  [SerializeField] private bool isMaster;
@@ -53,7 +54,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         reconnectCount = 0;
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
-
+        connectTOserver.Value = 0;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -61,6 +62,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         PhotonNetwork.JoinLobby();
+        connectTOserver.Value = 0.3f;
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
     }
 
@@ -101,13 +103,30 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
         finishConnectToServer.Value = true;
         finishConnectToRoomEvent.Raise(this, isMaster.Value);
+
         Debug.Log("JoinedRoom");
     }
+
+
+
+
     #endregion
     // Call With Event
     public void AfterJoinRoom(Component _sender, object _data)
     {
+
+        StartCoroutine(CountDownBeforeEnterGame());
+    }
+
+    private IEnumerator CountDownBeforeEnterGame()
+    {
+        connectTOserver.Value = 0.7f;
+        yield return new WaitForSeconds(0.4f);
+        connectTOserver.Value = 1f;
+        yield return new WaitForSeconds(0.6f);
+
         chooseTeamEvent.Raise(this, isMaster.Value);
+        UpdatePlayerList.Raise(this, -999);
     }
     #region Kick And Leave Room
     public void LeaveRoom(Component _sender, object _data)

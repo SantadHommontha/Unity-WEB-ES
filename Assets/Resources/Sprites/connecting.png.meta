@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0a0c66254e245cc4c95685f9b74dfe9f
+guid: 17e8fc277e1e4b444a1498761c6a7fdf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: punch_0
+      name: connecting_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
+        x: 196
+        y: 258
+        width: 710
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b254349d06ebdca4bb84c4e08a5e3614
-      internalID: -1758125328
+      spriteID: d5beaab183645d449a8b831d9897270b
+      internalID: -1415543715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: connecting_4
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 116
+        width: 926
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a53d23f456ebbf4e9ef61a8d3e88200
+      internalID: -659926985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: connecting_5
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 27
+        width: 883
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ca49e13f38d1f1418a316034a428836
+      internalID: 587346664
       vertices: []
       indices: 
       edges: []
@@ -135,7 +179,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 51f2f956238e51d4db099e838e58db88
+    spriteID: 54d998e7404be5f41a965369a63e3a3e
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +189,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      punch_0: -1758125328
+      connecting_0: -1415543715
+      connecting_1: 1611347789
+      connecting_2: -1403922333
+      connecting_3: 785270922
+      connecting_4: -659926985
+      connecting_5: 587346664
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
