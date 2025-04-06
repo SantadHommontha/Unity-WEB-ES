@@ -14,12 +14,15 @@ public class BuildCount : MonoBehaviour
     public void MAJOR()
     {
         major++;
+        minor = 0;
+        patch =0;
         UpdateText();
     }
     [ContextMenu("MINOR")]
     public void MINOR()
     {
         minor++;
+        patch =0;
         UpdateText();
     }
     [ContextMenu("PATCH")]
