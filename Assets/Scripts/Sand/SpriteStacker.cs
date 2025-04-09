@@ -18,7 +18,7 @@ public class SpriteStacker : MonoBehaviour
     public float nnn = 1;
     private GameObject lastSprite;
 
-
+    private int lastScore = 0;
 
     public int zCount = 1;
 
@@ -30,6 +30,7 @@ public class SpriteStacker : MonoBehaviour
     {
         nextScoreTarget = 10;
         perviousScore = 0;
+        lastScore = 0;
     }
 
     private void OnEnable()
@@ -120,10 +121,18 @@ public class SpriteStacker : MonoBehaviour
     private void GameScoreUpdate(int _score)
     {
         Debug.Log("score " + _score);
+        if (_score > lastScore)
+        {
+            bucket.PlayAnimation();
+        }
+        else if (_score < lastScore)
+        {
+            waterGun.PlayAnimation();
+        }
         if (_score >= nextScoreTarget)
         {
             //  Debug.Log("111");
-            bucket.PlayAnimation();
+            //  bucket.PlayAnimation();
             perviousScore = nextScoreTarget;
             nextScoreTarget += nextScore;
             CreateNewSprite();
@@ -131,7 +140,7 @@ public class SpriteStacker : MonoBehaviour
         else if (_score < perviousScore && parentSpawn.transform.childCount > 0)
         {
             //  Debug.Log("222");
-            waterGun.PlayAnimation();
+            //     waterGun.PlayAnimation();
             nextScoreTarget = perviousScore;
             perviousScore -= nextScore;
             DestroySprite();
@@ -139,7 +148,7 @@ public class SpriteStacker : MonoBehaviour
         else if (_score <= 0)
         {
             //  Debug.Log("333");
-        //    waterGun.PlayAnimation();
+            //    waterGun.PlayAnimation();
             nextScoreTarget = 10;
             perviousScore = 0;
         }
@@ -154,7 +163,7 @@ public class SpriteStacker : MonoBehaviour
     {
         nextScoreTarget = 10;
         perviousScore = 0;
-
+        lastScore = 0;
         var num = parentSpawn.childCount;
 
         for (int i = 0; i < num; i++)
