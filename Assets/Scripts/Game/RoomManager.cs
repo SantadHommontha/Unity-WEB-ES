@@ -1,9 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
-using ExitGames.Client.Photon;
 using Photon.Realtime;
 using System.Collections;
-using Photon.Pun.UtilityScripts;
+using UnityEngine.UI;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager instace;
@@ -25,7 +24,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent disconnectServer;
 
-
+    [SerializeField] private Image inServerStatus;
     private Coroutine co_SendKeepAlive;
     private Coroutine co_Reconnect;
     private int reconnectCount;
@@ -256,6 +255,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 co_Reconnect = StartCoroutine(IE_Reconncet());
             }
         }
+       
+        if (PhotonNetwork.IsConnected)
+        {
+            inServerStatus.color = Color.green;
+        }
+        else
+        {
+            inServerStatus.color = Color.red;
+        }
     }
     #endregion
 
@@ -288,4 +296,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
     }
+
+
+
 }
