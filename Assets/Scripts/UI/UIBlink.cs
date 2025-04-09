@@ -4,7 +4,7 @@ using System.Collections;
 
 public class UIBlink : MonoBehaviour
 {
-    [SerializeField] private Image uiGraphic;
+    [SerializeField] private Graphic uiGraphic;
     [SerializeField] private float blinkSpeed = 1f;
     private bool canPlay = true;
     private Coroutine coroutine;

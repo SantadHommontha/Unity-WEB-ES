@@ -54,16 +54,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
         reconnectCount = 0;
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
-        connectTOserver.Value = 0;
+        connectTOserver.Value = 0.2f;
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        PhotonNetwork.JoinLobby();
-        connectTOserver.Value = 0.3f;
+
+        connectTOserver.Value = 0.6f;
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnected()
@@ -76,7 +77,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
-
+        connectTOserver.Value = 0.8f;
         Debug.Log("Join a Lobby");
     }
     #endregion
@@ -101,6 +102,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
             PhotonNetwork.KeepAliveInBackground = 300f;
         }
+        connectTOserver.Value = 1f;
         finishConnectToServer.Value = true;
         finishConnectToRoomEvent.Raise(this, isMaster.Value);
 
@@ -115,9 +117,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void AfterJoinRoom(Component _sender, object _data)
     {
 
-        StartCoroutine(CountDownBeforeEnterGame());
+        // StartCoroutine(CountDownBeforeEnterGame());
     }
-
+    // Call With Button
+    public void TapToEnterGame()
+    {
+        chooseTeamEvent.Raise(this, isMaster.Value);
+        UpdatePlayerList.Raise(this, -999);
+    }
     private IEnumerator CountDownBeforeEnterGame()
     {
         connectTOserver.Value = 0.7f;
