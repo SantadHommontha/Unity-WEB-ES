@@ -1,0 +1,217 @@
+fileFormatVersion: 2
+guid: 29cec1454214f2a46b16395c6a1f2a06
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameLogo_SDMLogo_dropshadow_5
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 643
+        width: 472
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0c83012d3d5e5944813a590696cf9eb
+      internalID: 988217437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GameLogo_SDMLogo_dropshadow_26
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 847
+        height: 602
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 153553648d8d31f4a9ca1afe2e17ed0a
+      internalID: 1047776957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: cdc4f5b66e4105e4fb94307b3c6a904c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GameLogo_SDMLogo_dropshadow_0: 1062118455
+      GameLogo_SDMLogo_dropshadow_1: 279783713
+      GameLogo_SDMLogo_dropshadow_10: 1282256981
+      GameLogo_SDMLogo_dropshadow_11: 1325163253
+      GameLogo_SDMLogo_dropshadow_12: -1825985455
+      GameLogo_SDMLogo_dropshadow_13: -1615714471
+      GameLogo_SDMLogo_dropshadow_14: 1142512721
+      GameLogo_SDMLogo_dropshadow_15: -564795649
+      GameLogo_SDMLogo_dropshadow_16: -1218977070
+      GameLogo_SDMLogo_dropshadow_17: 1287201743
+      GameLogo_SDMLogo_dropshadow_18: 1685177519
+      GameLogo_SDMLogo_dropshadow_19: 764953772
+      GameLogo_SDMLogo_dropshadow_2: 341352331
+      GameLogo_SDMLogo_dropshadow_20: -1832661422
+      GameLogo_SDMLogo_dropshadow_21: 1624349386
+      GameLogo_SDMLogo_dropshadow_22: -1491038457
+      GameLogo_SDMLogo_dropshadow_23: -294117793
+      GameLogo_SDMLogo_dropshadow_24: -584360768
+      GameLogo_SDMLogo_dropshadow_25: -285627648
+      GameLogo_SDMLogo_dropshadow_26: 1047776957
+      GameLogo_SDMLogo_dropshadow_27: -983644800
+      GameLogo_SDMLogo_dropshadow_28: 260813398
+      GameLogo_SDMLogo_dropshadow_29: 1857762230
+      GameLogo_SDMLogo_dropshadow_3: 2106691588
+      GameLogo_SDMLogo_dropshadow_30: 198077398
+      GameLogo_SDMLogo_dropshadow_31: 906381438
+      GameLogo_SDMLogo_dropshadow_32: -2000714800
+      GameLogo_SDMLogo_dropshadow_33: -100296226
+      GameLogo_SDMLogo_dropshadow_34: -1680258541
+      GameLogo_SDMLogo_dropshadow_35: 1126744954
+      GameLogo_SDMLogo_dropshadow_36: -2031169339
+      GameLogo_SDMLogo_dropshadow_37: 206001867
+      GameLogo_SDMLogo_dropshadow_38: -1593562330
+      GameLogo_SDMLogo_dropshadow_39: -1595584978
+      GameLogo_SDMLogo_dropshadow_4: 360048826
+      GameLogo_SDMLogo_dropshadow_40: 1929547656
+      GameLogo_SDMLogo_dropshadow_41: 1499986475
+      GameLogo_SDMLogo_dropshadow_42: 1377910157
+      GameLogo_SDMLogo_dropshadow_5: 988217437
+      GameLogo_SDMLogo_dropshadow_6: 80735707
+      GameLogo_SDMLogo_dropshadow_7: 467659678
+      GameLogo_SDMLogo_dropshadow_8: 917729493
+      GameLogo_SDMLogo_dropshadow_9: 789277504
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
