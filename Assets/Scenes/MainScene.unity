@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.9.1
+  m_text: 0.9.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2304,7 +2304,7 @@ MonoBehaviour:
   text: {fileID: 1239305984}
   major: 0
   minor: 9
-  patch: 1
+  patch: 2
 --- !u!4 &2070465056
 Transform:
   m_ObjectHideFlags: 0
@@ -4841,7 +4841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7557722970710782123, guid: f6bf81bde7379674bbf1fe20f668f93d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7917786024688106252, guid: f6bf81bde7379674bbf1fe20f668f93d, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4888,6 +4888,10 @@ PrefabInstance:
       propertyPath: leaveRoomEven
       value: 
       objectReference: {fileID: 11400000, guid: ed2f2c8df24d6e540a7ccd4bc61353a3, type: 2}
+    - target: {fileID: 4783455494077644052, guid: e6b0d414711a16d41b9179bc0edd272c, type: 3}
+      propertyPath: inServerStatus
+      value: 
+      objectReference: {fileID: 465029545}
     - target: {fileID: 4783455494077644052, guid: e6b0d414711a16d41b9179bc0edd272c, type: 3}
       propertyPath: connectTOserver
       value: 
@@ -5169,7 +5173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1096342271162389099, guid: 9003d64bc00c854419a64e027de8a807, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1414344793622537048, guid: 9003d64bc00c854419a64e027de8a807, type: 3}
       propertyPath: m_Pivot.x
