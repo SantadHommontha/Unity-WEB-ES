@@ -24,10 +24,7 @@ public class PlayerData
 [System.Serializable]
 public class Team
 {
-    // private TeamSetting teamSetting;
 
-
-    // string is playerID
     private Dictionary<string, PlayerData> playerdata = new Dictionary<string, PlayerData>();
     public Action OnPlayerTeamChange;
 
