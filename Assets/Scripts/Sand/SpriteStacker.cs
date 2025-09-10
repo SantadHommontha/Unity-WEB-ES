@@ -123,12 +123,16 @@ public class SpriteStacker : MonoBehaviour
         Debug.Log("score " + _score);
         if (_score > lastScore)
         {
+            lastScore = _score;
             bucket.PlayAnimation();
         }
         else if (_score < lastScore)
         {
+            lastScore = _score;
             waterGun.PlayAnimation();
         }
+
+
         if (_score >= nextScoreTarget)
         {
             //  Debug.Log("111");
