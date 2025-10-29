@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 3318532700773821897}
   - component: {fileID: 8626887917242730153}
   - component: {fileID: 4669687188790716532}
+  - component: {fileID: 982306196639215120}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -212,7 +213,45 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8626887917242730153}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 982306196639215120}
+        m_TargetAssemblyTypeName: UIBlink, Assembly-CSharp
+        m_MethodName: StopUiFade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RoomManager, Game
+        m_MethodName: TapToEnterGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &982306196639215120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2159342502694078753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2452960e4ddd5d649a14cde916ce1b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiGraphic: {fileID: 5556924302608382838}
+  blinkSpeed: 1
 --- !u!1 &2505714603258150711
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +602,7 @@ GameObject:
   - component: {fileID: 2578794009488279624}
   - component: {fileID: 5713250425645706597}
   - component: {fileID: 2011454172559975380}
+  - component: {fileID: 114432585204521464}
   m_Layer: 5
   m_Name: Connect
   m_TagString: Untagged
@@ -624,7 +664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ddb06cec8822e949ad0281d57ad66a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8835c388ff2d6964791a8aeca9e797b6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -634,6 +674,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &114432585204521464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265357351730281306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa08cbefc6415f94b86b78cf1510b0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connect: {fileID: 3328822775747127234}
+  tapToEnterGame: {fileID: 8561159676378450068}
+  uIBlink: {fileID: 982306196639215120}
 --- !u!1 &5517671648033554567
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,7 +904,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TAP WHERE TO ENTER GAME
+  m_text: TAP HERE TO ENTER GAME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8389cdfaa5df94d4c96cff91069295a6, type: 2}
   m_sharedMaterial: {fileID: 1810095031728947302, guid: 8389cdfaa5df94d4c96cff91069295a6, type: 2}
@@ -858,8 +913,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 3875536895
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
