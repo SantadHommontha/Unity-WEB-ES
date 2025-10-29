@@ -293,14 +293,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 var gamescore = this.gameScore.Value;
                 gamescore += data.score;
-                gamescore = Mathf.Clamp(gamescore, -100, 100);
+             //  gamescore = Mathf.Clamp(gamescore, -100, 100);
                 this.gameScore.Value = gamescore;
             }
             else if (data.scoreType == ValueName.MINUS_TEAM)
             {
                 int gamescore = this.gameScore.Value;
                 gamescore -= data.score;
-                gamescore = Mathf.Clamp(gamescore, -100, 100);
+          //      gamescore = Mathf.Clamp(gamescore, -100, 100);
                 this.gameScore.Value = gamescore;
 
             }

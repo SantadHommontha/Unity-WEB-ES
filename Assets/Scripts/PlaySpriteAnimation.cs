@@ -10,10 +10,11 @@ public class PlaySpriteAnimation : MonoBehaviour
     [SerializeField] private float playTime = 1f;
 
     [SerializeField] private bool waitAnimationEnd = false;
-
+    [SerializeField] private bool playloop = false;
     private Coroutine ct_playsprite;
-    private float time;
 
+    private float time;
+    private bool play;
     private void Awake()
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
@@ -35,12 +36,13 @@ public class PlaySpriteAnimation : MonoBehaviour
         spriteRenderer.sprite = allSprtite[0];
         time = playTime / allSprtite.Length;
         //  currentSprite = 0;
+        play = false;
     }
 
 
     private IEnumerator PlayAnimation(float _time)
     {
-        bool play = true;
+
         int currentSprite = 0;
         while (play)
         {
@@ -48,7 +50,12 @@ public class PlaySpriteAnimation : MonoBehaviour
             currentSprite++;
             yield return new WaitForSeconds(_time);
             if (currentSprite >= allSprtite.Length)
+            {
                 play = false;
+                currentSprite = 0;
+            }
+            if (playloop)
+                play = true;
         }
 
         if (SetFirstSpriteWhenEndofPlay)
@@ -68,6 +75,7 @@ public class PlaySpriteAnimation : MonoBehaviour
                 StopCoroutine(ct_playsprite);
 
             SetUp();
+            play = true;
             ct_playsprite = StartCoroutine(PlayAnimation(time));
         }
         else
@@ -75,6 +83,7 @@ public class PlaySpriteAnimation : MonoBehaviour
             if (ct_playsprite == null)
             {
                 SetUp();
+                play = true;
                 ct_playsprite = StartCoroutine(PlayAnimation(time));
             }
         }
@@ -84,6 +93,7 @@ public class PlaySpriteAnimation : MonoBehaviour
     public void Stop()
     {
         ct_playsprite = StartCoroutine(PlayAnimation(time));
+        play = false;
         if (SetFirstSpriteWhenEndofPlay)
         {
             spriteRenderer.sprite = allSprtite[0];
