@@ -39,7 +39,7 @@ public class SanAnimation : MonoBehaviour
         }
         else
         {
-            spriteRenderer.enabled = false;
+        //    spriteRenderer.enabled = false;
         }
     }
 

@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2076173148, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 581531eedfbfa3c4297e85fbd84a74f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,17 +103,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7039827093858415006}
   allSprtite:
-  - {fileID: -2076173148, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: 1239643663, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: 2137634451, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: 1791314886, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: -577237633, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: -1120590593, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: -1717822065, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: -1265178808, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: 900065243, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  - {fileID: -1645879846, guid: 105569f40cbfc344c921fb40d7dc6d75, type: 3}
-  sanHeadAnimation: {fileID: 3534341145410550407}
+  - {fileID: 21300000, guid: 581531eedfbfa3c4297e85fbd84a74f0, type: 3}
+  - {fileID: 21300000, guid: ca99372e2ac70254897715e9c8570542, type: 3}
+  - {fileID: 21300000, guid: a5b5a63f50b9cc346a67ca8a5814a077, type: 3}
+  - {fileID: 21300000, guid: e2e81bee1bc77bf4fb7761190e9c1d5a, type: 3}
+  - {fileID: 21300000, guid: 8d7fea6980ee9294a8e95c55cdd2ca6e, type: 3}
+  - {fileID: 21300000, guid: 56e704d01ad71be4895164086751c659, type: 3}
+  - {fileID: 21300000, guid: 47c727bd62b5b0244ae6eb56cd75f53d, type: 3}
+  - {fileID: 21300000, guid: f44b7239d1def104ca855fbe5e2211e9, type: 3}
+  - {fileID: 21300000, guid: d48db8454583e944787e91ca2f67327e, type: 3}
+  - {fileID: 21300000, guid: 557d2014bffafe8479d9bea3aef3b05e, type: 3}
+  sanHeadAnimation: {fileID: 0}
   framePerSecond: 10
   second: 0.5
 --- !u!1001 &260729621432498574
@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sanHead
       objectReference: {fileID: 0}
+    - target: {fileID: 6255715767392807579, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -186,14 +190,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2353679617284058305, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
   m_PrefabInstance: {fileID: 260729621432498574}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3534341145410550407 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3644200166335562505, guid: 68a385601b4bd0645b30a058b18a4286, type: 3}
-  m_PrefabInstance: {fileID: 260729621432498574}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65654f32b6468cb40a22034d2e95baac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

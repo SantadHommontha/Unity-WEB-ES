@@ -1883,18 +1883,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3666243413497333985}
     m_Modifications:
-    - target: {fileID: 200694120374367940, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 778483757933857310, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 899174358970475235, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2183001663019860064, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1903,29 +1891,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2243517164212654402, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2403284040201023905, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2889004593519579571, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3253232556961091995, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3735012065942485578, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
       propertyPath: m_Name
       value: Slider And Time
-      objectReference: {fileID: 0}
-    - target: {fileID: 3833053476267298378, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -384.3
       objectReference: {fileID: 0}
     - target: {fileID: 4190569449808173692, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1937,38 +1905,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4190569449808173692, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683901497570054793, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683901497570054793, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683901497570054793, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683901497570054793, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -246.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4980485461121532960, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5413048142161479530, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -246.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5992660316387733661, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5992660316387733661, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6424066105004371146, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
@@ -2049,22 +1985,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6424066105004371146, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7070572658357201572, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7449387143702391081, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7637644863233103379, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8879251409684114813, guid: eff91ef1e2a22fa4a8cfde765b9feebc, type: 3}
-      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
