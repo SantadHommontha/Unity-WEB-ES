@@ -713,6 +713,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8878845699231663499, guid: 609e8fba3a551bd4e93f8692b7211074, type: 3}
+      propertyPath: nnn
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878845699231663499, guid: 609e8fba3a551bd4e93f8692b7211074, type: 3}
       propertyPath: bucket
       value: 
       objectReference: {fileID: 995151846}
@@ -3534,6 +3538,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8720379131869853246, guid: 20f066a33414b0c4eb40b7554ecb26fe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4819,7 +4827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6865352906424325884, guid: 6d3b5e50c2291124faba8baedc0b76f1, type: 3}
       propertyPath: response.m_PersistentCalls.m_Calls.Array.size
-      value: 22
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6865352906424325884, guid: 6d3b5e50c2291124faba8baedc0b76f1, type: 3}
       propertyPath: response.m_PersistentCalls.m_Calls.Array.data[12].m_Mode
@@ -5581,6 +5589,10 @@ PrefabInstance:
     - target: {fileID: 6952002494261291414, guid: 9df853c95a414524688b672708237dda, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7737315220312287697, guid: 9df853c95a414524688b672708237dda, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8930422765919139753, guid: 9df853c95a414524688b672708237dda, type: 3}
       propertyPath: m_Pivot.x

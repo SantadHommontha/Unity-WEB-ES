@@ -1,6 +1,5 @@
 
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 public class SpriteStacker : MonoBehaviour
@@ -25,7 +24,7 @@ public class SpriteStacker : MonoBehaviour
     [SerializeField] private Bucket bucket;
     [SerializeField] private WaterGun waterGun;
 
-
+    private int spriteOther = 1;
     [SerializeField] private GameEvent scoreIncreased;
     [SerializeField] private GameEvent scoreDecreased;
 
@@ -48,7 +47,7 @@ public class SpriteStacker : MonoBehaviour
 
     private GameObject RandomSprite()
     {
-        return sanAnimationsSet[Random.Range(0, sanAnimationsSet.Length)].gameObject;
+        return sanAnimationsSet[UnityEngine.Random.Range(0, sanAnimationsSet.Length)].gameObject;
     }
 
     [ContextMenu("Create New Sprite")]
@@ -94,6 +93,7 @@ public class SpriteStacker : MonoBehaviour
         allSanAnimation.Add(sa);
         sa.PlayAnimationUP();
         // bucket.PlayAnimation();
+        sa.GetSpriteRenderer.sortingOrder = spriteOther++;
         lastSanTranform.Value = _position;
     }
     private void CreateNewSprite(Vector3 _position, bool _s)
