@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7039827093858415006}
   - component: {fileID: 1177066621919188035}
   m_Layer: 0
-  m_Name: sanB
+  m_Name: sanC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 029564137352e5b499019baf76764c8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 689cc4990bba5e04f82de5efcb1a4a4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,16 +103,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7039827093858415006}
   allSprtite:
-  - {fileID: 21300000, guid: 029564137352e5b499019baf76764c8c, type: 3}
-  - {fileID: 21300000, guid: 7c4dec6a2b646d447830b208a5ed5ae5, type: 3}
-  - {fileID: 21300000, guid: 7fdfa844d9ab742449d24715a59f8901, type: 3}
-  - {fileID: 21300000, guid: 39b1b1c917db3884981d3105a79a48a9, type: 3}
-  - {fileID: 21300000, guid: 4c78f9eb31467b5499217ae4832e3802, type: 3}
-  - {fileID: 21300000, guid: f033b32e6181d7e48861357e269fbcc1, type: 3}
-  - {fileID: 21300000, guid: 8868a515ae6df804eab771595d1a321a, type: 3}
-  - {fileID: 21300000, guid: 147816c4b18fc134192851316330d664, type: 3}
-  - {fileID: 21300000, guid: b7c8fa2803cb78b4fa84d3a4033d9e3e, type: 3}
-  - {fileID: 21300000, guid: a7ebed4af93f6bd489ae2c71f8815e65, type: 3}
+  - {fileID: 21300000, guid: 689cc4990bba5e04f82de5efcb1a4a4e, type: 3}
+  - {fileID: 21300000, guid: d860bf75ca1bbca4b8061b499068706a, type: 3}
+  - {fileID: 21300000, guid: 03b924f415b987d498a71aed6c3999bc, type: 3}
+  - {fileID: 21300000, guid: 47abe98b6ad0c4b478effefd09de5695, type: 3}
+  - {fileID: 21300000, guid: 1679b7e06a45c5f4fb54da866aa86b0a, type: 3}
+  - {fileID: 21300000, guid: fdd3f6908e1deb64b81d153206f5a100, type: 3}
+  - {fileID: 21300000, guid: bec63d670ba53d149b648f733da20c05, type: 3}
+  - {fileID: 21300000, guid: a8c0b40b83b39744195d9544065200a3, type: 3}
+  - {fileID: 21300000, guid: 5a5314c0604613d45b3aac008d92522a, type: 3}
+  - {fileID: 21300000, guid: c5aa7ad89bc0f8b4c94c6e1aa19e1ddd, type: 3}
   sanHeadAnimation: {fileID: 0}
   framePerSecond: 10
   second: 0.5
