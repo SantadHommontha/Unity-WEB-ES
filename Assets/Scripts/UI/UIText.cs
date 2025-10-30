@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -19,11 +20,13 @@ public class UIText : MonoBehaviour
     [SerializeField] private FloatValue floatValue;
     [SerializeField] private BoolValue boolValue;
     [Header("Value Type")]
-   // [SerializeField] private ValueType valueType = ValueType.Int;
+    // [SerializeField] private ValueType valueType = ValueType.Int;
     [SerializeField] private string startText;
     [SerializeField] private string endText;
 
-
+    [SerializeField] private bool autoHide = false;
+    [SerializeField] private float autoHideTime = 3f;
+    private Coroutine ct_autoHideText;
     void Start()
     {
         if (text == null) text = GetComponent<TMP_Text>();
@@ -97,5 +100,20 @@ public class UIText : MonoBehaviour
     {
         if (text == null) return;
         text.text = $"{startText}{_data}{endText}";
+        if (autoHide)
+        {
+            if (ct_autoHideText != null)
+                StopCoroutine(ct_autoHideText);
+            ct_autoHideText = StartCoroutine(AutoHideText(autoHideTime));
+
+
+         
+        }
+    }
+
+    private IEnumerator AutoHideText(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        text.text = "";
     }
 }

@@ -11,8 +11,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //  [SerializeField] private GameObject play_Canva;
     // [SerializeField] private GameObject leveRoomCanvaTest;
     [Header("Event")]
-
     [SerializeField] private GameEvent connectEvent;
+    [SerializeField] private GameEvent chooseMode;
     [SerializeField] private GameEvent chooseTeamEvent;
     [SerializeField] private GameEvent resetGameEvent;
     // [SerializeField] private GameEvent leaveRoomEven;
@@ -36,6 +36,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
     [SerializeField] private FloatValue connectTOserver;
+   // [SerializeField] private StringValue myRoomCode;
 
 
     //  [SerializeField] private bool isMaster;
@@ -75,7 +76,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
+
+        PhotonNetwork.JoinOrCreateRoom("Room Test" + UnityEngine.Random.Range(0, 1000).ToString(), null, null);
         connectTOserver.Value = 0.8f;
         Debug.Log("Join a Lobby");
     }
@@ -119,6 +121,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
         // StartCoroutine(CountDownBeforeEnterGame());
     }
     // Call With Button
+
+     public void TapToChooseTeam()
+    {
+        chooseMode.Raise(this, -999);
+    }
     public void TapToEnterGame()
     {
         chooseTeamEvent.Raise(this, isMaster.Value);
@@ -255,7 +262,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 co_Reconnect = StartCoroutine(IE_Reconncet());
             }
         }
-       
+
         if (PhotonNetwork.IsConnected)
         {
             inServerStatus.color = Color.green;

@@ -198,9 +198,10 @@ public class TeamManager : MonoBehaviourPunCallbacks
         {
             reportError.text = data.responseMessage;
             isEnterToGame.Value = false;
-            afterJoinTeamComplete.Raise(this, false);
+      //      afterJoinTeamComplete.Raise(this, false);
         }
         reSpones.Value = data.responseMessage;
+        Debug.Log("RC: " + data.responseState);
         //   photonView.RPC("UpDatePlayerDate", RpcTarget.MasterClient);
     }
 
