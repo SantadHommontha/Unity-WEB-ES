@@ -36,6 +36,7 @@ public class PlaySpriteAnimation : MonoBehaviour
         spriteRenderer.sprite = allSprtite[0];
         time = playTime / allSprtite.Length;
         //  currentSprite = 0;
+      
         play = false;
     }
 

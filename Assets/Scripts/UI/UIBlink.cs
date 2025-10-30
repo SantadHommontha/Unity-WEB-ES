@@ -11,11 +11,12 @@ public class UIBlink : MonoBehaviour
     void Start()
     {
 
-    //    StartCoroutine(FadeAlpha());
+        //    StartCoroutine(FadeAlpha());
     }
     public void StopUiFade()
     {
-        StopCoroutine(coroutine);
+        if (coroutine != null)
+            StopCoroutine(coroutine);
     }
     public void StartFade()
     {
@@ -42,5 +43,6 @@ public class UIBlink : MonoBehaviour
                 yield return null;
             }
         }
+        coroutine = null;
     }
 }

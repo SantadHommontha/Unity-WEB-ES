@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private BoolValue isEnterToGame;
 
     [SerializeField] private BoolValue isMaster;
+    [SerializeField] private BoolValue singlePlayer;
 
 
     #endregion
@@ -85,7 +86,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
         gameTimer.Value = (float)_time;
-        if (!PhotonNetwork.IsMasterClient) return;
+         if (!PhotonNetwork.IsMasterClient) return;
+       // if (!isMaster) return;
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.GAME_TIME,gameTimer.Value}
@@ -178,6 +180,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (timer <= 0)
             {
                 gameTimer.Value = 0;
+                Debug.Log(";;;;;;;;;;;;;;;;;;;");
                 gameStart.Value = false;
 
                 GameEnd();
@@ -225,7 +228,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
         if (!isEnterToGame.Value) return;
-        if (!isMaster.Value)
+        if (!isMaster.Value || singlePlayer.Value)
         {
             if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
             {
@@ -293,14 +296,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 var gamescore = this.gameScore.Value;
                 gamescore += data.score;
-             //  gamescore = Mathf.Clamp(gamescore, -100, 100);
+                //  gamescore = Mathf.Clamp(gamescore, -100, 100);
                 this.gameScore.Value = gamescore;
             }
             else if (data.scoreType == ValueName.MINUS_TEAM)
             {
                 int gamescore = this.gameScore.Value;
                 gamescore -= data.score;
-          //      gamescore = Mathf.Clamp(gamescore, -100, 100);
+                //      gamescore = Mathf.Clamp(gamescore, -100, 100);
                 this.gameScore.Value = gamescore;
 
             }
@@ -366,6 +369,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     {
         gameStart.Value = true;
+
     }
     #endregion
 

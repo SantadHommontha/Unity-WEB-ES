@@ -2,7 +2,8 @@
     "name": "MyUtility",
     "rootNamespace": "",
     "references": [
-        "GUID:4a2f3c4c8dcb2444da55892f047d4d10"
+        "GUID:4a2f3c4c8dcb2444da55892f047d4d10",
+        "GUID:627ccdcbb603a394bb2a1713aa217863"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

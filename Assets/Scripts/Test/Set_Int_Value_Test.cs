@@ -6,11 +6,15 @@ public class Set_Int_Value_Test : MonoBehaviour
     [SerializeField] private int newInt;
 
     [ContextMenu("Set Int")]
-    private void SetInt()
+    public void SetInt()
     {
-        intValue.Value = newInt; 
+        intValue.Value = newInt;
     }
 
+    public void ChangeInt()
+    {
+        intValue.Value += newInt;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
