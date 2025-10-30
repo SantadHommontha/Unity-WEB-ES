@@ -31,12 +31,13 @@ public class PlaySpriteAnimation : MonoBehaviour
     }
 
 
-    private void SetUp()
+    public void SetUp()
     {
         spriteRenderer.sprite = allSprtite[0];
         time = playTime / allSprtite.Length;
         //  currentSprite = 0;
-      
+        if (ct_playsprite != null)
+            StopCoroutine(ct_playsprite);
         play = false;
     }
 
@@ -72,8 +73,10 @@ public class PlaySpriteAnimation : MonoBehaviour
     {
         if (!waitAnimationEnd)
         {
-            if (ct_playsprite != null)
-                StopCoroutine(ct_playsprite);
+            // if (ct_playsprite != null)
+            //     StopCoroutine(ct_playsprite);
+            StopAllCoroutines();
+            Debug.Log("PlayT " + gameObject.name);
 
             SetUp();
             play = true;
@@ -81,6 +84,7 @@ public class PlaySpriteAnimation : MonoBehaviour
         }
         else
         {
+            Debug.Log("PlayB " + gameObject.name);
             if (ct_playsprite == null)
             {
                 SetUp();
