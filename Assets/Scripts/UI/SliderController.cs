@@ -24,7 +24,7 @@ public class SliderController : MonoBehaviour
     {
         if (slider == null) return;
 
-        slider.value = Mathf.Clamp(_score, -100, 100) * -1;
+        slider.value = Mathf.Clamp(_score, -100, 100) ;
 
     }
 

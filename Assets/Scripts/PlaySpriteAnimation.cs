@@ -37,7 +37,10 @@ public class PlaySpriteAnimation : MonoBehaviour
         time = playTime / allSprtite.Length;
         //  currentSprite = 0;
         if (ct_playsprite != null)
+        {
             StopCoroutine(ct_playsprite);
+            ct_playsprite = null;
+        }
         play = false;
     }
 
@@ -91,6 +94,7 @@ public class PlaySpriteAnimation : MonoBehaviour
                 play = true;
                 ct_playsprite = StartCoroutine(PlayAnimation(time));
             }
+            
         }
     }
 
