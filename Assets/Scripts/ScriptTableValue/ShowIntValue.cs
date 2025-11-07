@@ -6,14 +6,21 @@ public class ShowIntValue : MonoBehaviour
     [SerializeField] private TMP_Text text;
     [SerializeField] private IntValue intValue;
 
-
+    [SerializeField] private bool useAbsToShow;
 
     public void ChangeText(int _value)
     {
-        text.text = _value.ToString();
+        int value = _value;
+        if (useAbsToShow)
+        {
+            value = Mathf.Abs(value);
+        }
+
+        text.text = value.ToString();
+
     }
 
-     public void ChangeText()
+    public void ChangeText()
     {
         ChangeText(intValue.Value);
     }

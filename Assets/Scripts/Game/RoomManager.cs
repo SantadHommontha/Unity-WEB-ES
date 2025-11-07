@@ -77,7 +77,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
 
-        PhotonNetwork.JoinOrCreateRoom("Room Test" + UnityEngine.Random.Range(0, 1000).ToString(), null, null);
+        PhotonNetwork.JoinOrCreateRoom("Room Test" , null, null);
         connectTOserver.Value = 0.8f;
         Debug.Log("Join a Lobby");
     }
