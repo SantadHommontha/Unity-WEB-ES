@@ -83,7 +83,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
             CcreateRoom("Game Room" + Random.Range(0, 1000).ToString());
         else
         {
-            
             CcreateRoom("Game Room Main");
             leftToNewRoom = false;
         }
@@ -101,16 +100,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         leftToNewRoom = true;
     }
-    private void JoinNewRoom()
+    private void JoinRoom(string _roomName)
     {
 
-        CcreateRoom("Game Room Main");
+        PhotonNetwork.JoinRoom(_roomName);
     }
 
     public void Onlef()
     {
 
 
+
+    }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+      //  base.OnMasterClientSwitched(newMasterClient);
+        if (newMasterClient.IsLocal)
+        {
+            Debug.Log("🎉 ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
+            JoinRoom("Game Room Main");
+        }
+        else
+        {
+            Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
+
+        }
 
     }
     public override void OnLeftRoom()
