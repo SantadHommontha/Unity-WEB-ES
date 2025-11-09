@@ -29,6 +29,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private Coroutine co_Reconnect;
     private int reconnectCount;
     private int maxReconnectCount = 5;
+    private bool leftToNewRoom = false;
     [Header("Value")]
 
     //  [SerializeField] private BoolValue isMaster;
@@ -36,7 +37,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
     [SerializeField] private FloatValue connectTOserver;
-   // [SerializeField] private StringValue myRoomCode;
+    // [SerializeField] private StringValue myRoomCode;
 
 
     //  [SerializeField] private bool isMaster;
@@ -61,7 +62,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-
+        Debug.Log("OnConnectedToMaster");
         connectTOserver.Value = 0.6f;
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
         PhotonNetwork.JoinLobby();
@@ -77,10 +78,52 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
 
-        PhotonNetwork.JoinOrCreateRoom("Room Test" , null, null);
-        connectTOserver.Value = 0.8f;
         Debug.Log("Join a Lobby");
+        if (!leftToNewRoom)
+            CcreateRoom("Game Room" + Random.Range(0, 1000).ToString());
+        else
+        {
+            
+            CcreateRoom("Game Room Main");
+            leftToNewRoom = false;
+        }
+        connectTOserver.Value = 0.8f;
     }
+
+    public void CcreateRoom(string _roomName = "Room Test")
+    {
+
+        PhotonNetwork.JoinOrCreateRoom(_roomName, null, null);
+    }
+
+    public void LeftAndJoinNewRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        leftToNewRoom = true;
+    }
+    private void JoinNewRoom()
+    {
+
+        CcreateRoom("Game Room Main");
+    }
+
+    public void Onlef()
+    {
+
+
+
+    }
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+         Debug.Log("OnLeftRoom");
+        //   if (leftToNewRoom)
+
+        // {
+        //     JoinNewRoom();
+        // }
+    }
+
     #endregion
     // public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     // {
@@ -92,6 +135,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
 
+        Debug.Log("JoinedRoom");
         if (!isMaster.localValue)
         {
             isMaster.Value = PhotonNetwork.IsMasterClient;
@@ -107,7 +151,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
         finishConnectToServer.Value = true;
         finishConnectToRoomEvent.Raise(this, isMaster.Value);
 
-        Debug.Log("JoinedRoom");
+        if (leftToNewRoom)
+        {
+            leftToNewRoom = false;
+            TapToEnterGame();
+        }
+
     }
 
 
@@ -122,7 +171,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     // Call With Button
 
-     public void TapToChooseTeam()
+    public void TapToChooseTeam()
     {
         chooseMode.Raise(this, -999);
     }

@@ -46,6 +46,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private StringValue roomCode;
     [SerializeField] private BoolValue isEnterToGame;
     [SerializeField] private StringValue myName;
+    [SerializeField] private BoolValue isAdmin;
     public string MyName => myName.Value;
     [SerializeField] private StringValue myTeamType;
     public string MyTeamType => myTeamType.Value;
@@ -78,7 +79,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     {
         SetupEvent();
 
-
+        isAdmin.Value = false;
         btn1.onClick.AddListener(() => RequestJoinTeam(ValueName.ADD_TEAM));
         btn2.onClick.AddListener(() => RequestJoinTeam(ValueName.MINUS_TEAM));
 
@@ -112,11 +113,44 @@ public class TeamManager : MonoBehaviourPunCallbacks
             clickCount = 0,
             code = roomCode.Value
         };
+
+        Debug.Log($"Room Code Is {playerData.code}");
         string jsonData = JsonUtility.ToJson(playerData);
         myName.Value = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
         photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
     }
+    public void RequestMasterClientTransferToSelf()
+    {
+        // 1. ตรวจสอบว่าเราอยู่ในห้องหรือไม่
+        if (!PhotonNetwork.InRoom)
+        {
+            Debug.LogWarning("ไม่สามารถย้าย Master Client ได้ เพราะไม่ได้อยู่ในห้อง!");
+            return;
+        }
 
+        // 2. ตรวจสอบว่าเราเป็น Master Client อยู่แล้วหรือไม่
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("คุณเป็น Master Client อยู่แล้ว");
+            return;
+        }
+
+        // 3. เรียกฟังก์ชันเพื่อย้าย Master Client มาที่ LocalPlayer (ตัวเราเอง)
+        Debug.Log("กำลังส่งคำขอเป็น Master Client...");
+
+        // **นี่คือฟังก์ชันหลัก:**
+        bool success = PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+
+        if (success)
+        {
+            Debug.Log("ส่งคำขอสำเร็จ! รอกการยืนยัน...");
+        }
+        else
+        {
+            // โดยปกติจะล้มเหลวถ้าการเชื่อมต่อไม่เสถียร หรือมีปัญหาอื่นๆ
+            Debug.LogError("การส่งคำขอเป็น Master Client ล้มเหลว");
+        }
+    }
     // receive player data at RequestJoinTeam Funcetion Send
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
@@ -129,7 +163,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
         if (data.playerName == ValueName.ADMIN_NAME)
         {
             RoomManager.instace.ChangeMaster(data.info.Sender);
-
+            isAdmin.Value = true;
+         //   RequestMasterClientTransferToSelf();
             return;
         }
 
@@ -198,7 +233,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         {
             reportError.text = data.responseMessage;
             isEnterToGame.Value = false;
-      //      afterJoinTeamComplete.Raise(this, false);
+            //      afterJoinTeamComplete.Raise(this, false);
         }
         reSpones.Value = data.responseMessage;
         Debug.Log("RC: " + data.responseState);
