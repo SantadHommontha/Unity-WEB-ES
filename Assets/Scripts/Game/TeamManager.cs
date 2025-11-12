@@ -54,6 +54,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private int maxPlayerInTeam = 3;
     private int addTeamCount;
     private int minusTeamCount;
+    public bool requestSendJoyTestAgaing = false;
     #endregion
 
     #region  GameEvent
@@ -100,24 +101,53 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
 
     #region Join Team
-
-    // send playerdata to master to join team
-    private void RequestJoinTeam(string _teamName)
+    private PlayerData PlayerDataBackUp;
+    public void SendJoyTeamAgain()
     {
-        PlayerData playerData = new PlayerData()
+        RequestJoinTeam("", PlayerDataBackUp);
+    }
+    // send playerdata to master to join team
+    private void RequestJoinTeam(string _teamName, PlayerData _playerData = null)
+    {
+        PlayerData playerData = new PlayerData();
+        if (_playerData == null)
         {
-            info = new PhotonMessageInfo(),
-            playerID = PhotonNetwork.LocalPlayer.UserId,
-            teamName = _teamName,
-            playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text,
-            clickCount = 0,
-            code = roomCode.Value
-        };
+            playerData = new PlayerData()
+            {
+                info = new PhotonMessageInfo(),
+                playerID = PhotonNetwork.LocalPlayer.UserId,
+                teamName = _teamName,
+                playerName = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text,
+                clickCount = 0,
+                code = roomCode.Value
+            };
+        }
+        else
+        {
+            playerData = _playerData;
+        }
 
-        Debug.Log($"Room Code Is {playerData.code}");
-        string jsonData = JsonUtility.ToJson(playerData);
-        myName.Value = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
-        photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
+        if (PhotonNetwork.InRoom)
+        {
+            requestSendJoyTestAgaing = false;
+            // Debug.Log($"Room Code Is {playerData.code}");
+            string jsonData = JsonUtility.ToJson(playerData);
+            myName.Value = enterNameInput.text == "" ? $"PLayer{PhotonNetwork.LocalPlayer.ActorNumber.ToString()}" : enterNameInput.text;
+            photonView.RPC("TryJoinTeam", RpcTarget.MasterClient, jsonData);
+        }
+        else
+
+        {
+            if (playerData.playerName == ValueName.ADMIN_NAME)
+            {
+                isAdmin.Value = true;
+            }
+
+            requestSendJoyTestAgaing = true;
+            PlayerDataBackUp = playerData;
+            RoomManager.instace.LeftAndJoinNewRoom();
+
+        }
     }
     public void RequestMasterClientTransferToSelf()
     {
@@ -155,8 +185,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
+        Debug.Log($"TryJoinTeam :" + PhotonNetwork.IsMasterClient);
         if (!PhotonNetwork.IsMasterClient) return;
-
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
 
@@ -164,7 +194,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         {
             RoomManager.instace.ChangeMaster(data.info.Sender);
             isAdmin.Value = true;
-         //   RequestMasterClientTransferToSelf();
+            //   RequestMasterClientTransferToSelf();
             return;
         }
 

@@ -37,6 +37,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
     [SerializeField] private FloatValue connectTOserver;
+    [SerializeField] private BoolValue iamAdmin;
     // [SerializeField] private StringValue myRoomCode;
 
 
@@ -51,7 +52,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        finishConnectToServer.Value = false;
+
         reconnectCount = 0;
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
@@ -62,6 +63,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        finishConnectToServer.Value = false;
         Debug.Log("OnConnectedToMaster");
         connectTOserver.Value = 0.6f;
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
@@ -79,17 +81,30 @@ public class RoomManager : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
 
         Debug.Log("Join a Lobby");
-        if (!leftToNewRoom)
-            CcreateRoom("Game Room" + Random.Range(0, 1000).ToString());
-        else
-        {
-            CcreateRoom("Game Room Main");
-            leftToNewRoom = false;
-        }
-        connectTOserver.Value = 0.8f;
+        finishConnectToServer.Value = true;
+        finishConnectToRoomEvent.Raise(this, isMaster.Value);
+        //      CreateRoom("Game Room" + Random.Range(0, 1000).ToString());
+        // if (!leftToNewRoom)
+        //     CreateRoom("Game Room" + Random.Range(0, 1000).ToString());
+        // else
+        // {
+        //     leftToNewRoom = false;
+        //     if (iamAdmin.Value)
+        //         CreateRoom();
+        //     else
+        //         JoinRoom();
+        // }
+        connectTOserver.Value = 1f;
     }
-
-    public void CcreateRoom(string _roomName = "Room Test")
+    public void CreateRoomForSinglePlayer()
+    {
+        CreateRoom("Game Room" + Random.Range(0, 1000).ToString());
+    }
+    public void CreateRoomForMutiPLayer()
+    {
+        CreateRoom();
+    }
+    public void CreateRoom(string _roomName = "Game Room Main")
     {
 
         PhotonNetwork.JoinOrCreateRoom(_roomName, null, null);
@@ -97,13 +112,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void LeftAndJoinNewRoom()
     {
-        PhotonNetwork.LeaveRoom();
         leftToNewRoom = true;
+        PhotonNetwork.LeaveRoom();
     }
-    private void JoinRoom(string _roomName)
+    private void JoinRoom(string _roomName = "Game Room Main")
     {
-
+        Debug.Log("Join Room");
         PhotonNetwork.JoinRoom(_roomName);
+
     }
 
     public void Onlef()
@@ -114,23 +130,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-      //  base.OnMasterClientSwitched(newMasterClient);
+        //  base.OnMasterClientSwitched(newMasterClient);
         if (newMasterClient.IsLocal)
         {
             Debug.Log("🎉 ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
-            JoinRoom("Game Room Main");
+            JoinRoom();
         }
         else
         {
             Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
-
+            iamAdmin.Value = false;
         }
 
     }
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-         Debug.Log("OnLeftRoom");
+        Debug.Log("OnLeftRoom");
+
         //   if (leftToNewRoom)
 
         // {
@@ -162,14 +179,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.KeepAliveInBackground = 300f;
         }
         connectTOserver.Value = 1f;
-        finishConnectToServer.Value = true;
-        finishConnectToRoomEvent.Raise(this, isMaster.Value);
 
-        if (leftToNewRoom)
-        {
-            leftToNewRoom = false;
-            TapToEnterGame();
-        }
+
+
+        // if (leftToNewRoom)
+        // {
+        //     leftToNewRoom = false;
+        //     TapToEnterGame();
+        // }
+        // if (TeamManager.instance.requestSendJoyTestAgaing)
+        // {
+        //     TeamManager.instance.SendJoyTeamAgain();
+        // }
 
     }
 
@@ -367,6 +388,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom("Room Test", null, null);
     }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log($"Join Room Fail Error: {message}");
 
+    }
 
 }
