@@ -17,8 +17,8 @@ public static class ValueName
 
 
     // Team Name
-    public static string ADD_TEAM = "RED";
-    public static string MINUS_TEAM = "BLUE";
+    public static string ADD_TEAM = "GREEN";
+    public static string MINUS_TEAM = "RED";
 }
 
 public static class ResponesState

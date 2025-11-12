@@ -25,11 +25,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent scoreUpdateEvent;
     [SerializeField] private GameEvent playCanvasEvent;
     [SerializeField] private GameEvent gameEndMasterEvent;
-
+    [SerializeField] private GameEvent PlayConnectSound;
+    [SerializeField] private GameEvent StopConnectSound;
+    [SerializeField] private GameEvent PlayPlaySound;
+    [SerializeField] private GameEvent StopPlaySound;
+    [SerializeField] private GameEvent PlayEndSound;
+    [SerializeField] private GameEvent StopEndSound;
     //--Var
     [Space]
     [SerializeField] private ClickCount currentCickCount;
     [SerializeField] private int scoreForAddTeamWin = 50;
+
 
 
     //--Corutine
@@ -86,8 +92,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
         gameTimer.Value = (float)_time;
-         if (!PhotonNetwork.IsMasterClient) return;
-       // if (!isMaster) return;
+        if (!PhotonNetwork.IsMasterClient) return;
+        // if (!isMaster) return;
         ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable()
         {
             {ValueName.GAME_TIME,gameTimer.Value}
@@ -180,7 +186,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (timer <= 0)
             {
                 gameTimer.Value = 0;
-                Debug.Log(";;;;;;;;;;;;;;;;;;;");
+                //   Debug.Log(";;;;;;;;;;;;;;;;;;;");
                 gameStart.Value = false;
 
                 GameEnd();
@@ -243,11 +249,20 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (propertiesThatChanged.ContainsKey(ValueName.GAME_START))
             {
                 gameStart.Value = (bool)propertiesThatChanged[ValueName.GAME_START];
+                if (gameStart.Value)
+                {
+                    StopConnectSound.Raise(this, -999);
+                    StopEndSound.Raise(this, -999);
+                    PlayPlaySound.Raise(this, -999);
+                }
+
             }
 
             if (propertiesThatChanged.ContainsKey(ValueName.TEAM_WIN))
             {
                 teamWin.Value = (string)propertiesThatChanged[ValueName.TEAM_WIN];
+                StopPlaySound.Raise(this, -999);
+                PlayEndSound.Raise(this, -999);
             }
         }
     }
@@ -264,7 +279,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void RequstClickScore(Component _sender, object _data)
     {
 
-        photonView.RPC("SendClickScore", RpcTarget.AllBuffered);
+        photonView.RPC("SendClickScore", RpcTarget.All);
     }
 
     [PunRPC]
@@ -280,7 +295,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             scoreType = teamType,
             score = currentClick
         };
-
+        Debug.Log($"Send click {data.score} for {data.scoreType}");
         var ScoreSendJson = JsonUtility.ToJson(data);
         photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, ScoreSendJson);
     }

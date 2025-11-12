@@ -113,6 +113,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void LeftAndJoinNewRoom()
     {
         leftToNewRoom = true;
+        
         PhotonNetwork.LeaveRoom();
     }
     private void JoinRoom(string _roomName = "Game Room Main")

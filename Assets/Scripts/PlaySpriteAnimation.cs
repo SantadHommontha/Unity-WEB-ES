@@ -30,6 +30,7 @@ public class PlaySpriteAnimation : MonoBehaviour
 
     }
 
+    public void SetPlayLoop(bool _loop) => playloop = _loop;
 
     public void SetUp()
     {
@@ -94,7 +95,7 @@ public class PlaySpriteAnimation : MonoBehaviour
                 play = true;
                 ct_playsprite = StartCoroutine(PlayAnimation(time));
             }
-            
+
         }
     }
 
