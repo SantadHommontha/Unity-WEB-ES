@@ -94,6 +94,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //     else
         //         JoinRoom();
         // }
+        if (leftToNewRoom)
+        {
+            leftToNewRoom = false;
+            CreateRoomForMutiPLayer();
+        }
         connectTOserver.Value = 1f;
     }
     public void CreateRoomForSinglePlayer()
@@ -112,9 +117,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void LeftAndJoinNewRoom()
     {
-        leftToNewRoom = true;
-        
-        PhotonNetwork.LeaveRoom();
+        // leftToNewRoom = true;
+        Debug.Log("LeftAndJoinNewRoom");
+        chooseTeamEvent.Raise(this, -999);
+        //  PhotonNetwork.LeaveRoom();
     }
     private void JoinRoom(string _roomName = "Game Room Main")
     {
@@ -132,15 +138,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         //  base.OnMasterClientSwitched(newMasterClient);
-        if (newMasterClient.IsLocal)
+        resetGameEvent.Raise(this, -999);
+        Debug.Log("HHHHHHHHHHHHHH");
+        if (newMasterClient == PhotonNetwork.LocalPlayer)
         {
-            Debug.Log("🎉 ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
-            JoinRoom();
+            Debug.Log(" ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
+
+            resetRoomEvent.Raise(this, -999);
+            masterPanelEvent.Raise(this, isMaster.Value);
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+            PhotonNetwork.KeepAliveInBackground = 60f;
+            co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+
         }
         else
         {
             Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
             iamAdmin.Value = false;
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
+            PhotonNetwork.KeepAliveInBackground = 300f;
+            LeftAndJoinNewRoom();
         }
 
     }
@@ -148,7 +165,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
         Debug.Log("OnLeftRoom");
-
+        PhotonNetwork.JoinLobby();
         //   if (leftToNewRoom)
 
         // {
@@ -258,16 +275,75 @@ public class RoomManager : MonoBehaviourPunCallbacks
     #region ChangeMaster
     public void ChangeMaster(Player _newMaster)
     {
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        //   PhotonNetwork.SetMasterClient(_newMaster);
+        //
+        Debug.Log("ChangeMaster");
+
+
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.SetMasterClient(_newMaster);
+            Debug.Log("เป็น Master Client อยู่แล้ว");
             resetRoomEvent.Raise(this, -999);
-            StartCoroutine(CountDownAfterStartNewMaster());
+            masterPanelEvent.Raise(this, isMaster.Value);
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+            PhotonNetwork.KeepAliveInBackground = 60f;
+            co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+
+        }
+        else
+
+        {
+            PhotonNetwork.SetMasterClient(_newMaster);
+        }
+        // resetRoomEvent.Raise(this, -999);
+
+        //  }
+        // RequestMasterClientTransferToSelf(_newMaster);
+        if (co_SendKeepAlive != null)
+            StopCoroutine(co_SendKeepAlive);
+        co_SendKeepAlive = null;
+        //   StartCoroutine(CountDownAfterStartNewMaster());
+    }
+
+
+    public void RequestMasterClientTransferToSelf(Player _newMaster)
+    {
+        // 1. ตรวจสอบว่าเราอยู่ในห้องหรือไม่
+        if (!PhotonNetwork.InRoom)
+        {
+            Debug.LogWarning("ไม่สามารถย้าย Master Client ได้ เพราะไม่ได้อยู่ในห้อง!");
+            return;
+        }
+
+        // 2. ตรวจสอบว่าเราเป็น Master Client อยู่แล้วหรือไม่
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("คุณเป็น Master Client อยู่แล้ว");
+            return;
+        }
+
+        // 3. เรียกฟังก์ชันเพื่อย้าย Master Client มาที่ LocalPlayer (ตัวเราเอง)
+        Debug.Log("กำลังส่งคำขอเป็น Master Client...");
+
+        // **นี่คือฟังก์ชันหลัก:**
+        bool success = PhotonNetwork.SetMasterClient(_newMaster);
+
+        if (success)
+        {
+            Debug.Log("ส่งคำขอสำเร็จ! รอกการยืนยัน...");
+            chooseTeamEvent.Raise(this, -999);
+        }
+        else
+        {
+            // โดยปกติจะล้มเหลวถ้าการเชื่อมต่อไม่เสถียร หรือมีปัญหาอื่นๆ
+            Debug.LogError("การส่งคำขอเป็น Master Client ล้มเหลว");
         }
     }
     IEnumerator CountDownAfterStartNewMaster()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         chooseTeamEvent.Raise(this, -999);
         photonView.RPC("NewMaster", RpcTarget.All);
@@ -295,6 +371,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
             PhotonNetwork.KeepAliveInBackground = 300f;
+            LeftAndJoinNewRoom();
         }
         resetGameEvent.Raise(this, -999);
     }
@@ -327,7 +404,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         while (!PhotonNetwork.IsConnected && reconnectCount < maxReconnectCount)
         {
-            PhotonNetwork.Reconnect();
+            //  PhotonNetwork.Reconnect();
             yield return new WaitForSeconds(1);
             reconnectCount++;
             Debug.Log("Reconnect");
@@ -340,7 +417,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     #region Update 
     void Update()
     {
-        if (!PhotonNetwork.IsConnected && finishConnectToServer.Value)
+        if (!PhotonNetwork.IsConnected && finishConnectToServer.Value || !leftToNewRoom)
         {
             if (co_Reconnect == null)
             {
@@ -372,15 +449,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void RESETROOMM()
     {
-        photonView.RPC("RRRRR", RpcTarget.All);
+        Debug.Log("RESETROOMM");
+        photonView.RPC("RRRRR", RpcTarget.Others);
+    }
+    public void GoTOChooseMode()
+    {
+          Debug.Log("RoomManager Goto");
+        PhotonNetwork.LeaveRoom();
+        chooseMode.Raise(this, -999);
     }
     [PunRPC]
     private void RRRRR()
     {
+        Debug.Log("RRRRR");
         if (!PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LeaveRoom();
-            StartCoroutine(GGG());
+            chooseMode.Raise(this, -999);
+            //   leftToNewRoom = true;
+            //  StartCoroutine(GGG());
+
         }
     }
     private IEnumerator GGG()

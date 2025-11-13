@@ -129,43 +129,12 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
 
     }
-    public void RequestMasterClientTransferToSelf()
-    {
-        // 1. ตรวจสอบว่าเราอยู่ในห้องหรือไม่
-        if (!PhotonNetwork.InRoom)
-        {
-            Debug.LogWarning("ไม่สามารถย้าย Master Client ได้ เพราะไม่ได้อยู่ในห้อง!");
-            return;
-        }
 
-        // 2. ตรวจสอบว่าเราเป็น Master Client อยู่แล้วหรือไม่
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("คุณเป็น Master Client อยู่แล้ว");
-            return;
-        }
-
-        // 3. เรียกฟังก์ชันเพื่อย้าย Master Client มาที่ LocalPlayer (ตัวเราเอง)
-        Debug.Log("กำลังส่งคำขอเป็น Master Client...");
-
-        // **นี่คือฟังก์ชันหลัก:**
-        bool success = PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-
-        if (success)
-        {
-            Debug.Log("ส่งคำขอสำเร็จ! รอกการยืนยัน...");
-        }
-        else
-        {
-            // โดยปกติจะล้มเหลวถ้าการเชื่อมต่อไม่เสถียร หรือมีปัญหาอื่นๆ
-            Debug.LogError("การส่งคำขอเป็น Master Client ล้มเหลว");
-        }
-    }
     // receive player data at RequestJoinTeam Funcetion Send
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
     {
-        Debug.Log("TryJoinTeam :");
+        Debug.Log("TryJoinTeam Fucntion:");
         if (!PhotonNetwork.IsMasterClient) return;
         var data = JsonUtility.FromJson<PlayerData>(_jsonData);
         data.info = _info;
@@ -175,6 +144,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
             RoomManager.instace.ChangeMaster(data.info.Sender);
             isAdmin.Value = true;
+
+            photonView.RPC("RPC_GOto", data.info.Sender);
             //   RequestMasterClientTransferToSelf();
             return;
         }
@@ -228,8 +199,18 @@ public class TeamManager : MonoBehaviourPunCallbacks
         }
 
     }
+    [PunRPC]
+    public void RPC_GOto()
 
-
+    {
+        photonView.RPC("RPC_GoTOChooseMode", RpcTarget.Others);
+    }
+    [PunRPC]
+    private void RPC_GoTOChooseMode()
+    {
+        Debug.Log("TeamManager Goto");
+        RoomManager.instace.GoTOChooseMode();
+    }
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
     {
