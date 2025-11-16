@@ -198,5 +198,32 @@ public class Team
         }
         return ids;
     }
+
+
+    public void GetAllPlayerByTeam(out PlayerData[] _teamAdd, out PlayerData[] _teamMinus)
+    {
+
+        List<PlayerData> playerAddTteam = new List<PlayerData>();
+        List<PlayerData> playerMinusTteam = new List<PlayerData>();
+
+       // int num = 0;
+        foreach (var T in playerdata)
+        {
+
+            if (T.Value.teamName == ValueName.ADD_TEAM)
+            {
+                playerAddTteam.Add(T.Value);
+            }
+            if (T.Value.teamName == ValueName.MINUS_TEAM)
+            {
+                playerMinusTteam.Add(T.Value);
+            }
+        }
+
+        _teamAdd = playerAddTteam.ToArray();
+        _teamMinus = playerMinusTteam.ToArray();
+
+    }
+
     #endregion
 }

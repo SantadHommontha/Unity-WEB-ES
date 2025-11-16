@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"D:/Unity Build/WEB 15;D:/Unity Build/WEB ES/Test/WEB 16;D:/Unity Build/WEB 14;D:/Unity Build/WEB ES/Test/WEB 15;D:/Unity Build/WEB ES/Test/WEB 14;D:/Unity Build/WEB ES/Test/WEB 13;D:/Unity Build/WEB 13;D:/Unity Build/WEB 12;D:/Unity Build/WEB 11;D:/Unity Build/WEB 10\"}"
+                "value": "{\"m_Value\":\"D:/Unity Build/WEB 16;D:/Unity Build/WEB 15;D:/Unity Build/WEB ES/Test/WEB 16;D:/Unity Build/WEB 14;D:/Unity Build/WEB ES/Test/WEB 15;D:/Unity Build/WEB ES/Test/WEB 14;D:/Unity Build/WEB ES/Test/WEB 13;D:/Unity Build/WEB 13;D:/Unity Build/WEB 12;D:/Unity Build/WEB 11\"}"
             }
         ]
     }

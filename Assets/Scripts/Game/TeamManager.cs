@@ -37,8 +37,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public PlayerData MyPlayerData => myPlayerData;
 
 
-    private Team myTeam;
-    public Team MyTeam => myTeam;
+    private Team myTeam ;
+    public Team MyTeam => team;
 
 
     [Header("Value")]
@@ -143,7 +143,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         {
 
             RoomManager.instace.ChangeMaster(data.info.Sender);
-            isAdmin.Value = true;
+          //  isAdmin.Value = true;
 
             photonView.RPC("RPC_GOto", data.info.Sender);
             //   RequestMasterClientTransferToSelf();

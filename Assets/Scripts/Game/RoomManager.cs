@@ -38,6 +38,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private BoolValue finishConnectToServer;
     [SerializeField] private FloatValue connectTOserver;
     [SerializeField] private BoolValue iamAdmin;
+    // [SerializeField] private 
     // [SerializeField] private StringValue myRoomCode;
 
 
@@ -139,7 +140,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         //  base.OnMasterClientSwitched(newMasterClient);
         resetGameEvent.Raise(this, -999);
-        Debug.Log("HHHHHHHHHHHHHH");
+        //   Debug.Log("HHHHHHHHHHHHHH");
         if (newMasterClient == PhotonNetwork.LocalPlayer)
         {
             Debug.Log(" ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
@@ -149,10 +150,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
             PhotonNetwork.KeepAliveInBackground = 60f;
             co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+            iamAdmin.Value = true;
 
         }
         else
         {
+            if (!openMaster) return;
+            openMaster = false;
             Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
             iamAdmin.Value = false;
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
@@ -273,6 +277,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region ChangeMaster
+    bool openMaster;
     public void ChangeMaster(Player _newMaster)
     {
         // if (PhotonNetwork.IsMasterClient)
@@ -280,7 +285,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //   PhotonNetwork.SetMasterClient(_newMaster);
         //
         Debug.Log("ChangeMaster");
-
+        iamAdmin.Value = false;
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -296,6 +301,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         {
             PhotonNetwork.SetMasterClient(_newMaster);
+            openMaster = true;
+
         }
         // resetRoomEvent.Raise(this, -999);
 
@@ -454,7 +461,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void GoTOChooseMode()
     {
-          Debug.Log("RoomManager Goto");
+        Debug.Log("RoomManager Goto");
         PhotonNetwork.LeaveRoom();
         chooseMode.Raise(this, -999);
     }

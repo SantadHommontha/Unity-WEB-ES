@@ -98,6 +98,14 @@ public class PlaySpriteAnimation : MonoBehaviour
 
         }
     }
+    public void Play(float _time)
+    {
+         StopAllCoroutines();
+         ct_playsprite = null;
+          SetUp();
+                play = true;
+                ct_playsprite = StartCoroutine(PlayAnimation(_time));
+    }
 
     [ContextMenu("Stop")]
     public void Stop()
