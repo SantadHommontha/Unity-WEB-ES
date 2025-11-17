@@ -28,6 +28,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
     void Start()
     {
         // TeamManager.instance.MyTeam.OnPlayerTeamChange += PlayerListUpdate2;
+        StartUpdatePLayerList();
     }
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
@@ -66,7 +67,7 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
 
         //     }
         // }
-      
+
     }
 
     public void StartUpdatePLayerList()
@@ -90,23 +91,23 @@ public class ShowListPlayer : MonoBehaviourPunCallbacks
         while (true)
 
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(PhotonNetwork.IsMasterClient ? 1 : 3);
             PlayerListUpdate2();
         }
 
     }
     void Update()
     {
-           PlayerListUpdate2();
+        PlayerListUpdate2();
     }
     private void PlayerListUpdate2()
     {
         if (!finishConnectToServer.Value) return;
         if (PhotonNetwork.CurrentRoom == null) return;
         if (TeamManager.instance == null) return;
-        Debug.Log("UpdatePlayerList");
+        //     Debug.Log("UpdatePlayerList");
         TeamManager.instance.MyTeam.GetAllPlayerByTeam(out var _teamAdd, out var _teamMinus);
-        
+
         for (int i = 0; i < 3; i++)
         {
             if (i < _teamAdd.Length)

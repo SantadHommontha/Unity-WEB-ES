@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager instace;
@@ -43,7 +44,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
 
     //  [SerializeField] private bool isMaster;
+    public void NewScene()
+    {
+        PhotonNetwork.Disconnect();
 
+        SceneManager.LoadScene("MainScene");
+    }
     void Awake()
     {
         if (instace != null && instace != this)
@@ -139,30 +145,32 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         //  base.OnMasterClientSwitched(newMasterClient);
-        resetGameEvent.Raise(this, -999);
-        //   Debug.Log("HHHHHHHHHHHHHH");
-        if (newMasterClient == PhotonNetwork.LocalPlayer)
-        {
-            Debug.Log(" ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
+        // resetGameEvent.Raise(this, -999);
+        // isMaster.Value = false;
+        // //   Debug.Log("HHHHHHHHHHHHHH");
+        // if (newMasterClient == PhotonNetwork.LocalPlayer)
+        // {
+        //     Debug.Log(" ย้าย Master Client มาที่คุณสำเร็จแล้ว! คุณคือ Master Client ใหม่");
 
-            resetRoomEvent.Raise(this, -999);
-            masterPanelEvent.Raise(this, isMaster.Value);
-            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
-            PhotonNetwork.KeepAliveInBackground = 60f;
-            co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
-            iamAdmin.Value = true;
-
-        }
-        else
-        {
-            if (!openMaster) return;
-            openMaster = false;
-            Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
-            iamAdmin.Value = false;
-            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
-            PhotonNetwork.KeepAliveInBackground = 300f;
-            LeftAndJoinNewRoom();
-        }
+        //     resetRoomEvent.Raise(this, -999);
+        //     masterPanelEvent.Raise(this, isMaster.Value);
+        //     PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+        //     PhotonNetwork.KeepAliveInBackground = 60f;
+        //     co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+        //     iamAdmin.Value = true;
+        //     isMaster.Value = true;
+        // }
+        // else
+        // {
+        //     if (!openMaster) return;
+        //     openMaster = false;
+        //     Debug.Log($"Master Client ถูกย้ายไปที่ผู้เล่น: {newMasterClient.NickName}");
+        //     iamAdmin.Value = false;
+        //     PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 300000;
+        //     PhotonNetwork.KeepAliveInBackground = 300f;
+        //     isMaster.Value = false;
+        //     LeftAndJoinNewRoom();
+        // }
 
     }
     public override void OnLeftRoom()
@@ -175,6 +183,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         // {
         //     JoinNewRoom();
         // }
+    }
+    public void SetingRoom()
+    {
+        resetRoomEvent.Raise(this, -999);
+        masterPanelEvent.Raise(this, isMaster.Value);
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+        PhotonNetwork.KeepAliveInBackground = 60f;
+        co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+        iamAdmin.Value = true;
+        isMaster.Value = true;
     }
 
     #endregion
@@ -284,26 +302,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
         // {
         //   PhotonNetwork.SetMasterClient(_newMaster);
         //
-        Debug.Log("ChangeMaster");
-        iamAdmin.Value = false;
+        // Debug.Log("ChangeMaster");
+        // iamAdmin.Value = false;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("เป็น Master Client อยู่แล้ว");
-            resetRoomEvent.Raise(this, -999);
-            masterPanelEvent.Raise(this, isMaster.Value);
-            PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
-            PhotonNetwork.KeepAliveInBackground = 60f;
-            co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        //     Debug.Log("เป็น Master Client อยู่แล้ว");
+        //     resetRoomEvent.Raise(this, -999);
+        //     masterPanelEvent.Raise(this, isMaster.Value);
+        //     PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
+        //     PhotonNetwork.KeepAliveInBackground = 60f;
+        //     co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
 
-        }
-        else
+        // }
+        // else
 
-        {
-            PhotonNetwork.SetMasterClient(_newMaster);
-            openMaster = true;
-
-        }
+        // {
+        //     PhotonNetwork.SetMasterClient(_newMaster);
+        //     openMaster = true;
+        PhotonNetwork.SetMasterClient(_newMaster);
+        // }
         // resetRoomEvent.Raise(this, -999);
 
         //  }

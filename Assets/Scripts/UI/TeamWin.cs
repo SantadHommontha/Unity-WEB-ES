@@ -12,6 +12,7 @@ public class TeamWin : TextUI
     [SerializeField] private Image image;
     [SerializeField] private GameObject red;
     [SerializeField] private GameObject blue;
+    [SerializeField] private ShowIntValue showIntValue;
 
     [SerializeField] private GameObject LeaveBtn;
     void Start()
@@ -40,6 +41,10 @@ public class TeamWin : TextUI
     }
     public void UpdateText()
     {
+        if(showIntValue)
+        {
+            showIntValue.ChangeText();
+        }
         UpdateText(stringValue.Value);
     }
     public void Startt()

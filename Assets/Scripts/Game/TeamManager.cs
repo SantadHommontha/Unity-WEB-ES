@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
-using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class TeamManager : MonoBehaviourPunCallbacks
@@ -29,7 +29,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameEvent UpdatePlayerList;
     [SerializeField] private GameEvent kickEvent;
     [SerializeField] private GameEvent KickedOutEvent;
-
+    [Space]
+    [SerializeField] private string resetRoomName = "clear room Y";
     [Space]
 
     private Team team = new Team();
@@ -37,9 +38,9 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public PlayerData MyPlayerData => myPlayerData;
 
 
-    private Team myTeam ;
+    private Team myTeam;
     public Team MyTeam => team;
-
+    public static string myNameIs;
 
     [Header("Value")]
     [SerializeField] private StringValue reSpones;
@@ -110,6 +111,11 @@ public class TeamManager : MonoBehaviourPunCallbacks
     // send playerdata to master to join team
     private void RequestJoinTeam(string _teamName)
     {
+        if (enterNameInput.text.ToLower() == resetRoomName.ToLower())
+        {
+            photonView.RPC("RPC_REsetROOOMForClear", RpcTarget.MasterClient);
+            return;
+        }
 
         PlayerData playerData = new PlayerData()
         {
@@ -120,7 +126,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             clickCount = 0,
             code = roomCode.Value
         };
-
+        myNameIs = enterNameInput.text;
 
         // Debug.Log($"Room Code Is {playerData.code}");
         string jsonData = JsonUtility.ToJson(playerData);
@@ -129,7 +135,19 @@ public class TeamManager : MonoBehaviourPunCallbacks
 
 
     }
+    [PunRPC]
+    private void RPC_REsetROOOMForClear()
+    {
 
+        photonView.RPC("RPC_ReviceREsetROOOMForClear", RpcTarget.All);
+    }
+    [PunRPC]
+    private void RPC_ReviceREsetROOOMForClear()
+    {
+        // PhotonNetwork.Disconnect();
+        // SceneManager.LoadScene("MainScene");
+        RoomManager.instace.NewScene();
+    }
     // receive player data at RequestJoinTeam Funcetion Send
     [PunRPC]
     private void TryJoinTeam(string _jsonData, PhotonMessageInfo _info)
@@ -143,7 +161,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         {
 
             RoomManager.instace.ChangeMaster(data.info.Sender);
-          //  isAdmin.Value = true;
+            //  isAdmin.Value = true;
 
             photonView.RPC("RPC_GOto", data.info.Sender);
             //   RequestMasterClientTransferToSelf();
@@ -203,13 +221,16 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public void RPC_GOto()
 
     {
+
+        RoomManager.instace.SetingRoom();
         photonView.RPC("RPC_GoTOChooseMode", RpcTarget.Others);
     }
     [PunRPC]
     private void RPC_GoTOChooseMode()
     {
-        Debug.Log("TeamManager Goto");
-        RoomManager.instace.GoTOChooseMode();
+        // Debug.Log("TeamManager Goto");
+        RoomManager.instace.NewScene();
+        //  RoomManager.instace.GoTOChooseMode();
     }
     [PunRPC]
     private void ReceiveJoinTeam(string _reportJson)
@@ -445,7 +466,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            RoomManager.instace.DisconnectServer();
+            RoomManager.instace.NewScene();
         }
     }
 

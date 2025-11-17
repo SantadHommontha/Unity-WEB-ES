@@ -19,7 +19,7 @@ public class ShowIntValue : MonoBehaviour
         text.text = value.ToString();
 
     }
-
+    [ContextMenu("ChangeText")]
     public void ChangeText()
     {
         ChangeText(intValue.Value);

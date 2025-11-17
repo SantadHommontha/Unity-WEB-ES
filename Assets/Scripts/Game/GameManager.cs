@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         //   gameStart.OnValueChange += StartUpdateScore;
 
-        if (isMaster.Value)
+        if (PhotonNetwork.IsMasterClient)
         {
 
             gameStart.OnValueChange += UpdateGameStartToRoomProperties;
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ReceiveGameEnd()
     {
-        if (!isMaster.Value)
+        if (!PhotonNetwork.IsMasterClient)
         {
             gameEndEvent.Raise(this, -999);
         }
@@ -234,7 +234,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
         if (!isEnterToGame.Value) return;
-        if (!isMaster.Value || singlePlayer.Value)
+        if (!PhotonNetwork.IsMasterClient || singlePlayer.Value)
         {
             if (propertiesThatChanged.ContainsKey(ValueName.GAME_SCORE))
             {
@@ -279,7 +279,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void RequstClickScore(Component _sender, object _data)
     {
 
-        photonView.RPC("SendClickScore", RpcTarget.All);
+        photonView.RPC("SendClickScore", RpcTarget.Others);
+        Debug.Log("RequstClickScore");
     }
 
     [PunRPC]
@@ -298,15 +299,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log($"Send click {data.score} for {data.scoreType}");
         var ScoreSendJson = JsonUtility.ToJson(data);
         photonView.RPC("ReceiveClickScore", RpcTarget.MasterClient, ScoreSendJson);
+        Debug.Log("Below Send");
     }
 
     [PunRPC]
-    private void ReceiveClickScore(string _jsonData, PhotonMessageInfo _info)
+    private void ReceiveClickScore(string _jsonData)
     {
         if (PhotonNetwork.IsMasterClient)
         {
             ScoreSend data = JsonUtility.FromJson<ScoreSend>(_jsonData);
-            Debug.Log($"Receive:{_jsonData}");
+            Debug.Log($"Receive Click:{_jsonData}");
             if (data.scoreType == ValueName.ADD_TEAM)
             {
                 var gamescore = this.gameScore.Value;
