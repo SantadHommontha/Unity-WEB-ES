@@ -179,6 +179,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //     isMaster.Value = false;
         //     LeftAndJoinNewRoom();
         // }
+        Debug.Log("OnMasterClientSwitched");
         isMaster.Value = false;
         if (PhotonNetwork.IsMasterClient)
         {
@@ -351,7 +352,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
         // {
         //     PhotonNetwork.SetMasterClient(_newMaster);
         //     openMaster = true;
-        PhotonNetwork.SetMasterClient(_newMaster);
+        isMaster.Value = false;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SetingRoom();
+            photonView.RPC("RPC_GOto", RpcTarget.Others);
+            isMaster.Value = PhotonNetwork.IsMasterClient;
+            GameManager.instance.SetupEvents();
+        }
+        else
+        {
+
+            PhotonNetwork.SetMasterClient(_newMaster);
+        }
         // }
         // resetRoomEvent.Raise(this, -999);
 
@@ -458,13 +471,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private IEnumerator IE_Reconncet()
     {
-        while (!PhotonNetwork.IsConnected && reconnectCount < maxReconnectCount)
-        {
-            //  PhotonNetwork.Reconnect();
-            yield return new WaitForSeconds(1);
-            reconnectCount++;
-            Debug.Log("Reconnect");
-        }
+        yield return new WaitForSeconds(1);
+        // while (!PhotonNetwork.IsConnected && reconnectCount < maxReconnectCount)
+        // {
+        //     //  PhotonNetwork.Reconnect();
+        //     yield return new WaitForSeconds(1);
+        //     reconnectCount++;
+        //     Debug.Log("Reconnect");
+        // }
         //        disconnectServer.Raise(this, -999);
     }
 
