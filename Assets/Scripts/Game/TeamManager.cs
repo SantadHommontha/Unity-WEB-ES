@@ -163,7 +163,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             RoomManager.instace.ChangeMaster(data.info.Sender);
             //  isAdmin.Value = true;
 
-            photonView.RPC("RPC_GOto", data.info.Sender);
+      //      photonView.RPC("RPC_GOto", data.info.Sender);
             //   RequestMasterClientTransferToSelf();
             return;
         }

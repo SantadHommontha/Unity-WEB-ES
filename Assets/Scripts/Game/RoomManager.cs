@@ -33,8 +33,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private bool leftToNewRoom = false;
     [Header("Value")]
 
-    //  [SerializeField] private BoolValue isMaster;
-    [SerializeField] private BoolValueHandle isMaster;
+    [SerializeField] private BoolValue isMaster;
+    // [SerializeField] private BoolValueHandle isMaster;
     //[SerializeField] private BoolValueHandle isMaster;
     [SerializeField] private BoolValue finishConnectToServer;
     [SerializeField] private FloatValue connectTOserver;
@@ -46,9 +46,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //  [SerializeField] private bool isMaster;
     public void NewScene()
     {
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
 
-        SceneManager.LoadScene("MainScene");
+
     }
     void Awake()
     {
@@ -64,7 +64,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("Connect...");
         connectEvent.Raise(this, this);
         connectTOserver.Value = 0.2f;
-        PhotonNetwork.ConnectUsingSettings();
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinLobby();
+        }
+        else
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -89,7 +96,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         Debug.Log("Join a Lobby");
         finishConnectToServer.Value = true;
-        finishConnectToRoomEvent.Raise(this, isMaster.Value);
+        finishConnectToRoomEvent.Raise(this, PhotonNetwork.IsMasterClient);
         //      CreateRoom("Game Room" + Random.Range(0, 1000).ToString());
         // if (!leftToNewRoom)
         //     CreateRoom("Game Room" + Random.Range(0, 1000).ToString());
@@ -142,6 +149,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
 
     }
+    #region OnMasterClientSwitched
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         //  base.OnMasterClientSwitched(newMasterClient);
@@ -171,13 +179,36 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //     isMaster.Value = false;
         //     LeftAndJoinNewRoom();
         // }
+        isMaster.Value = false;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SetingRoom();
+            photonView.RPC("RPC_GOto", RpcTarget.Others);
+            isMaster.Value = PhotonNetwork.IsMasterClient;
+            GameManager.instance.SetupEvents();
+        }
+        else
+        {
+            GameManager.instance.ResetSetupEvents();
+        }
 
+    }
+    #endregion
+    [PunRPC]
+    public void RPC_GOto()
+
+    {
+
+        //  RoomManager.instace.SetingRoom();
+        NewScene();
     }
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
         Debug.Log("OnLeftRoom");
-        PhotonNetwork.JoinLobby();
+        // PhotonNetwork.JoinLobby();
+        SceneManager.LoadScene("MainScene");
+
         //   if (leftToNewRoom)
 
         // {
@@ -187,7 +218,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void SetingRoom()
     {
         resetRoomEvent.Raise(this, -999);
-        masterPanelEvent.Raise(this, isMaster.Value);
+        masterPanelEvent.Raise(this, PhotonNetwork.IsMasterClient);
         PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
         PhotonNetwork.KeepAliveInBackground = 60f;
         co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
@@ -207,7 +238,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
 
         Debug.Log("JoinedRoom");
-        if (!isMaster.localValue)
+        if (!PhotonNetwork.IsMasterClient)
         {
             isMaster.Value = PhotonNetwork.IsMasterClient;
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
@@ -252,7 +283,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void TapToEnterGame()
     {
-        chooseTeamEvent.Raise(this, isMaster.Value);
+        chooseTeamEvent.Raise(this, PhotonNetwork.IsMasterClient);
         UpdatePlayerList.Raise(this, -999);
     }
     private IEnumerator CountDownBeforeEnterGame()
@@ -262,7 +293,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         connectTOserver.Value = 1f;
         yield return new WaitForSeconds(0.6f);
 
-        chooseTeamEvent.Raise(this, isMaster.Value);
+        chooseTeamEvent.Raise(this, PhotonNetwork.IsMasterClient);
         UpdatePlayerList.Raise(this, -999);
     }
     #region Kick And Leave Room
@@ -384,10 +415,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
             StopCoroutine(co_SendKeepAlive);
 
 
-        if (isMaster.Value)
+        if (PhotonNetwork.IsMasterClient)
         {
             resetRoomEvent.Raise(this, -999);
-            masterPanelEvent.Raise(this, isMaster.Value);
+            masterPanelEvent.Raise(this, PhotonNetwork.IsMasterClient);
             PhotonNetwork.NetworkingClient.LoadBalancingPeer.DisconnectTimeout = 60000;
             PhotonNetwork.KeepAliveInBackground = 60f;
             co_SendKeepAlive = StartCoroutine(IE_SendKeepAlive());
@@ -409,7 +440,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     #region  SendKeepAlive
     IEnumerator IE_SendKeepAlive()
     {
-        while (isMaster.Value && PhotonNetwork.InRoom)
+        while (PhotonNetwork.IsMasterClient && PhotonNetwork.InRoom)
         {
             yield return new WaitForSeconds(10);
             photonView.RPC("SendKeepAlive", RpcTarget.All);

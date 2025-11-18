@@ -27,6 +27,7 @@ public class SpriteStacker : MonoBehaviour
     private int spriteOther = 1;
     [SerializeField] private GameEvent scoreIncreased;
     [SerializeField] private GameEvent scoreDecreased;
+    
 
     void Start()
     {
@@ -126,17 +127,17 @@ public class SpriteStacker : MonoBehaviour
         Debug.Log("score " + _score);
         if (_score > lastScore)
         {
-            lastScore = _score;
+
             // bucket.PlayAnimation();
             scoreIncreased.Raise(this, -979);
         }
-        else if (_score < lastScore)
+        else
         {
-            lastScore = _score;
+
             scoreDecreased.Raise(this, -979);
             //  waterGun.PlayAnimation();
         }
-
+        lastScore = _score;
 
         if (_score >= nextScoreTarget)
         {

@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void UpdateScoreGame(int _score)
     {
-        scoreUpdateEvent.Raise(this, _score);
+        //        scoreUpdateEvent.Raise(this, _score);
         if (!PhotonNetwork.IsMasterClient) return;
         ExitGames.Client.Photon.Hashtable roomScore = new ExitGames.Client.Photon.Hashtable()
             {
@@ -121,15 +121,16 @@ public class GameManager : MonoBehaviourPunCallbacks
             };
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomScore);
     }
+    private bool isSetupEvents = false;
     // call in OnJoinRoom Function
-    private void SetupEvents()
+    public void SetupEvents()
     {
 
         //   gameStart.OnValueChange += StartUpdateScore;
-
         if (PhotonNetwork.IsMasterClient)
         {
 
+            isSetupEvents = true;
             gameStart.OnValueChange += UpdateGameStartToRoomProperties;
 
             gameScore.OnValueChange += UpdateScoreGame;
@@ -137,16 +138,18 @@ public class GameManager : MonoBehaviourPunCallbacks
             teamWin.OnValueChange += UpdateTeamWin;
         }
 
-        else
-        {
+    }
 
+    public void ResetSetupEvents()
+    {
+        if (isSetupEvents)
+        {
             gameStart.OnValueChange -= UpdateGameStartToRoomProperties;
 
             gameScore.OnValueChange -= UpdateScoreGame;
 
             teamWin.OnValueChange -= UpdateTeamWin;
         }
-
     }
 
 
